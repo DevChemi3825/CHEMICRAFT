@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CHEMICRAFT</title>
+  <link rel="icon" href="favicon.png" type="image/png" id="favicon-link">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+</head>
+<body>
+  <audio id="bg-music" src="sounds/bg-music.mp3" loop></audio>
+  <audio id="success" src="sounds/success.mp3"></audio>
+  <audio id="fail" src="sounds/fail.mp3"></audio>
+  <audio id="locked-popup-sfx" src="sounds/locked.mp3"></audio>
+  <audio id="quiz-start-sfx" src="sounds/quiz-start.mp3"></audio>
+  <audio id="intro-sound" src="sounds/intro.mp3" autoplay loop></audio>
+  <button id="sound-toggle" aria-label="sounds/sound-toggle">🔊</button>
+  <audio id="filter-sfx" src="sounds/filter-click.mp3"></audio>
+  <audio id="table-quiz-wipe-sfx" src="sounds/wipe-transition.mp3"></audio>
+  <audio id="ui-popup-sfx" src="sounds/ui-popup.mp3"></audio>
+
+  <div class="language-selector">
+    <button data-lang="en">EN</button>
+    <button data-lang="id">ID</button>
+  </div>
+
+  <div id="flaskii">
+    <div class="flaskii-body" id="flaskii-face">🧪</div>
+    <div class="flaskii-bubble" id="flaskii-bubble" data-i18n="flaskii_hi">Hi! I’m Flaskii 💖</div>
+  </div>
+
+  <div id="dev-alert" class="alert">
+    <span data-i18n="dev_alert_message">⚠️ This game is still in development. More features are coming soon.</span>
+    <button class="alert-close" onclick="dismissAlert()">×</button>
+  </div>
+
+  <div id="intro-screen">
+    <div class="intro-content">
+	  <img src="favicon.png" alt="Chemicraft Icon" class="logo-img">
+      <h1 class="intro-title">CHEMICRAFT</h1>
+      <p class="intro-subtitle" data-i18n="intro_subtitle">🧪 Unlock the secrets of the periodic table</p>
+      <button id="enter-btn" data-i18n="play_button">Play</button>
+    </div>
+  </div>
+
+  <div class="readme-overlay" id="readme">
+    <div class="readme-box">
+      <h2 data-i18n="welcome_title">Welcome to CHEMICRAFT!</h2>
+      <p data-i18n="welcome_message">You're about to unlock the world of chemistry, one element at a time!</p>
+      <ul>
+        <li data-i18n="rule_quiz">🧪 Answer quizzes to unlock elements</li>
+        <li data-i18n="rule_flip">🔓 Unlocked elements will flip into view</li>
+        <li data-i18n="rule_drag">🧬 Drag unlocked elements into the mixing area</li>
+        <li data-i18n="rule_combine">🎯 Combine them to discover compounds!</li>
+      </ul>
+      <button id="close-readme" data-i18n="lets_go_button">Let's Go!</button>
+    </div>
+  </div>
+
+  <main class="game-container">
+    <div class="start-section" id="start-section">
+      <button id="start-puzzle-btn" class="highlight-bounce" data-i18n="puzzle_button">Puzzle</button>
+      <button id="start-quiz-btn" class="highlight-bounce" data-i18n="start_quiz_button">Start Quiz</button>
+      <button id="start-table-quiz-btn" data-i18n="periodic_table_quiz_button">Periodic Table Quiz</button>
+    </div>
+
+    <div class="quiz-popup hidden" id="quiz-popup">
+      <div class="quiz-box">
+        <h3 id="quiz-question">Question text</h3>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div id="quiz-result" class="hidden">
+          <p id="quiz-result-text"></p>
+          <div class="quiz-buttons">
+            <button id="next-quiz-btn" data-i18n="next_button">Next</button>
+            <button id="close-quiz-btn" data-i18n="close_button">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h1>🧪 <span class="title">CHEMICRAFT</span> 🧬</h1>
+    <p class="subtitle" data-i18n="game_subtitle">Drag elements to combine them and discover new compounds!</p>
+    <div class="theme-toggle">
+      <button id="vault-btn" data-i18n="element_vault_button">Element Vault</button>
+      <button id="resume-quiz-btn" class="hidden" data-i18n="resume_quiz_button">Resume Quiz</button>
+    </div>
+
+    <div class="element-bottom-popup hidden" id="element-popup">
+      <div class="element-popup-inner">
+        <div class="popup-column">
+          <div class="popup-symbol" id="popup-symbol">H</div>
+          <div class="popup-name" id="popup-name">Hydrogen</div>
+        </div>
+        <div class="popup-column" id="popup-atomic" data-i18n-prefix="atomic_number">Atomic Number: 1</div>
+        <div class="popup-column" id="popup-mass" data-i18n-prefix="mass">Mass: 1.008</div>
+        <div class="popup-column" id="popup-category" data-i18n-prefix="category">Category: Nonmetal</div>
+        <span class="popup-close" onclick="hideElementPopup()">×</span>
+      </div>
+    </div>
+
+    <div class="game-columns">
+      <div class="discovery-section">
+        <h2 data-i18n="your_elements_title">Your Elements</h2>
+        <div class="elements-grid" id="discovered-elements"></div>
+        <h2 data-i18n="mixing_area_title">Mixing Area</h2>
+        <div class="mixing-area empty" id="mixing-area">
+          <p data-i18n="mixing_area_placeholder">Drag elements here or click elements below</p>
+        </div>
+        <button id="hint-btn" data-i18n="get_hint_button">💡 Get a Hint</button>
+        <p id="hint-area"></p>
+        <button id="mix-btn" data-i18n="mix_button">Mix!</button>
+        <button id="reset-btn" data-i18n="reset_button">Reset</button>
+        <div class="result-area" id="result-area">
+          <p data-i18n="combination_results_placeholder">Combination results will appear here</p>
+        </div>
+      </div>
+
+      <div class="elements-section">
+        <h2 data-i18n="periodic_table_title">Periodic Table</h2>
+        <input type="text" id="search-input" placeholder="Search element..." data-i18n-placeholder="search_element_placeholder" />
+        <div id="progress-container">
+          <div id="progress-bar"></div>
+          <span id="progress-text"></span>
+        </div>
+
+        <div class="phase-filters">
+          <button onclick="filterByPhase('solid')" data-i18n="solid_button">Solid</button>
+          <button onclick="filterByPhase('liquid')" data-i18n="liquid_button">Liquid</button>
+          <button onclick="filterByPhase('gas')" data-i18n="gas_button">Gas</button>
+          <button onclick="filterByPhase('artificial')" data-i18n="artificial_button">Artificial</button>
+          <button onclick="clearPhaseFilter()" data-i18n="show_all_button">Show All</button>
+        </div>
+
+        <div class="periodic-full-grid" id="periodic-full-grid"></div>
+        <div class="periodic-wrapper">
+          <div class="periodic-periods"></div>
+          <div class="periodic-groups" id="periodic-groups"></div>
+          <div class="periodic-table" id="periodic-table"></div>
+        </div>
+
+        <div class="lan-act-section">
+          <div class="lan-row" id="lanthanides-row"></div>
+          <div class="ac-row" id="actinides-row"></div>
+        </div>
+
+        <p class="click-hint" data-i18n="click_hint">💡 Try and click any unlocked element!</p>
+        <div class="legend">
+          <div><span class="alkali-metal"></span> <span data-i18n="alkali_metal">Alkali Metal</span></div>
+          <div><span class="alkaline-earth-metal"></span> <span data-i18n="alkaline_earth">Alkaline Earth</span></div>
+          <div><span class="transition-metal"></span> <span data-i18n="transition_metal">Transition Metal</span></div>
+          <div><span class="post-transition-metal"></span> <span data-i18n="post_transition">Post-Transition</span></div>
+          <div><span class="metalloid"></span> <span data-i18n="metalloid">Metalloid</span></div>
+          <div><span class="nonmetal"></span> <span data-i18n="nonmetal">Nonmetal</span></div>
+          <div><span class="noble-gas"></span> <span data-i18n="noble_gas">Noble Gas</span></div>
+          <div><span class="lanthanide"></span> <span data-i18n="lanthanide">Lanthanide</span></div>
+          <div><span class="actinide"></span> <span data-i18n="actinide">Actinide</span></div>
+          <div><span class="unknown"></span> <span data-i18n="unknown">Unknown</span></div>
+        </div>
+
+        <div id="atom-viewer"></div>
+      </div>
+    </div>
+
+    <div id="reset-modal" class="modal hidden">
+      <div class="modal-content">
+        <p data-i18n="reset_confirmation">This will reset your discovered elements. Are you sure?</p>
+        <div class="modal-buttons">
+          <button id="confirm-reset" data-i18n="yes_reset_button">Yes, Reset</button>
+          <button id="cancel-reset" data-i18n="cancel_button">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" id="evaluation-btn" target="_blank" title="The little things you do worth a lot for us!!" data-i18n-title="evaluation_feedback_title" data-i18n="evaluation_button">💬 Survey Here!</a>
+	
+	  <div id="contact-us-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2 data-i18n="contact_us_title">Contact Us</h2>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="contact-name" data-i18n="contact_name_label">Your Name:</label>
+          <input type="text" id="contact-name" required>
+        </div>
+        <div class="form-group">
+          <label for="contact-email" data-i18n="contact_email_label">Your Email:</label>
+          <input type="email" id="contact-email" required>
+        </div>
+        <div class="form-group">
+          <label for="contact-message" data-i18n="contact_message_label">Message:</label>
+          <textarea id="contact-message" rows="5" required></textarea>
+        </div>
+        <div class="modal-buttons">
+          <button type="submit" id="send-message-btn" data-i18n="send_message_button">Send Message</button>
+          <button type="button" id="close-contact-us-modal" data-i18n="close_button">Close</button>
+        </div>
+      </form>
+      <p id="contact-form-status" class="hidden"></p>
+    </div>
+  </div>
+</body>
+</html>
+
+    <button id="dev-unlock" class="hidden" onclick="devUnlockAll()" data-i18n="dev_unlock_button">Unlock All (dev)</button>
+
+    <div id="vault-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 data-i18n="element_vault_title">Your Element Vault</h2>
+        <div class="vault-controls">
+          <input type="text" id="vault-search" placeholder="Search by name or symbol..." data-i18n-placeholder="vault_search_placeholder" />
+          <select id="vault-filter">
+            <option value="" data-i18n="all_types_option">All Types</option>
+            <option value="Molecule" data-i18n="molecules_option">Molecules</option>
+            <option value="Ionic Compound" data-i18n="ionic_compounds_option">Ionic Compounds</option>
+            <option value="Gas" data-i18n="gases_option">Gases</option>
+          </select>
+          <select id="vault-sort">
+            <option value="default" data-i18n="sort_default_option">Sort: Default</option>
+            <option value="name" data-i18n="sort_name_option">Sort: A → Z</option>
+            <option value="symbol" data-i18n="sort_formula_option">Sort: Formula</option>
+          </select>
+          <button id="vault-clear" data-i18n="reset_button">Reset</button>
+        </div>
+
+        <div id="vault-list"></div>
+        <button id="vault-close" data-i18n="close_button">Close</button>
+      </div>
+    </div>
+
+    <div id="puzzle-modal" class="modal hidden">
+      <div class="modal-content puzzle-content">
+        <h2 data-i18n="periodic_table_puzzle_title">Periodic Table Puzzle</h2>
+        <div class="puzzle-toolbar">
+          <span id="puzzle-info" data-i18n="puzzle_info">Drag each element to its correct spot.</span>
+          <div class="puzzle-actions">
+            <button id="puzzle-submit" data-i18n="submit_button">Submit</button>
+            <button id="puzzle-reset" data-i18n="reset_button">Reset</button>
+            <button id="puzzle-close" data-i18n="close_button">Close</button>
+          </div>
+        </div>
+
+        <div class="puzzle-wrapper">
+          <div id="puzzle-grid" class="puzzle-grid"></div>
+          <div id="puzzle-bank" class="puzzle-bank"></div>
+        </div>
+
+        <div id="puzzle-result" class="puzzle-result"></div>
+      </div>
+    </div>
+
+    <div id="table-quiz-popup" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="table-quiz-question" data-i18n="table_quiz_question">Which category does this element belong to?</h2>
+        <div id="table-quiz-element" style="font-size: 2rem; margin: 12px;">🔬</div>
+        <div id="table-quiz-options" class="quiz-options"></div>
+        <div id="table-quiz-result" style="margin-top: 10px;"></div>
+        <div class="modal-buttons">
+          <button id="next-table-quiz" data-i18n="next_button">Next</button>
+          <button id="close-table-quiz" data-i18n="close_button">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="win-screen" class="modal hidden">
+      <div class="modal-content win-style">
+        <h2 data-i18n="win_title">🎉 <span style="color:#60a5fa">You completed the Periodic Table!</span></h2>
+        <p style="margin-top: 10px;" data-i18n="win_message">118 elements discovered.<br>You’re basically a <strong>chemistry god</strong> now.</p>
+        <button class="btn-confirm" onclick="closeWinScreen()" data-i18n="okay_button">Okay 🧪</button>
+      </div>
+    </div>
+
+    <div id="puzzle-blocker" class="modal hidden">
+      <div class="modal-content">
+        <h2 data-i18n="puzzle_blocker_title">HOLD UP!</h2>
+        <p data-i18n="puzzle_blocker_message_1">You haven’t unlocked all the elements yet :P</p>
+        <p data-i18n="puzzle_blocker_message_2">Nice try sneaking into the puzzle early, scientist...</p>
+        <div class="modal-buttons">
+          <button onclick="closePuzzleBlocker()" data-i18n="okay_fine_button">Okay fine..</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="question-review-modal" class="modal hidden">
+      <div class="modal-content" style="max-width: 800px;">
+        <h2 style="margin-bottom: 12px;" data-i18n="all_quiz_questions_title">Questions Review</h2>
+        <div id="question-buttons" class="qa-grid"></div>
+        <div id="question-info" class="qa-info"></div>
+        <button class="quiz-close-btn" onclick="closeQuestionReview()" data-i18n="close_button">Close</button>
+      </div>
+    </div>
+
+    <div id="sound-prompt-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 data-i18n="sound_prompt_title">Enhance Your Experience!</h2>
+        <p data-i18n="sound_prompt_message">Turn on sound for an immersive adventure.</p>
+        <div class="modal-buttons">
+          <button id="sound-prompt-toggle" aria-label="Toggle sound" data-i18n="sound_prompt_button">🔊 Turn On Sound</button>
+          <button id="sound-prompt-dismiss" data-i18n="sound_prompt_dismiss">No Thanks</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
