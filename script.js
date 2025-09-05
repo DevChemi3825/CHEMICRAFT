@@ -1,23 +1,167 @@
 const quizHistory = [];
 
+const soundPromptModal = document.getElementById("sound-prompt-modal");
+const soundPromptToggleBtn = document.getElementById("sound-prompt-toggle");
+const soundPromptDismissBtn = document.getElementById("sound-prompt-dismiss");
+
 const periodicLayout = [
   ["H", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "He"],
-  ["Li", "Be", "", "", "", "", "", "", "", "", "", "", "B", "C", "N", "O", "F", "Ne"],
-  ["Na", "Mg", "", "", "", "", "", "", "", "", "", "", "Al", "Si", "P", "S", "Cl", "Ar"],
-  ["K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr"],
-  ["Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe"],
-  ["Cs", "Ba", "", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn"],
-  ["Fr", "Ra", "", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"],
+  [
+    "Li",
+    "Be",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "B",
+    "C",
+    "N",
+    "O",
+    "F",
+    "Ne",
+  ],
+  [
+    "Na",
+    "Mg",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Al",
+    "Si",
+    "P",
+    "S",
+    "Cl",
+    "Ar",
+  ],
+  [
+    "K",
+    "Ca",
+    "Sc",
+    "Ti",
+    "V",
+    "Cr",
+    "Mn",
+    "Fe",
+    "Co",
+    "Ni",
+    "Cu",
+    "Zn",
+    "Ga",
+    "Ge",
+    "As",
+    "Se",
+    "Br",
+    "Kr",
+  ],
+  [
+    "Rb",
+    "Sr",
+    "Y",
+    "Zr",
+    "Nb",
+    "Mo",
+    "Tc",
+    "Ru",
+    "Rh",
+    "Pd",
+    "Ag",
+    "Cd",
+    "In",
+    "Sn",
+    "Sb",
+    "Te",
+    "I",
+    "Xe",
+  ],
+  [
+    "Cs",
+    "Ba",
+    "",
+    "Hf",
+    "Ta",
+    "W",
+    "Re",
+    "Os",
+    "Ir",
+    "Pt",
+    "Au",
+    "Hg",
+    "Tl",
+    "Pb",
+    "Bi",
+    "Po",
+    "At",
+    "Rn",
+  ],
+  [
+    "Fr",
+    "Ra",
+    "",
+    "Rf",
+    "Db",
+    "Sg",
+    "Bh",
+    "Hs",
+    "Mt",
+    "Ds",
+    "Rg",
+    "Cn",
+    "Nh",
+    "Fl",
+    "Mc",
+    "Lv",
+    "Ts",
+    "Og",
+  ],
 ];
 
 const lanthanides = [
-  "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb",
-  "Dy", "Ho", "Er", "Tm", "Yb", "Lu"
+  "La",
+  "Ce",
+  "Pr",
+  "Nd",
+  "Pm",
+  "Sm",
+  "Eu",
+  "Gd",
+  "Tb",
+  "Dy",
+  "Ho",
+  "Er",
+  "Tm",
+  "Yb",
+  "Lu",
 ];
 
 const actinides = [
-  "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk",
-  "Cf", "Es", "Fm", "Md", "No", "Lr"
+  "Ac",
+  "Th",
+  "Pa",
+  "U",
+  "Np",
+  "Pu",
+  "Am",
+  "Cm",
+  "Bk",
+  "Cf",
+  "Es",
+  "Fm",
+  "Md",
+  "No",
+  "Lr",
 ];
 
 const periodicTable = document.getElementById("periodic-table");
@@ -37,7 +181,7 @@ const vaultData = {
     emoji: "🎈",
     use: "Common fuel and reducing agent.",
     trivia: "Most abundant element in the universe.",
-    type: "Gas"
+    type: "Gas",
   },
   CO: {
     name: "Carbon Monoxide",
@@ -45,7 +189,7 @@ const vaultData = {
     emoji: "😵",
     use: "Used in metallurgy and as a fuel.",
     trivia: "Toxic gas produced from incomplete combustion.",
-    type: "Gas"
+    type: "Gas",
   },
   CH4: {
     name: "Methane",
@@ -53,7 +197,7 @@ const vaultData = {
     emoji: "🔥",
     use: "Main component of natural gas.",
     trivia: "Potent greenhouse gas.",
-    type: "Gas"
+    type: "Gas",
   },
   NaOH: {
     name: "Sodium Hydroxide",
@@ -61,7 +205,7 @@ const vaultData = {
     emoji: "🧪",
     use: "Used in soaps and drain cleaners.",
     trivia: "Also called caustic soda.",
-    type: "Base"
+    type: "Base",
   },
   HCl: {
     name: "Hydrochloric Acid",
@@ -69,7 +213,7 @@ const vaultData = {
     emoji: "🌫️",
     use: "Used in chemical labs and digestion.",
     trivia: "Found in stomach acid.",
-    type: "Acid"
+    type: "Acid",
   },
   C2H5OH: {
     name: "Ethanol",
@@ -77,7 +221,7 @@ const vaultData = {
     emoji: "🍷",
     use: "In beverages and as a fuel.",
     trivia: "Type of alcohol found in wine.",
-    type: "Alcohol"
+    type: "Alcohol",
   },
   NO2: {
     name: "Nitrogen Dioxide",
@@ -85,7 +229,7 @@ const vaultData = {
     emoji: "🧨",
     use: "Used in industrial processes.",
     trivia: "Major air pollutant.",
-    type: "Gas"
+    type: "Gas",
   },
   Cl2: {
     name: "Chlorine Gas",
@@ -93,7 +237,7 @@ const vaultData = {
     emoji: "🧪",
     use: "Used for disinfecting water.",
     trivia: "Toxic greenish-yellow gas.",
-    type: "Halogen"
+    type: "Halogen",
   },
   N2: {
     name: "Nitrogen Gas",
@@ -101,7 +245,7 @@ const vaultData = {
     emoji: "💨",
     use: "Used in fertilizers and inert atmospheres.",
     trivia: "Makes up 78% of air.",
-    type: "Gas"
+    type: "Gas",
   },
   O2: {
     name: "Oxygen Gas",
@@ -109,7 +253,7 @@ const vaultData = {
     emoji: "🌬️",
     use: "Supports combustion and respiration.",
     trivia: "Essential for life.",
-    type: "Gas"
+    type: "Gas",
   },
   H2S: {
     name: "Hydrogen Sulfide",
@@ -117,7 +261,7 @@ const vaultData = {
     emoji: "💨",
     use: "Used in chemical manufacturing.",
     trivia: "Smells like rotten eggs.",
-    type: "Gas"
+    type: "Gas",
   },
   H2O: {
     name: "Water",
@@ -125,7 +269,7 @@ const vaultData = {
     use: "Essential for life and industry.",
     trivia: "Expands when frozen — that's why ice floats!",
     emoji: "💧",
-    type: "Molecule"
+    type: "Molecule",
   },
   NaCl: {
     name: "Salt",
@@ -133,15 +277,16 @@ const vaultData = {
     use: "Seasoning and food preservation.",
     trivia: "Used as currency in Roman times.",
     emoji: "🧂",
-    type: "Ionic Compound"
+    type: "Ionic Compound",
   },
   SiO2: {
     name: "Silicon Dioxide",
     formula: "SiO₂",
     use: "Used in glass, concrete, and semiconductors.",
-    trivia: "Also known as quartz — it's one of the most abundant minerals in Earth's crust.",
+    trivia:
+      "Also known as quartz — it's one of the most abundant minerals in Earth's crust.",
     emoji: "🏖️",
-    type: "Mineral"
+    type: "Mineral",
   },
   AgCl: {
     name: "Silver Chloride",
@@ -149,7 +294,7 @@ const vaultData = {
     use: "Used in photography and electrochemistry.",
     trivia: "Turns violet on exposure to light.",
     emoji: "📸",
-    type: "Salt"
+    type: "Salt",
   },
   Al2O3: {
     name: "Aluminum Oxide",
@@ -157,7 +302,7 @@ const vaultData = {
     use: "Used in abrasives and ceramics.",
     trivia: "Forms a protective layer on aluminum surfaces.",
     emoji: "🔩",
-    type: "Oxide"
+    type: "Oxide",
   },
   As2O3: {
     name: "Arsenic Trioxide",
@@ -165,7 +310,7 @@ const vaultData = {
     use: "Used historically in pesticides.",
     trivia: "Extremely toxic and a known poison.",
     emoji: "💀",
-    type: "Toxic Compound"
+    type: "Toxic Compound",
   },
   BaCl2: {
     name: "Barium Chloride",
@@ -173,7 +318,7 @@ const vaultData = {
     use: "Used in fireworks to create green flames.",
     trivia: "Toxic if ingested.",
     emoji: "🎆",
-    type: "Salt"
+    type: "Salt",
   },
   BeO: {
     name: "Beryllium Oxide",
@@ -181,7 +326,7 @@ const vaultData = {
     use: "Used in electronics and ceramics.",
     trivia: "Has high thermal conductivity.",
     emoji: "🧱",
-    type: "Oxide"
+    type: "Oxide",
   },
   BF3: {
     name: "Boron Trifluoride",
@@ -189,7 +334,7 @@ const vaultData = {
     use: "Used as a catalyst in organic synthesis.",
     trivia: "Reacts violently with water.",
     emoji: "🔬",
-    type: "Inorganic"
+    type: "Inorganic",
   },
   C2H6N2O: {
     name: "Nitroguanidine",
@@ -197,7 +342,7 @@ const vaultData = {
     use: "Used in explosives and propellants.",
     trivia: "Stable under normal conditions but explosive.",
     emoji: "💣",
-    type: "Explosive"
+    type: "Explosive",
   },
   CH3CH2NO2: {
     name: "Nitromethane",
@@ -205,7 +350,7 @@ const vaultData = {
     use: "Used as a fuel in drag racing.",
     trivia: "A volatile and energetic liquid.",
     emoji: "🚀",
-    type: "Fuel"
+    type: "Fuel",
   },
   CH3Cl: {
     name: "Methyl Chloride",
@@ -213,7 +358,7 @@ const vaultData = {
     use: "Used in silicone production.",
     trivia: "A colorless, flammable gas.",
     emoji: "🌬️",
-    type: "Organic"
+    type: "Organic",
   },
   CH5NO: {
     name: "Glycine",
@@ -221,7 +366,7 @@ const vaultData = {
     use: "An amino acid used in proteins.",
     trivia: "The simplest amino acid found in the human body.",
     emoji: "🧠",
-    type: "Organic"
+    type: "Organic",
   },
   CN: {
     name: "Cyanide Ion",
@@ -229,7 +374,7 @@ const vaultData = {
     use: "Used in gold mining and organic synthesis.",
     trivia: "Extremely toxic to all aerobic organisms.",
     emoji: "☠️",
-    type: "Ion"
+    type: "Ion",
   },
   CS2: {
     name: "Carbon Disulfide",
@@ -237,7 +382,7 @@ const vaultData = {
     use: "Used in rayon and cellophane production.",
     trivia: "Highly flammable and toxic.",
     emoji: "🧪",
-    type: "Solvent"
+    type: "Solvent",
   },
   CuO: {
     name: "Copper(II) Oxide",
@@ -245,7 +390,7 @@ const vaultData = {
     use: "Used in pigments and batteries.",
     trivia: "A black solid used in ceramics.",
     emoji: "🔋",
-    type: "Oxide"
+    type: "Oxide",
   },
   CuS: {
     name: "Copper Sulfide",
@@ -253,7 +398,7 @@ const vaultData = {
     use: "Used in solar cells and semiconductors.",
     trivia: "Occurs naturally as covellite mineral.",
     emoji: "⚙️",
-    type: "Mineral"
+    type: "Mineral",
   },
   EsF3: {
     name: "Einsteinium Fluoride",
@@ -261,7 +406,7 @@ const vaultData = {
     use: "Studied in radioactive research.",
     trivia: "Synthesized in extremely small amounts.",
     emoji: "🧪",
-    type: "Radioactive"
+    type: "Radioactive",
   },
   Fe2O3: {
     name: "Iron(III) Oxide",
@@ -269,7 +414,7 @@ const vaultData = {
     use: "Used as pigment and in polishing.",
     trivia: "Commonly known as rust.",
     emoji: "🧱",
-    type: "Oxide"
+    type: "Oxide",
   },
   FmO3: {
     name: "Fermium Trioxide",
@@ -277,7 +422,7 @@ const vaultData = {
     use: "Purely research purposes in nuclear chemistry.",
     trivia: "Extremely rare and radioactive.",
     emoji: "🌌",
-    type: "Radioactive"
+    type: "Radioactive",
   },
   HBr: {
     name: "Hydrobromic Acid",
@@ -285,7 +430,7 @@ const vaultData = {
     use: "Used in industrial chemistry.",
     trivia: "A strong acid with pungent fumes.",
     emoji: "🌪️",
-    type: "Acid"
+    type: "Acid",
   },
   HNO3: {
     name: "Nitric Acid",
@@ -293,7 +438,7 @@ const vaultData = {
     use: "Used in fertilizers and explosives.",
     trivia: "Corrosive and a strong oxidizer.",
     emoji: "☣️",
-    type: "Acid"
+    type: "Acid",
   },
   H2Se: {
     name: "Hydrogen Selenide",
@@ -301,7 +446,7 @@ const vaultData = {
     use: "Used in chemical vapor deposition.",
     trivia: "Very toxic and smells like decaying radishes.",
     emoji: "🌫️",
-    type: "Gas"
+    type: "Gas",
   },
   H2S: {
     name: "Hydrogen Sulfide",
@@ -309,7 +454,7 @@ const vaultData = {
     use: "Found in volcanic gases and sewers.",
     trivia: "Smells like rotten eggs and is toxic.",
     emoji: "💨",
-    type: "Gas"
+    type: "Gas",
   },
   HgCl2: {
     name: "Mercury(II) Chloride",
@@ -317,7 +462,7 @@ const vaultData = {
     use: "Used in disinfectants and research.",
     trivia: "Highly toxic mercury salt.",
     emoji: "☠️",
-    type: "Salt"
+    type: "Salt",
   },
   KCl: {
     name: "Potassium Chloride",
@@ -325,7 +470,7 @@ const vaultData = {
     use: "Used in fertilizers and salt substitutes.",
     trivia: "Supplies potassium to the body.",
     emoji: "🧂",
-    type: "Salt"
+    type: "Salt",
   },
   KOH: {
     name: "Potassium Hydroxide",
@@ -333,7 +478,7 @@ const vaultData = {
     use: "Used in making soap and batteries.",
     trivia: "Also called caustic potash.",
     emoji: "🧪",
-    type: "Base"
+    type: "Base",
   },
   LiF: {
     name: "Lithium Fluoride",
@@ -341,7 +486,7 @@ const vaultData = {
     use: "Used in optics and metallurgy.",
     trivia: "Transparent to ultraviolet light.",
     emoji: "🔋",
-    type: "Salt"
+    type: "Salt",
   },
   LiOH: {
     name: "Lithium Hydroxide",
@@ -349,7 +494,7 @@ const vaultData = {
     use: "Used in batteries and air purification.",
     trivia: "Removes CO₂ from spacecraft air.",
     emoji: "🔋",
-    type: "Base"
+    type: "Base",
   },
   MnO4: {
     name: "Permanganate",
@@ -357,7 +502,7 @@ const vaultData = {
     use: "Used as an oxidizer and disinfectant.",
     trivia: "Bright purple in solution.",
     emoji: "🧪",
-    type: "Ion"
+    type: "Ion",
   },
   NaHCO3: {
     name: "Sodium Bicarbonate",
@@ -365,7 +510,7 @@ const vaultData = {
     use: "Used in baking and cleaning.",
     trivia: "Also known as baking soda.",
     emoji: "🧁",
-    type: "Salt"
+    type: "Salt",
   },
   NH4: {
     name: "Ammonium",
@@ -373,7 +518,7 @@ const vaultData = {
     use: "A common ion in fertilizers.",
     trivia: "Combines with anions to form stable salts.",
     emoji: "⚗️",
-    type: "Ion"
+    type: "Ion",
   },
   NH4NO3: {
     name: "Ammonium Nitrate",
@@ -381,7 +526,7 @@ const vaultData = {
     use: "Used in fertilizers and explosives.",
     trivia: "Can detonate under extreme heat.",
     emoji: "💥",
-    type: "Salt"
+    type: "Salt",
   },
   NiO: {
     name: "Nickel Oxide",
@@ -389,7 +534,7 @@ const vaultData = {
     use: "Used in ceramics and batteries.",
     trivia: "Forms green to black powder.",
     emoji: "⚙️",
-    type: "Oxide"
+    type: "Oxide",
   },
   PbO: {
     name: "Lead(II) Oxide",
@@ -397,7 +542,7 @@ const vaultData = {
     use: "Used in glass and ceramics.",
     trivia: "Toxic lead compound with multiple uses.",
     emoji: "🧪",
-    type: "Oxide"
+    type: "Oxide",
   },
   SbCl3: {
     name: "Antimony Chloride",
@@ -405,7 +550,7 @@ const vaultData = {
     use: "Used in flame retardants and catalysts.",
     trivia: "Hydrolyzes in moist air.",
     emoji: "🧪",
-    type: "Salt"
+    type: "Salt",
   },
   SnF2: {
     name: "Stannous Fluoride",
@@ -413,7 +558,7 @@ const vaultData = {
     use: "Used in toothpaste.",
     trivia: "Helps reduce cavities and tooth sensitivity.",
     emoji: "🦷",
-    type: "Salt"
+    type: "Salt",
   },
   SO3: {
     name: "Sulfur Trioxide",
@@ -421,7 +566,7 @@ const vaultData = {
     use: "Used to make sulfuric acid.",
     trivia: "Highly reactive with water.",
     emoji: "☁",
-    type: "Acid Anhydride"
+    type: "Acid Anhydride",
   },
   TiO2: {
     name: "Titanium Dioxide",
@@ -429,7 +574,7 @@ const vaultData = {
     use: "Used in paints and sunscreens.",
     trivia: "Bright white pigment with UV protection.",
     emoji: "🎨",
-    type: "Oxide"
+    type: "Oxide",
   },
   ZnO: {
     name: "Zinc Oxide",
@@ -437,7 +582,7 @@ const vaultData = {
     use: "Used in creams and rubber production.",
     trivia: "Provides UV protection in sunscreens.",
     emoji: "🌞",
-    type: "Oxide"
+    type: "Oxide",
   },
   ZnS: {
     name: "Zinc Sulfide",
@@ -445,7 +590,7 @@ const vaultData = {
     use: "Used in luminescent materials.",
     trivia: "Glows under UV light.",
     emoji: "💡",
-    type: "Salt"
+    type: "Salt",
   },
   CO2: {
     name: "Carbon Dioxide",
@@ -453,7 +598,7 @@ const vaultData = {
     use: "In fizzy drinks and respiration.",
     trivia: "Exhaled by humans and inhaled by plants.",
     emoji: "🍃",
-    type: "Gas"
+    type: "Gas",
   },
   NH3: {
     name: "Ammonia",
@@ -461,7 +606,7 @@ const vaultData = {
     use: "Used in fertilizers and cleaning products.",
     trivia: "Has a sharp smell often found in cat pee.",
     emoji: "💨",
-    type: "Base"
+    type: "Base",
   },
   H2SO4: {
     name: "Sulfuric Acid",
@@ -469,7 +614,7 @@ const vaultData = {
     use: "Used in batteries and fertilizers.",
     trivia: "Highly corrosive and reactive with water.",
     emoji: "🧫",
-    type: "Acid"
+    type: "Acid",
   },
   CH3COOH: {
     name: "Acetic Acid",
@@ -477,7 +622,7 @@ const vaultData = {
     use: "Main acid in vinegar; used in food and lab chemistry.",
     trivia: "Acetic acid gives vinegar its sour smell and taste.",
     emoji: "🍯",
-    type: "Organic Acid"
+    type: "Organic Acid",
   },
   Br2: {
     name: "Bromine",
@@ -485,7 +630,7 @@ const vaultData = {
     use: "Used in flame retardants and some medicines.",
     trivia: "Only nonmetal that is liquid at room temp.",
     emoji: "🧪",
-    type: "Elemental Molecule"
+    type: "Elemental Molecule",
   },
   I2: {
     name: "Iodine",
@@ -493,7 +638,7 @@ const vaultData = {
     use: "Used in antiseptics and thyroid treatments.",
     trivia: "Turns purple when vaporized.",
     emoji: "🧴",
-    type: "Elemental Molecule"
+    type: "Elemental Molecule",
   },
   HF: {
     name: "Hydrofluoric Acid",
@@ -501,7 +646,7 @@ const vaultData = {
     use: "Used to etch glass and metals.",
     trivia: "Can penetrate skin and is extremely toxic.",
     emoji: "🧪",
-    type: "Acid"
+    type: "Acid",
   },
   UO2: {
     name: "Uranium Dioxide",
@@ -509,7 +654,7 @@ const vaultData = {
     use: "Used as nuclear reactor fuel.",
     trivia: "Slightly radioactive and forms black crystals.",
     emoji: "☢️",
-    type: "Radioactive Oxide"
+    type: "Radioactive Oxide",
   },
   ThO2: {
     name: "Thorium Dioxide",
@@ -517,7 +662,7 @@ const vaultData = {
     use: "Used in gas mantles and nuclear fuel.",
     trivia: "Has a very high melting point (~3300°C).",
     emoji: "☢️",
-    type: "Radioactive Oxide"
+    type: "Radioactive Oxide",
   },
   RaCl2: {
     name: "Radium Chloride",
@@ -525,7 +670,7 @@ const vaultData = {
     use: "Historic use in glow-in-the-dark paint.",
     trivia: "Discovered by Marie Curie; highly radioactive.",
     emoji: "⚛️",
-    type: "Radioactive Salt"
+    type: "Radioactive Salt",
   },
   RnF: {
     name: "Radon Fluoride",
@@ -533,7 +678,7 @@ const vaultData = {
     use: "Hypothetical; extremely unstable.",
     trivia: "Radon is a noble gas and rarely bonds.",
     emoji: "🌫️",
-    type: "Gas"
+    type: "Gas",
   },
   PuO3: {
     name: "Plutonium Trioxide",
@@ -541,7 +686,7 @@ const vaultData = {
     use: "Used in nuclear reprocessing.",
     trivia: "Highly reactive and toxic.",
     emoji: "☣️",
-    type: "Radioactive Oxide"
+    type: "Radioactive Oxide",
   },
   AmO3: {
     name: "Americium Trioxide",
@@ -549,7 +694,7 @@ const vaultData = {
     use: "Used in smoke detectors (as Am²⁴¹).",
     trivia: "Discovered during Manhattan Project.",
     emoji: "☢️",
-    type: "Radioactive Oxide"
+    type: "Radioactive Oxide",
   },
   NpF6: {
     name: "Neptunium Hexafluoride",
@@ -557,7 +702,7 @@ const vaultData = {
     use: "Used in nuclear fuel processing.",
     trivia: "One of few neptunium compounds that sublimes.",
     emoji: "💥",
-    type: "Radioactive Salt"
+    type: "Radioactive Salt",
   },
   CmCl3: {
     name: "Curium Chloride",
@@ -565,7 +710,7 @@ const vaultData = {
     use: "Used in scientific research only.",
     trivia: "Curium glows purple in the dark!",
     emoji: "⚗️",
-    type: "Radioactive Salt"
+    type: "Radioactive Salt",
   },
   BkO3: {
     name: "Berkelium Trioxide",
@@ -573,7 +718,7 @@ const vaultData = {
     use: "Highly unstable; studied for nuclear chemistry.",
     trivia: "Named after Berkeley, California.",
     emoji: "☠️",
-    type: "Radioactive Oxide"
+    type: "Radioactive Oxide",
   },
   CfCl3: {
     name: "Californium Chloride",
@@ -581,15 +726,16 @@ const vaultData = {
     use: "Used as neutron source in nuclear reactors.",
     trivia: "One gram can emit 170 million neutrons per minute.",
     emoji: "☢️",
-    type: "Radioactive Salt"
+    type: "Radioactive Salt",
   },
   CH4N2O: {
     name: "Urea",
     formula: "CH₄N₂O",
     use: "Used in fertilizers and skincare products.",
-    trivia: "The first organic compound ever synthesized from inorganic material.",
+    trivia:
+      "The first organic compound ever synthesized from inorganic material.",
     emoji: "💊",
-    type: "Organic Compound"
+    type: "Organic Compound",
   },
   C2H4O2: {
     name: "Acetic Acid",
@@ -597,7 +743,7 @@ const vaultData = {
     use: "Found in vinegar, used in food and chemistry.",
     trivia: "Naturally produced during fermentation.",
     emoji: "🍯",
-    type: "Organic Acid"
+    type: "Organic Acid",
   },
   MgCl2: {
     name: "Magnesium Chloride",
@@ -605,7 +751,7 @@ const vaultData = {
     use: "Used in supplements and road de-icing.",
     trivia: "Can be harvested from seawater.",
     emoji: "💪",
-    type: "Salt"
+    type: "Salt",
   },
   NaBr: {
     name: "Sodium Bromide",
@@ -613,7 +759,7 @@ const vaultData = {
     use: "Used as sedative in the early 1900s.",
     trivia: "Sometimes used in hot tubs to generate bromine.",
     emoji: "🧴",
-    type: "Salt"
+    type: "Salt",
   },
   LiOH: {
     name: "Lithium Hydroxide",
@@ -621,7 +767,7 @@ const vaultData = {
     use: "Used in batteries and CO₂ scrubbers.",
     trivia: "Removes carbon dioxide in spacecrafts.",
     emoji: "🔋",
-    type: "Base"
+    type: "Base",
   },
   KOH: {
     name: "Potassium Hydroxide",
@@ -629,7 +775,7 @@ const vaultData = {
     use: "Used in soap and biodiesel production.",
     trivia: "Also called caustic potash.",
     emoji: "🧼",
-    type: "Base"
+    type: "Base",
   },
   AlCl3: {
     name: "Aluminum Chloride",
@@ -637,7 +783,7 @@ const vaultData = {
     use: "Used in antiperspirants and as a catalyst.",
     trivia: "Reacts violently with water!",
     emoji: "🧲",
-    type: "Salt"
+    type: "Salt",
   },
   BH3: {
     name: "Borane",
@@ -645,7 +791,7 @@ const vaultData = {
     use: "Used in organic synthesis and rocket fuel.",
     trivia: "A highly unstable molecule with unusual bonding.",
     emoji: "⚗️",
-    type: "Molecule"
+    type: "Molecule",
   },
   NH4Cl: {
     name: "Ammonium Chloride",
@@ -653,7 +799,7 @@ const vaultData = {
     use: "Used in cough medicine and fertilizers.",
     trivia: "Fizzes when mixed with baking soda.",
     emoji: "🧪",
-    type: "Salt"
+    type: "Salt",
   },
   ZnS: {
     name: "Zinc Sulfide",
@@ -661,8 +807,8 @@ const vaultData = {
     use: "Used in glow-in-the-dark materials.",
     trivia: "Can glow green or blue under UV light.",
     emoji: "💡",
-    type: "Salt"
-  }
+    type: "Salt",
+  },
 };
 
 const compoundRecipes = {
@@ -699,7 +845,10 @@ const compoundRecipes = {
   "C+H+H+H+H+Cl": { symbol: "CH3Cl", result: "🌬️ Methyl Chloride (CH₃Cl)" },
   "C+H+H+O+O": { symbol: "CH3COOH", result: "🍶 Acetic Acid (CH₃COOH)" },
   "N+H+H+H+H": { symbol: "NH4", result: "⚗️ Ammonium (NH₄⁺)" },
-  "N+H+H+H+H+O+O+O": { symbol: "NH4NO3", result: "💥 Ammonium Nitrate (NH₄NO₃)" },
+  "N+H+H+H+H+O+O+O": {
+    symbol: "NH4NO3",
+    result: "💥 Ammonium Nitrate (NH₄NO₃)",
+  },
   "S+O+O+O": { symbol: "SO3", result: "☁️ Sulfur Trioxide (SO₃)" },
   "H+H+S": { symbol: "H2S", result: "💨 Hydrogen Sulfide (H₂S)" },
   "C+N": { symbol: "CN", result: "☠️ Cyanide Ion (CN⁻)" },
@@ -730,7 +879,10 @@ const compoundRecipes = {
   "Hg+Cl+Cl": { symbol: "HgCl2", result: "☠️ Mercury(II) Chloride (HgCl₂)" },
   "Ni+O": { symbol: "NiO", result: "⚙️ Nickel Oxide (NiO)" },
   "Sn+F+F": { symbol: "SnF2", result: "🦷 Stannous Fluoride (SnF₂)" },
-  "C+H+H+H+H+O+O+N": { symbol: "CH3CH2NO2", result: "🚀 Nitromethane (CH₃CH₂NO₂)" },
+  "C+H+H+H+H+O+O+N": {
+    symbol: "CH3CH2NO2",
+    result: "🚀 Nitromethane (CH₃CH₂NO₂)",
+  },
   "Mn+O+O+O+O": { symbol: "MnO4", result: "🧪 Permanganate (MnO₄⁻)" },
   "Cr+O+O+O": { symbol: "CrO3", result: "🧪 Chromium Trioxide (CrO₃)" },
   "As+O+O+O": { symbol: "As2O3", result: "💀 Arsenic Trioxide (As₂O₃)" },
@@ -742,154 +894,1085 @@ const compoundRecipes = {
   "Rn+F": { symbol: "RnF", result: "🌫️ Radon Fluoride (RnF)" },
   "Pu+O+O+O": { symbol: "PuO3", result: "☣️ Plutonium Trioxide (PuO₃)" },
   "Am+O+O+O": { symbol: "AmO3", result: "☢️ Americium Trioxide (AmO₃)" },
-  "Np+F+F+F+F+F+F": { symbol: "NpF6", result: "💥 Neptunium Hexafluoride (NpF₆)" },
+  "Np+F+F+F+F+F+F": {
+    symbol: "NpF6",
+    result: "💥 Neptunium Hexafluoride (NpF₆)",
+  },
   "Cm+Cl+Cl+Cl": { symbol: "CmCl3", result: "⚗️ Curium Chloride (CmCl₃)" },
   "Bk+O+O+O": { symbol: "BkO3", result: "☠️ Berkelium Trioxide (BkO₃)" },
   "Cf+Cl+Cl+Cl": { symbol: "CfCl3", result: "☢️ Californium Chloride (CfCl₃)" },
   "Es+F+F+F": { symbol: "EsF3", result: "🧪 Einsteinium Fluoride (EsF₃)" },
-  "Fm+O+O+O": { symbol: "FmO3", result: "🌌 Fermium Trioxide (FmO₃)" }
+  "Fm+O+O+O": { symbol: "FmO3", result: "🌌 Fermium Trioxide (FmO₃)" },
 };
 
 let discoveredVault = [];
 
 const elements = [
-  { symbol: "H", name: "Hydrogen", atomicNumber: 1, atomicMass: 1.008, category: "nonmetal", phase: "gas" },
-  { symbol: "He", name: "Helium", atomicNumber: 2, atomicMass: 4.0026, category: "noble-gas", phase: "gas" },
-  { symbol: "Li", name: "Lithium", atomicNumber: 3, atomicMass: 6.94, category: "alkali-metal", phase: "solid" },
-  { symbol: "Be", name: "Beryllium", atomicNumber: 4, atomicMass: 9.0122, category: "alkaline-earth-metal", phase: "solid" },
-  { symbol: "B", name: "Boron", atomicNumber: 5, atomicMass: 10.81, category: "metalloid", phase: "solid" },
-  { symbol: "C", name: "Carbon", atomicNumber: 6, atomicMass: 12.011, category: "nonmetal", phase: "solid" },
-  { symbol: "N", name: "Nitrogen", atomicNumber: 7, atomicMass: 14.007, category: "nonmetal", phase: "gas" },
-  { symbol: "O", name: "Oxygen", atomicNumber: 8, atomicMass: 15.999, category: "nonmetal", phase: "gas" },
-  { symbol: "F", name: "Fluorine", atomicNumber: 9, atomicMass: 18.998, category: "halogen", phase: "gas" },
-  { symbol: "Ne", name: "Neon", atomicNumber: 10, atomicMass: 20.180, category: "noble-gas", phase: "gas" },
-  { symbol: "Na", name: "Sodium", atomicNumber: 11, atomicMass: 22.990, category: "alkali-metal", phase: "solid" },
-  { symbol: "Mg", name: "Magnesium", atomicNumber: 12, atomicMass: 24.305, category: "alkaline-earth-metal", phase: "solid" },
-  { symbol: "Al", name: "Aluminum", atomicNumber: 13, atomicMass: 26.982, category: "post-transition-metal", phase: "solid" },
-  { symbol: "Si", name: "Silicon", atomicNumber: 14, atomicMass: 28.085, category: "metalloid", phase: "solid" },
-  { symbol: "P", name: "Phosphorus", atomicNumber: 15, atomicMass: 30.974, category: "nonmetal", phase: "solid" },
-  { symbol: "S", name: "Sulfur", atomicNumber: 16, atomicMass: 32.06, category: "nonmetal", phase: "solid" },
-  { symbol: "Cl", name: "Chlorine", atomicNumber: 17, atomicMass: 35.45, category: "halogen", phase: "gas" },
-  { symbol: "Ar", name: "Argon", atomicNumber: 18, atomicMass: 39.948, category: "noble-gas", phase: "gas" },
-  { symbol: "K", name: "Potassium", atomicNumber: 19, atomicMass: 39.098, category: "alkali-metal", phase: "solid" },
-  { symbol: "Ca", name: "Calcium", atomicNumber: 20, atomicMass: 40.078, category: "alkaline-earth-metal", phase: "solid" },
-  { symbol: "Sc", name: "Scandium", atomicNumber: 21, atomicMass: 44.956, category: "transition-metal", phase: "solid" },
-  { symbol: "Ti", name: "Titanium", atomicNumber: 22, atomicMass: 47.867, category: "transition-metal", phase: "solid" },
-  { symbol: "V", name: "Vanadium", atomicNumber: 23, atomicMass: 50.942, category: "transition-metal", phase: "solid" },
-  { symbol: "Cr", name: "Chromium", atomicNumber: 24, atomicMass: 51.996, category: "transition-metal", phase: "solid" },
-  { symbol: "Mn", name: "Manganese", atomicNumber: 25, atomicMass: 54.938, category: "transition-metal", phase: "solid" },
-  { symbol: "Fe", name: "Iron", atomicNumber: 26, atomicMass: 55.845, category: "transition-metal", phase: "solid" },
-  { symbol: "Co", name: "Cobalt", atomicNumber: 27, atomicMass: 58.933, category: "transition-metal", phase: "solid" },
-  { symbol: "Ni", name: "Nickel", atomicNumber: 28, atomicMass: 58.693, category: "transition-metal", phase: "solid" },
-  { symbol: "Cu", name: "Copper", atomicNumber: 29, atomicMass: 63.546, category: "transition-metal", phase: "solid" },
-  { symbol: "Zn", name: "Zinc", atomicNumber: 30, atomicMass: 65.38, category: "transition-metal", phase: "solid" },
-  { symbol: "Ga", name: "Gallium", atomicNumber: 31, atomicMass: 69.723, category: "post-transition-metal", phase: "solid" },
-  { symbol: "Ge", name: "Germanium", atomicNumber: 32, atomicMass: 72.630, category: "metalloid", phase: "solid" },
-  { symbol: "As", name: "Arsenic", atomicNumber: 33, atomicMass: 74.922, category: "metalloid", phase: "solid" },
-  { symbol: "Se", name: "Selenium", atomicNumber: 34, atomicMass: 78.971, category: "nonmetal", phase: "solid" },
-  { symbol: "Br", name: "Bromine", atomicNumber: 35, atomicMass: 79.904, category: "halogen", phase: "liquid" },
-  { symbol: "Kr", name: "Krypton", atomicNumber: 36, atomicMass: 83.798, category: "noble-gas", phase: "gas" },
-  { symbol: "Rb", name: "Rubidium", atomicNumber: 37, atomicMass: 85.468, category: "alkali-metal", phase: "solid" },
-  { symbol: "Sr", name: "Strontium", atomicNumber: 38, atomicMass: 87.62, category: "alkaline-earth-metal", phase: "solid" },
-  { symbol: "Y", name: "Yttrium", atomicNumber: 39, atomicMass: 88.906, category: "transition-metal", phase: "solid" },
-  { symbol: "Zr", name: "Zirconium", atomicNumber: 40, atomicMass: 91.224, category: "transition-metal", phase: "solid" },
-  { symbol: "Nb", name: "Niobium", atomicNumber: 41, atomicMass: 92.906, category: "transition-metal", phase: "solid" },
-  { symbol: "Mo", name: "Molybdenum", atomicNumber: 42, atomicMass: 95.95, category: "transition-metal", phase: "solid" },
-  { symbol: "Tc", name: "Technetium", atomicNumber: 43, atomicMass: 98, category: "transition-metal", phase: "artificial" },
-  { symbol: "Ru", name: "Ruthenium", atomicNumber: 44, atomicMass: 101.07, category: "transition-metal", phase: "solid" },
-  { symbol: "Rh", name: "Rhodium", atomicNumber: 45, atomicMass: 102.91, category: "transition-metal", phase: "solid" },
-  { symbol: "Pd", name: "Palladium", atomicNumber: 46, atomicMass: 106.42, category: "transition-metal", phase: "solid" },
-  { symbol: "Ag", name: "Silver", atomicNumber: 47, atomicMass: 107.87, category: "transition-metal", phase: "solid" },
-  { symbol: "Cd", name: "Cadmium", atomicNumber: 48, atomicMass: 112.41, category: "transition-metal", phase: "solid" },
-  { symbol: "In", name: "Indium", atomicNumber: 49, atomicMass: 114.82, category: "post-transition-metal", phase: "solid" },
-  { symbol: "Sn", name: "Tin", atomicNumber: 50, atomicMass: 118.71, category: "post-transition-metal", phase: "solid" },
-  { symbol: "Sb", name: "Antimony", atomicNumber: 51, atomicMass: 121.76, category: "metalloid", phase: "solid" },
-  { symbol: "Te", name: "Tellurium", atomicNumber: 52, atomicMass: 127.60, category: "metalloid", phase: "solid" },
-  { symbol: "I", name: "Iodine", atomicNumber: 53, atomicMass: 126.90, category: "halogen", phase: "solid" },
-  { symbol: "Xe", name: "Xenon", atomicNumber: 54, atomicMass: 131.29, category: "noble-gas", phase: "gas" },
-  { symbol: "Cs", name: "Cesium", atomicNumber: 55, atomicMass: 132.91, category: "alkali-metal", phase: "solid" },
-  { symbol: "Ba", name: "Barium", atomicNumber: 56, atomicMass: 137.33, category: "alkaline-earth-metal", phase: "solid" },
-  { symbol: "La", name: "Lanthanum", atomicNumber: 57, atomicMass: 138.91, category: "lanthanide", phase: "solid" },
-  { symbol: "Ce", name: "Cerium", atomicNumber: 58, atomicMass: 140.12, category: "lanthanide", phase: "solid" },
-  { symbol: "Pr", name: "Praseodymium", atomicNumber: 59, atomicMass: 140.91, category: "lanthanide", phase: "solid" },
-  { symbol: "Nd", name: "Neodymium", atomicNumber: 60, atomicMass: 144.24, category: "lanthanide", phase: "solid" },
-  { symbol: "Pm", name: "Promethium", atomicNumber: 61, atomicMass: 145, category: "lanthanide", phase: "artificial" },
-  { symbol: "Sm", name: "Samarium", atomicNumber: 62, atomicMass: 150.36, category: "lanthanide", phase: "solid" },
-  { symbol: "Eu", name: "Europium", atomicNumber: 63, atomicMass: 151.96, category: "lanthanide", phase: "solid" },
-  { symbol: "Gd", name: "Gadolinium", atomicNumber: 64, atomicMass: 157.25, category: "lanthanide", phase: "solid" },
-  { symbol: "Tb", name: "Terbium", atomicNumber: 65, atomicMass: 158.93, category: "lanthanide", phase: "solid" },
-  { symbol: "Dy", name: "Dysprosium", atomicNumber: 66, atomicMass: 162.50, category: "lanthanide", phase: "solid" },
-  { symbol: "Ho", name: "Holmium", atomicNumber: 67, atomicMass: 164.93, category: "lanthanide", phase: "solid" },
-  { symbol: "Er", name: "Erbium", atomicNumber: 68, atomicMass: 167.26, category: "lanthanide", phase: "solid" },
-  { symbol: "Tm", name: "Thulium", atomicNumber: 69, atomicMass: 168.93, category: "lanthanide", phase: "solid" },
-  { symbol: "Yb", name: "Ytterbium", atomicNumber: 70, atomicMass: 173.05, category: "lanthanide", phase: "solid" },
-  { symbol: "Lu", name: "Lutetium", atomicNumber: 71, atomicMass: 174.97, category: "lanthanide", phase: "solid" },
-  { symbol: "Hf", name: "Hafnium", atomicNumber: 72, atomicMass: 178.49, category: "transition-metal", phase: "solid" },
-  { symbol: "Ta", name: "Tantalum", atomicNumber: 73, atomicMass: 180.95, category: "transition-metal", phase: "solid" },
-  { symbol: "W", name: "Tungsten", atomicNumber: 74, atomicMass: 183.84, category: "transition-metal", phase: "solid" },
-  { symbol: "Re", name: "Rhenium", atomicNumber: 75, atomicMass: 186.21, category: "transition-metal", phase: "solid" },
-  { symbol: "Os", name: "Osmium", atomicNumber: 76, atomicMass: 190.23, category: "transition-metal", phase: "solid" },
-  { symbol: "Ir", name: "Iridium", atomicNumber: 77, atomicMass: 192.22, category: "transition-metal", phase: "solid" },
-  { symbol: "Pt", name: "Platinum", atomicNumber: 78, atomicMass: 195.08, category: "transition-metal", phase: "solid" },
-  { symbol: "Au", name: "Gold", atomicNumber: 79, atomicMass: 196.97, category: "transition-metal", phase: "solid" },
-  { symbol: "Hg", name: "Mercury", atomicNumber: 80, atomicMass: 200.59, category: "transition-metal", phase: "liquid" },
-  { symbol: "Tl", name: "Thallium", atomicNumber: 81, atomicMass: 204.38, category: "post-transition-metal", phase: "solid" },
-  { symbol: "Pb", name: "Lead", atomicNumber: 82, atomicMass: 207.2, category: "post-transition-metal", phase: "solid" },
-  { symbol: "Bi", name: "Bismuth", atomicNumber: 83, atomicMass: 208.98, category: "post-transition-metal", phase: "solid" },
-  { symbol: "Po", name: "Polonium", atomicNumber: 84, atomicMass: 209, category: "metalloid", phase: "solid" },
-  { symbol: "At", name: "Astatine", atomicNumber: 85, atomicMass: 210, category: "halogen", phase: "solid" },
-  { symbol: "Rn", name: "Radon", atomicNumber: 86, atomicMass: 222, category: "noble-gas", phase: "gas" },
-  { symbol: "Fr", name: "Francium", atomicNumber: 87, atomicMass: 223, category: "alkali-metal", phase: "solid" },
-  { symbol: "Ra", name: "Radium", atomicNumber: 88, atomicMass: 226, category: "alkaline-earth-metal", phase: "solid" },
-  { symbol: "Ac", name: "Actinium", atomicNumber: 89, atomicMass: 227, category: "actinide", phase: "solid" },
-  { symbol: "Th", name: "Thorium", atomicNumber: 90, atomicMass: 232.04, category: "actinide", phase: "solid" },
-  { symbol: "Pa", name: "Protactinium", atomicNumber: 91, atomicMass: 231.04, category: "actinide", phase: "solid" },
-  { symbol: "U", name: "Uranium", atomicNumber: 92, atomicMass: 238.03, category: "actinide", phase: "solid" },
-  { symbol: "Np", name: "Neptunium", atomicNumber: 93, atomicMass: 237, category: "actinide", phase: "artificial" },
-  { symbol: "Pu", name: "Plutonium", atomicNumber: 94, atomicMass: 244, category: "actinide", phase: "artificial" },
-  { symbol: "Am", name: "Americium", atomicNumber: 95, atomicMass: 243, category: "actinide", phase: "artificial" },
-  { symbol: "Cm", name: "Curium", atomicNumber: 96, atomicMass: 247, category: "actinide", phase: "artificial" },
-  { symbol: "Bk", name: "Berkelium", atomicNumber: 97, atomicMass: 247, category: "actinide", phase: "artificial" },
-  { symbol: "Cf", name: "Californium", atomicNumber: 98, atomicMass: 251, category: "actinide", phase: "artificial" },
-  { symbol: "Es", name: "Einsteinium", atomicNumber: 99, atomicMass: 252, category: "actinide", phase: "artificial" },
-  { symbol: "Fm", name: "Fermium", atomicNumber: 100, atomicMass: 257, category: "actinide", phase: "artificial" },
-  { symbol: "Md", name: "Mendelevium", atomicNumber: 101, atomicMass: 258, category: "actinide", phase: "artificial" },
-  { symbol: "No", name: "Nobelium", atomicNumber: 102, atomicMass: 259, category: "actinide", phase: "artificial" },
-  { symbol: "Lr", name: "Lawrencium", atomicNumber: 103, atomicMass: 262, category: "actinide", phase: "artificial" },
-  { symbol: "Rf", name: "Rutherfordium", atomicNumber: 104, atomicMass: 267, category: "transition-metal", phase: "artificial" },
-  { symbol: "Db", name: "Dubnium", atomicNumber: 105, atomicMass: 270, category: "transition-metal", phase: "artificial" },
-  { symbol: "Sg", name: "Seaborgium", atomicNumber: 106, atomicMass: 271, category: "transition-metal", phase: "artificial" },
-  { symbol: "Bh", name: "Bohrium", atomicNumber: 107, atomicMass: 270, category: "transition-metal", phase: "artificial" },
-  { symbol: "Hs", name: "Hassium", atomicNumber: 108, atomicMass: 277, category: "transition-metal", phase: "artificial" },
-  { symbol: "Mt", name: "Meitnerium", atomicNumber: 109, atomicMass: 278, category: "unknown", phase: "artificial" },
-  { symbol: "Ds", name: "Darmstadtium", atomicNumber: 110, atomicMass: 281, category: "unknown", phase: "artificial" },
-  { symbol: "Rg", name: "Roentgenium", atomicNumber: 111, atomicMass: 282, category: "unknown", phase: "artificial" },
-  { symbol: "Cn", name: "Copernicium", atomicNumber: 112, atomicMass: 285, category: "transition-metal", phase: "artificial" },
-  { symbol: "Nh", name: "Nihonium", atomicNumber: 113, atomicMass: 286, category: "unknown", phase: "artificial" },
-  { symbol: "Fl", name: "Flerovium", atomicNumber: 114, atomicMass: 289, category: "post-transition-metal", phase: "artificial" },
-  { symbol: "Mc", name: "Moscovium", atomicNumber: 115, atomicMass: 290, category: "unknown", phase: "artificial" },
-  { symbol: "Lv", name: "Livermorium", atomicNumber: 116, atomicMass: 293, category: "post-transition-metal", phase: "artificial" },
-  { symbol: "Ts", name: "Tennessine", atomicNumber: 117, atomicMass: 294, category: "halogen", phase: "artificial" },
-  { symbol: "Og", name: "Oganesson", atomicNumber: 118, atomicMass: 294, category: "noble-gas", phase: "artificial" },
+  {
+    symbol: "H",
+    name: "Hydrogen",
+    atomicNumber: 1,
+    atomicMass: 1.008,
+    category: "nonmetal",
+    phase: "gas",
+  },
+  {
+    symbol: "He",
+    name: "Helium",
+    atomicNumber: 2,
+    atomicMass: 4.0026,
+    category: "noble-gas",
+    phase: "gas",
+  },
+  {
+    symbol: "Li",
+    name: "Lithium",
+    atomicNumber: 3,
+    atomicMass: 6.94,
+    category: "alkali-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Be",
+    name: "Beryllium",
+    atomicNumber: 4,
+    atomicMass: 9.0122,
+    category: "alkaline-earth-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "B",
+    name: "Boron",
+    atomicNumber: 5,
+    atomicMass: 10.81,
+    category: "metalloid",
+    phase: "solid",
+  },
+  {
+    symbol: "C",
+    name: "Carbon",
+    atomicNumber: 6,
+    atomicMass: 12.011,
+    category: "nonmetal",
+    phase: "solid",
+  },
+  {
+    symbol: "N",
+    name: "Nitrogen",
+    atomicNumber: 7,
+    atomicMass: 14.007,
+    category: "nonmetal",
+    phase: "gas",
+  },
+  {
+    symbol: "O",
+    name: "Oxygen",
+    atomicNumber: 8,
+    atomicMass: 15.999,
+    category: "nonmetal",
+    phase: "gas",
+  },
+  {
+    symbol: "F",
+    name: "Fluorine",
+    atomicNumber: 9,
+    atomicMass: 18.998,
+    category: "halogen",
+    phase: "gas",
+  },
+  {
+    symbol: "Ne",
+    name: "Neon",
+    atomicNumber: 10,
+    atomicMass: 20.18,
+    category: "noble-gas",
+    phase: "gas",
+  },
+  {
+    symbol: "Na",
+    name: "Sodium",
+    atomicNumber: 11,
+    atomicMass: 22.99,
+    category: "alkali-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Mg",
+    name: "Magnesium",
+    atomicNumber: 12,
+    atomicMass: 24.305,
+    category: "alkaline-earth-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Al",
+    name: "Aluminum",
+    atomicNumber: 13,
+    atomicMass: 26.982,
+    category: "post-transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Si",
+    name: "Silicon",
+    atomicNumber: 14,
+    atomicMass: 28.085,
+    category: "metalloid",
+    phase: "solid",
+  },
+  {
+    symbol: "P",
+    name: "Phosphorus",
+    atomicNumber: 15,
+    atomicMass: 30.974,
+    category: "nonmetal",
+    phase: "solid",
+  },
+  {
+    symbol: "S",
+    name: "Sulfur",
+    atomicNumber: 16,
+    atomicMass: 32.06,
+    category: "nonmetal",
+    phase: "solid",
+  },
+  {
+    symbol: "Cl",
+    name: "Chlorine",
+    atomicNumber: 17,
+    atomicMass: 35.45,
+    category: "halogen",
+    phase: "gas",
+  },
+  {
+    symbol: "Ar",
+    name: "Argon",
+    atomicNumber: 18,
+    atomicMass: 39.948,
+    category: "noble-gas",
+    phase: "gas",
+  },
+  {
+    symbol: "K",
+    name: "Potassium",
+    atomicNumber: 19,
+    atomicMass: 39.098,
+    category: "alkali-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ca",
+    name: "Calcium",
+    atomicNumber: 20,
+    atomicMass: 40.078,
+    category: "alkaline-earth-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Sc",
+    name: "Scandium",
+    atomicNumber: 21,
+    atomicMass: 44.956,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ti",
+    name: "Titanium",
+    atomicNumber: 22,
+    atomicMass: 47.867,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "V",
+    name: "Vanadium",
+    atomicNumber: 23,
+    atomicMass: 50.942,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Cr",
+    name: "Chromium",
+    atomicNumber: 24,
+    atomicMass: 51.996,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Mn",
+    name: "Manganese",
+    atomicNumber: 25,
+    atomicMass: 54.938,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Fe",
+    name: "Iron",
+    atomicNumber: 26,
+    atomicMass: 55.845,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Co",
+    name: "Cobalt",
+    atomicNumber: 27,
+    atomicMass: 58.933,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ni",
+    name: "Nickel",
+    atomicNumber: 28,
+    atomicMass: 58.693,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Cu",
+    name: "Copper",
+    atomicNumber: 29,
+    atomicMass: 63.546,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Zn",
+    name: "Zinc",
+    atomicNumber: 30,
+    atomicMass: 65.38,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ga",
+    name: "Gallium",
+    atomicNumber: 31,
+    atomicMass: 69.723,
+    category: "post-transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ge",
+    name: "Germanium",
+    atomicNumber: 32,
+    atomicMass: 72.63,
+    category: "metalloid",
+    phase: "solid",
+  },
+  {
+    symbol: "As",
+    name: "Arsenic",
+    atomicNumber: 33,
+    atomicMass: 74.922,
+    category: "metalloid",
+    phase: "solid",
+  },
+  {
+    symbol: "Se",
+    name: "Selenium",
+    atomicNumber: 34,
+    atomicMass: 78.971,
+    category: "nonmetal",
+    phase: "solid",
+  },
+  {
+    symbol: "Br",
+    name: "Bromine",
+    atomicNumber: 35,
+    atomicMass: 79.904,
+    category: "halogen",
+    phase: "liquid",
+  },
+  {
+    symbol: "Kr",
+    name: "Krypton",
+    atomicNumber: 36,
+    atomicMass: 83.798,
+    category: "noble-gas",
+    phase: "gas",
+  },
+  {
+    symbol: "Rb",
+    name: "Rubidium",
+    atomicNumber: 37,
+    atomicMass: 85.468,
+    category: "alkali-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Sr",
+    name: "Strontium",
+    atomicNumber: 38,
+    atomicMass: 87.62,
+    category: "alkaline-earth-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Y",
+    name: "Yttrium",
+    atomicNumber: 39,
+    atomicMass: 88.906,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Zr",
+    name: "Zirconium",
+    atomicNumber: 40,
+    atomicMass: 91.224,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Nb",
+    name: "Niobium",
+    atomicNumber: 41,
+    atomicMass: 92.906,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Mo",
+    name: "Molybdenum",
+    atomicNumber: 42,
+    atomicMass: 95.95,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Tc",
+    name: "Technetium",
+    atomicNumber: 43,
+    atomicMass: 98,
+    category: "transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Ru",
+    name: "Ruthenium",
+    atomicNumber: 44,
+    atomicMass: 101.07,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Rh",
+    name: "Rhodium",
+    atomicNumber: 45,
+    atomicMass: 102.91,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Pd",
+    name: "Palladium",
+    atomicNumber: 46,
+    atomicMass: 106.42,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ag",
+    name: "Silver",
+    atomicNumber: 47,
+    atomicMass: 107.87,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Cd",
+    name: "Cadmium",
+    atomicNumber: 48,
+    atomicMass: 112.41,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "In",
+    name: "Indium",
+    atomicNumber: 49,
+    atomicMass: 114.82,
+    category: "post-transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Sn",
+    name: "Tin",
+    atomicNumber: 50,
+    atomicMass: 118.71,
+    category: "post-transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Sb",
+    name: "Antimony",
+    atomicNumber: 51,
+    atomicMass: 121.76,
+    category: "metalloid",
+    phase: "solid",
+  },
+  {
+    symbol: "Te",
+    name: "Tellurium",
+    atomicNumber: 52,
+    atomicMass: 127.6,
+    category: "metalloid",
+    phase: "solid",
+  },
+  {
+    symbol: "I",
+    name: "Iodine",
+    atomicNumber: 53,
+    atomicMass: 126.9,
+    category: "halogen",
+    phase: "solid",
+  },
+  {
+    symbol: "Xe",
+    name: "Xenon",
+    atomicNumber: 54,
+    atomicMass: 131.29,
+    category: "noble-gas",
+    phase: "gas",
+  },
+  {
+    symbol: "Cs",
+    name: "Cesium",
+    atomicNumber: 55,
+    atomicMass: 132.91,
+    category: "alkali-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ba",
+    name: "Barium",
+    atomicNumber: 56,
+    atomicMass: 137.33,
+    category: "alkaline-earth-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "La",
+    name: "Lanthanum",
+    atomicNumber: 57,
+    atomicMass: 138.91,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Ce",
+    name: "Cerium",
+    atomicNumber: 58,
+    atomicMass: 140.12,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Pr",
+    name: "Praseodymium",
+    atomicNumber: 59,
+    atomicMass: 140.91,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Nd",
+    name: "Neodymium",
+    atomicNumber: 60,
+    atomicMass: 144.24,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Pm",
+    name: "Promethium",
+    atomicNumber: 61,
+    atomicMass: 145,
+    category: "lanthanide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Sm",
+    name: "Samarium",
+    atomicNumber: 62,
+    atomicMass: 150.36,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Eu",
+    name: "Europium",
+    atomicNumber: 63,
+    atomicMass: 151.96,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Gd",
+    name: "Gadolinium",
+    atomicNumber: 64,
+    atomicMass: 157.25,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Tb",
+    name: "Terbium",
+    atomicNumber: 65,
+    atomicMass: 158.93,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Dy",
+    name: "Dysprosium",
+    atomicNumber: 66,
+    atomicMass: 162.5,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Ho",
+    name: "Holmium",
+    atomicNumber: 67,
+    atomicMass: 164.93,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Er",
+    name: "Erbium",
+    atomicNumber: 68,
+    atomicMass: 167.26,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Tm",
+    name: "Thulium",
+    atomicNumber: 69,
+    atomicMass: 168.93,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Yb",
+    name: "Ytterbium",
+    atomicNumber: 70,
+    atomicMass: 173.05,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Lu",
+    name: "Lutetium",
+    atomicNumber: 71,
+    atomicMass: 174.97,
+    category: "lanthanide",
+    phase: "solid",
+  },
+  {
+    symbol: "Hf",
+    name: "Hafnium",
+    atomicNumber: 72,
+    atomicMass: 178.49,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ta",
+    name: "Tantalum",
+    atomicNumber: 73,
+    atomicMass: 180.95,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "W",
+    name: "Tungsten",
+    atomicNumber: 74,
+    atomicMass: 183.84,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Re",
+    name: "Rhenium",
+    atomicNumber: 75,
+    atomicMass: 186.21,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Os",
+    name: "Osmium",
+    atomicNumber: 76,
+    atomicMass: 190.23,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ir",
+    name: "Iridium",
+    atomicNumber: 77,
+    atomicMass: 192.22,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Pt",
+    name: "Platinum",
+    atomicNumber: 78,
+    atomicMass: 195.08,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Au",
+    name: "Gold",
+    atomicNumber: 79,
+    atomicMass: 196.97,
+    category: "transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Hg",
+    name: "Mercury",
+    atomicNumber: 80,
+    atomicMass: 200.59,
+    category: "transition-metal",
+    phase: "liquid",
+  },
+  {
+    symbol: "Tl",
+    name: "Thallium",
+    atomicNumber: 81,
+    atomicMass: 204.38,
+    category: "post-transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Pb",
+    name: "Lead",
+    atomicNumber: 82,
+    atomicMass: 207.2,
+    category: "post-transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Bi",
+    name: "Bismuth",
+    atomicNumber: 83,
+    atomicMass: 208.98,
+    category: "post-transition-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Po",
+    name: "Polonium",
+    atomicNumber: 84,
+    atomicMass: 209,
+    category: "metalloid",
+    phase: "solid",
+  },
+  {
+    symbol: "At",
+    name: "Astatine",
+    atomicNumber: 85,
+    atomicMass: 210,
+    category: "halogen",
+    phase: "solid",
+  },
+  {
+    symbol: "Rn",
+    name: "Radon",
+    atomicNumber: 86,
+    atomicMass: 222,
+    category: "noble-gas",
+    phase: "gas",
+  },
+  {
+    symbol: "Fr",
+    name: "Francium",
+    atomicNumber: 87,
+    atomicMass: 223,
+    category: "alkali-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ra",
+    name: "Radium",
+    atomicNumber: 88,
+    atomicMass: 226,
+    category: "alkaline-earth-metal",
+    phase: "solid",
+  },
+  {
+    symbol: "Ac",
+    name: "Actinium",
+    atomicNumber: 89,
+    atomicMass: 227,
+    category: "actinide",
+    phase: "solid",
+  },
+  {
+    symbol: "Th",
+    name: "Thorium",
+    atomicNumber: 90,
+    atomicMass: 232.04,
+    category: "actinide",
+    phase: "solid",
+  },
+  {
+    symbol: "Pa",
+    name: "Protactinium",
+    atomicNumber: 91,
+    atomicMass: 231.04,
+    category: "actinide",
+    phase: "solid",
+  },
+  {
+    symbol: "U",
+    name: "Uranium",
+    atomicNumber: 92,
+    atomicMass: 238.03,
+    category: "actinide",
+    phase: "solid",
+  },
+  {
+    symbol: "Np",
+    name: "Neptunium",
+    atomicNumber: 93,
+    atomicMass: 237,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Pu",
+    name: "Plutonium",
+    atomicNumber: 94,
+    atomicMass: 244,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Am",
+    name: "Americium",
+    atomicNumber: 95,
+    atomicMass: 243,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Cm",
+    name: "Curium",
+    atomicNumber: 96,
+    atomicMass: 247,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Bk",
+    name: "Berkelium",
+    atomicNumber: 97,
+    atomicMass: 247,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Cf",
+    name: "Californium",
+    atomicNumber: 98,
+    atomicMass: 251,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Es",
+    name: "Einsteinium",
+    atomicNumber: 99,
+    atomicMass: 252,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Fm",
+    name: "Fermium",
+    atomicNumber: 100,
+    atomicMass: 257,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Md",
+    name: "Mendelevium",
+    atomicNumber: 101,
+    atomicMass: 258,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "No",
+    name: "Nobelium",
+    atomicNumber: 102,
+    atomicMass: 259,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Lr",
+    name: "Lawrencium",
+    atomicNumber: 103,
+    atomicMass: 262,
+    category: "actinide",
+    phase: "artificial",
+  },
+  {
+    symbol: "Rf",
+    name: "Rutherfordium",
+    atomicNumber: 104,
+    atomicMass: 267,
+    category: "transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Db",
+    name: "Dubnium",
+    atomicNumber: 105,
+    atomicMass: 270,
+    category: "transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Sg",
+    name: "Seaborgium",
+    atomicNumber: 106,
+    atomicMass: 271,
+    category: "transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Bh",
+    name: "Bohrium",
+    atomicNumber: 107,
+    atomicMass: 270,
+    category: "transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Hs",
+    name: "Hassium",
+    atomicNumber: 108,
+    atomicMass: 277,
+    category: "transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Mt",
+    name: "Meitnerium",
+    atomicNumber: 109,
+    atomicMass: 278,
+    category: "unknown",
+    phase: "artificial",
+  },
+  {
+    symbol: "Ds",
+    name: "Darmstadtium",
+    atomicNumber: 110,
+    atomicMass: 281,
+    category: "unknown",
+    phase: "artificial",
+  },
+  {
+    symbol: "Rg",
+    name: "Roentgenium",
+    atomicNumber: 111,
+    atomicMass: 282,
+    category: "unknown",
+    phase: "artificial",
+  },
+  {
+    symbol: "Cn",
+    name: "Copernicium",
+    atomicNumber: 112,
+    atomicMass: 285,
+    category: "transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Nh",
+    name: "Nihonium",
+    atomicNumber: 113,
+    atomicMass: 286,
+    category: "unknown",
+    phase: "artificial",
+  },
+  {
+    symbol: "Fl",
+    name: "Flerovium",
+    atomicNumber: 114,
+    atomicMass: 289,
+    category: "post-transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Mc",
+    name: "Moscovium",
+    atomicNumber: 115,
+    atomicMass: 290,
+    category: "unknown",
+    phase: "artificial",
+  },
+  {
+    symbol: "Lv",
+    name: "Livermorium",
+    atomicNumber: 116,
+    atomicMass: 293,
+    category: "post-transition-metal",
+    phase: "artificial",
+  },
+  {
+    symbol: "Ts",
+    name: "Tennessine",
+    atomicNumber: 117,
+    atomicMass: 294,
+    category: "halogen",
+    phase: "artificial",
+  },
+  {
+    symbol: "Og",
+    name: "Oganesson",
+    atomicNumber: 118,
+    atomicMass: 294,
+    category: "noble-gas",
+    phase: "artificial",
+  },
 ];
 
 const defaultDiscovered = [""];
 let unlockQueue = [
-  "He", "Li", "Be",
-  "B", "C", "N", "O", "F",
-  "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
-  "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni",
-  "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
-  "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd",
-  "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe",
-  "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd",
-  "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",
-  "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl",
-  "Pb", "Bi", "Po", "At", "Rn",
-  "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm",
-  "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
-  "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh",
-  "Fl", "Mc", "Lv", "Ts", "Og"
+  "He",
+  "Li",
+  "Be",
+  "B",
+  "C",
+  "N",
+  "O",
+  "F",
+  "Ne",
+  "Na",
+  "Mg",
+  "Al",
+  "Si",
+  "P",
+  "S",
+  "Cl",
+  "Ar",
+  "K",
+  "Ca",
+  "Sc",
+  "Ti",
+  "V",
+  "Cr",
+  "Mn",
+  "Fe",
+  "Co",
+  "Ni",
+  "Cu",
+  "Zn",
+  "Ga",
+  "Ge",
+  "As",
+  "Se",
+  "Br",
+  "Kr",
+  "Rb",
+  "Sr",
+  "Y",
+  "Zr",
+  "Nb",
+  "Mo",
+  "Tc",
+  "Ru",
+  "Rh",
+  "Pd",
+  "Ag",
+  "Cd",
+  "In",
+  "Sn",
+  "Sb",
+  "Te",
+  "I",
+  "Xe",
+  "Cs",
+  "Ba",
+  "La",
+  "Ce",
+  "Pr",
+  "Nd",
+  "Pm",
+  "Sm",
+  "Eu",
+  "Gd",
+  "Tb",
+  "Dy",
+  "Ho",
+  "Er",
+  "Tm",
+  "Yb",
+  "Lu",
+  "Hf",
+  "Ta",
+  "W",
+  "Re",
+  "Os",
+  "Ir",
+  "Pt",
+  "Au",
+  "Hg",
+  "Tl",
+  "Pb",
+  "Bi",
+  "Po",
+  "At",
+  "Rn",
+  "Fr",
+  "Ra",
+  "Ac",
+  "Th",
+  "Pa",
+  "U",
+  "Np",
+  "Pu",
+  "Am",
+  "Cm",
+  "Bk",
+  "Cf",
+  "Es",
+  "Fm",
+  "Md",
+  "No",
+  "Lr",
+  "Rf",
+  "Db",
+  "Sg",
+  "Bh",
+  "Hs",
+  "Mt",
+  "Ds",
+  "Rg",
+  "Cn",
+  "Nh",
+  "Fl",
+  "Mc",
+  "Lv",
+  "Ts",
+  "Og",
 ];
 
 let discovered = [];
@@ -897,13 +1980,15 @@ let mixed = [];
 
 const translations = {
   en: {
-    "unknown": "Unknown Category",
+    unknown: "Unknown Category",
     flaskii_hi: "Hi! I’m Flaskii 💖",
-    dev_alert_message: "⚠️ This game is still in development. More features are coming soon.",
+    dev_alert_message:
+      "⚠️ This game is still in development. More features are coming soon.",
     intro_subtitle: "🧪 Unlock the secrets of the periodic table",
     play_button: "Play",
     welcome_title: "👋 Welcome to CHEMICRAFT!",
-    welcome_message: "You're about to unlock the world of chemistry, one element at a time!",
+    welcome_message:
+      "You're about to unlock the world of chemistry, one element at a time!",
     rule_quiz: "🧪 Answer quizzes to unlock elements",
     rule_flip: "🔓 Unlocked elements will flip into view",
     rule_drag: "🧬 Drag unlocked elements into the mixing area",
@@ -943,17 +2028,18 @@ const translations = {
     noble_gas: "Noble Gas",
     lanthanide: "Lanthanide",
     actinide: "Actinide",
-    reset_confirmation: "⚠️ This will reset your discovered elements. Are you sure?",
+    reset_confirmation:
+      "⚠️ This will reset your discovered elements. Are you sure?",
     yes_reset_button: "Yes, Reset",
     cancel_button: "Cancel",
-    "contact_us_title": "Contact Us", 
-    "contact_name_label": "Your Name:", 
-    "contact_email_label": "Your Email:", 
-    "contact_message_label": "Message:", 
-    "send_message_button": "Send Message", 
-    "contact_sending": "Sending message...", 
-    "contact_success": "Message sent successfully! Thank you.", 
-    "contact_error": "Failed to send message. Please try again later.", 
+    contact_us_title: "Contact Us",
+    contact_name_label: "Your Name:",
+    contact_email_label: "Your Email:",
+    contact_message_label: "Message:",
+    send_message_button: "Send Message",
+    contact_sending: "Sending message...",
+    contact_success: "Message sent successfully! Thank you.",
+    contact_error: "Failed to send message. Please try again later.",
     dev_unlock_button: "Unlock All (dev)",
     element_vault_title: "🔓 Your Element Vault",
     vault_search_placeholder: "Search by name or symbol...",
@@ -971,18 +2057,21 @@ const translations = {
     table_quiz_question: "Which category does this element belong to?",
     next_button: "Next",
     win_title: "🎉 You completed the Periodic Table!",
-    win_message: "118 elements discovered.<br>You’re basically a <strong>chemistry god</strong> now.",
+    win_message:
+      "118 elements discovered.<br>You’re basically a <strong>chemistry god</strong> now.",
     okay_button: "Okay 🧪",
     puzzle_blocker_title: "🚫 Hold it right there!",
     puzzle_blocker_message_1: "You haven’t unlocked all the elements yet 😤",
-    puzzle_blocker_message_2: "Nice try sneaking into the puzzle early, scientist...",
+    puzzle_blocker_message_2:
+      "Nice try sneaking into the puzzle early, scientist...",
     okay_fine_button: "Okay fine 😒",
     all_quiz_questions_title: "📘 All Quiz Questions",
     view_all_quiz_button: "📖 View All Quiz Q&A",
     quiz_correct: "✅ Correct! You unlocked ",
     quiz_try_again: "❌ Try again!",
     no_combination: "❌ No valid combination",
-    hint_elements_count: "🧪 Hint: This compound uses <strong>{count}</strong> elements.",
+    hint_elements_count:
+      "🧪 Hint: This compound uses <strong>{count}</strong> elements.",
     hint_try_combining: "Try combining: {elements}.",
     hint_all_discovered: "🥳 You've discovered everything!",
     table_quiz_discover_first: "Discover elements first!",
@@ -1015,17 +2104,29 @@ const translations = {
     reviewing_all_quiz_questions: "Reviewing all available quiz questions.",
     use_label: "Use",
     trivia_label: "Trivia",
+    reset_progress_button: "Reset All Progress",
+    reset_progress_confirmation:
+      "⚠️ This will reset all your progress including discovered elements and quizzes. Are you sure?",
+    yes_reset_progress_button: "Yes, Reset All",
+    loading_message: "Loading Chemicraft...",
   },
   id: {
+    loading_message: "Memuat Chemicraft...",
+    reset_progress_button: "Atur Ulang Semua Progres",
+    reset_progress_confirmation:
+      "⚠️ Ini akan mengatur ulang semua progresmu termasuk elemen yang ditemukan dan kuis. Kamu yakin?",
+    yes_reset_progress_button: "Ya, Atur Ulang Semua",
     use_label: "Penggunaan",
     trivia_label: "Fakta Menarik",
-    "unknown": "Tidak Diketahui",
+    unknown: "Tidak Diketahui",
     flaskii_hi: "Hai! Aku Flaskii 💖",
-    dev_alert_message: "⚠️ Game ini masih dalam pengembangan. Fitur lainnya akan segera hadir.",
+    dev_alert_message:
+      "⚠️ Game ini masih dalam pengembangan. Fitur lainnya akan segera hadir.",
     intro_subtitle: "🧪 Ungkap rahasia tabel periodik",
     play_button: "Main",
     welcome_title: "👋 Selamat datang di CHEMICRAFT!",
-    welcome_message: "Kamu akan membuka dunia kimia, satu elemen pada satu waktu!",
+    welcome_message:
+      "Kamu akan membuka dunia kimia, satu elemen pada satu waktu!",
     rule_quiz: "🧪 Jawab kuis untuk membuka elemen",
     rule_flip: "🔓 Elemen yang terbuka akan muncul",
     rule_drag: "🧬 Seret elemen yang terbuka ke area pencampuran",
@@ -1034,7 +2135,8 @@ const translations = {
     puzzle_button: "🧩 Teka-teki",
     start_quiz_button: "Mulai Kuis",
     periodic_table_quiz_button: "Kuis Tabel Periodik",
-    game_subtitle: "Seret elemen untuk menggabungkannya dan temukan senyawa baru!",
+    game_subtitle:
+      "Seret elemen untuk menggabungkannya dan temukan senyawa baru!",
     element_vault_button: "Gudang Elemen",
     resume_quiz_button: "Lanjutkan Kuis",
     atomic_number: "Nomor Atom:",
@@ -1065,17 +2167,18 @@ const translations = {
     noble_gas: "Gas Mulia",
     lanthanide: "Lantanida",
     actinide: "Aktinida",
-    reset_confirmation: "⚠️ Ini akan mengatur ulang elemen yang kamu temukan. Kamu yakin?",
+    reset_confirmation:
+      "⚠️ Ini akan mengatur ulang elemen yang kamu temukan. Kamu yakin?",
     yes_reset_button: "Ya, Atur Ulang",
     cancel_button: "Batal",
-    "contact_us_title": "Hubungi Kami", 
-    "contact_name_label": "Nama Anda:", 
-    "contact_email_label": "Email Anda:", 
-    "contact_message_label": "Pesan:", 
-    "send_message_button": "Kirim Pesan", 
-    "contact_sending": "Mengirim pesan...", 
-    "contact_success": "Pesan berhasil dikirim! Terima kasih.", 
-    "contact_error": "Gagal mengirim pesan. Silakan coba lagi nanti.",
+    contact_us_title: "Hubungi Kami",
+    contact_name_label: "Nama Anda:",
+    contact_email_label: "Email Anda:",
+    contact_message_label: "Pesan:",
+    send_message_button: "Kirim Pesan",
+    contact_sending: "Mengirim pesan...",
+    contact_success: "Pesan berhasil dikirim! Terima kasih.",
+    contact_error: "Gagal mengirim pesan. Silakan coba lagi nanti.",
     dev_unlock_button: "Buka Semua (dev)",
     element_vault_title: "🔓 Gudang Elemenmu",
     vault_search_placeholder: "Cari berdasarkan nama atau simbol...",
@@ -1093,7 +2196,8 @@ const translations = {
     table_quiz_question: "Elemen ini termasuk kategori apa?",
     next_button: "Selanjutnya",
     win_title: "🎉 Kamu menyelesaikan Tabel Periodik!",
-    win_message: "118 elemen ditemukan.<br>Kamu pada dasarnya adalah <strong>dewa kimia</strong> sekarang.",
+    win_message:
+      "118 elemen ditemukan.<br>Kamu pada dasarnya adalah <strong>dewa kimia</strong> sekarang.",
     okay_button: "Oke 🧪",
     puzzle_blocker_title: "🚫 Tunggu dulu!",
     puzzle_blocker_message_1: "Kamu belum membuka semua elemen 😤",
@@ -1104,7 +2208,8 @@ const translations = {
     quiz_correct: "✅ Benar! Kamu membuka ",
     quiz_try_again: "❌ Coba lagi!",
     no_combination: "❌ Tidak ada kombinasi yang valid",
-    hint_elements_count: "🧪 Petunjuk: Senyawa ini menggunakan <strong>{count}</strong> elemen.",
+    hint_elements_count:
+      "🧪 Petunjuk: Senyawa ini menggunakan <strong>{count}</strong> elemen.",
     hint_try_combining: "Coba gabungkan: {elements}.",
     hint_all_discovered: "🥳 Kamu sudah menemukan semuanya!",
     table_quiz_discover_first: "Temukan elemen dulu!",
@@ -1114,7 +2219,8 @@ const translations = {
     quiz_started: "Kuis Dimulai!",
     quiz_completed: "Kuis Selesai!",
     quiz_finished_message: "🎉 Kamu Menyelesaikan Kuis!",
-    no_compounds_found: "Tidak ada senyawa yang ditemukan sesuai kriteria Anda.",
+    no_compounds_found:
+      "Tidak ada senyawa yang ditemukan sesuai kriteria Anda.",
     flaskii_mix_magic: "Campurkan sesuatu yang ajaib! ✨",
     flaskii_flaskinated: "Aku ter-flaskinasi 🧪",
     flaskii_bubbly: "Aku merasa bersemangat hari ini~ 🫧",
@@ -1134,30 +2240,31 @@ const translations = {
     result_label: "Hasil",
     correct_result: "✅ Benar",
     incorrect_result: "❌ Salah",
-    reviewing_all_quiz_questions: "Meninjau semua pertanyaan kuis yang tersedia.",
-  }
+    reviewing_all_quiz_questions:
+      "Meninjau semua pertanyaan kuis yang tersedia.",
+  },
 };
 
-let currentLanguage = 'en';
+let currentLanguage = "en";
 
 function setLanguage(lang) {
   currentLanguage = lang;
-  document.querySelectorAll('[data-i18n]').forEach(element => {
-    const key = element.getAttribute('data-i18n');
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.getAttribute("data-i18n");
     if (translations[lang] && translations[lang][key]) {
       element.textContent = translations[lang][key];
     }
   });
 
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-    const key = element.getAttribute('data-i18n-placeholder');
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-placeholder");
     if (translations[lang] && translations[lang][key]) {
       element.placeholder = translations[lang][key];
     }
   });
 
-  document.querySelectorAll('[data-i18n-title]').forEach(element => {
-    const key = element.getAttribute('data-i18n-title');
+  document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-title");
     if (translations[lang] && translations[lang][key]) {
       element.title = translations[lang][key];
     }
@@ -1167,7 +2274,8 @@ function setLanguage(lang) {
 }
 
 function updateDynamicText() {
-  document.getElementById('flaskii-bubble').textContent = translations[currentLanguage].flaskii_hi;
+  document.getElementById("flaskii-bubble").textContent =
+    translations[currentLanguage].flaskii_hi;
 
   const startQuizBtn = document.getElementById("start-quiz-btn");
   if (startQuizBtn) {
@@ -1176,38 +2284,49 @@ function updateDynamicText() {
     } else if (startQuizBtn.disabled) {
       startQuizBtn.textContent = translations[currentLanguage].quiz_in_progress;
     } else {
-      startQuizBtn.textContent = translations[currentLanguage].start_quiz_button;
+      startQuizBtn.textContent =
+        translations[currentLanguage].start_quiz_button;
     }
   }
 
   const resumeQuizBtn = document.getElementById("resume-quiz-btn");
   if (resumeQuizBtn) {
     if (quizFinished) {
-      resumeQuizBtn.textContent = translations[currentLanguage].quiz_finished_message;
+      resumeQuizBtn.textContent =
+        translations[currentLanguage].quiz_finished_message;
     } else {
-      resumeQuizBtn.textContent = translations[currentLanguage].resume_quiz_button;
+      resumeQuizBtn.textContent =
+        translations[currentLanguage].resume_quiz_button;
     }
   }
 
   const popupCategoryElement = document.getElementById("popup-category");
   if (popupCategoryElement && currentQuizElement) {
-    popupCategoryElement.textContent = `${translations[currentLanguage].category} ${formatCategory(currentQuizElement.category)}`;
+    popupCategoryElement.textContent = `${
+      translations[currentLanguage].category
+    } ${formatCategory(currentQuizElement.category)}`;
   }
 
   const mixingAreaPlaceholder = document.querySelector("#mixing-area p");
   if (mixingAreaPlaceholder) {
-    mixingAreaPlaceholder.textContent = translations[currentLanguage].mixing_area_placeholder;
+    mixingAreaPlaceholder.textContent =
+      translations[currentLanguage].mixing_area_placeholder;
   }
 
   const resultAreaPlaceholder = document.querySelector("#result-area p");
   if (resultAreaPlaceholder) {
-    resultAreaPlaceholder.textContent = translations[currentLanguage].combination_results_placeholder;
+    resultAreaPlaceholder.textContent =
+      translations[currentLanguage].combination_results_placeholder;
   }
 
   updateProgressBar();
 
   const vaultList = document.getElementById("vault-list");
-  if (vaultList && discoveredVault.length === 0 && vaultList.textContent.includes("No compounds found")) {
+  if (
+    vaultList &&
+    discoveredVault.length === 0 &&
+    vaultList.textContent.includes("No compounds found")
+  ) {
     vaultList.innerHTML = `<p style='text-align: center; margin-top: 20px;'>${translations[currentLanguage].no_compounds_found}</p>`;
   }
 
@@ -1223,12 +2342,17 @@ function updateDynamicText() {
 
   const tableQuizQuestion = document.getElementById("table-quiz-question");
   if (tableQuizQuestion) {
-    tableQuizQuestion.textContent = translations[currentLanguage].table_quiz_question;
+    tableQuizQuestion.textContent =
+      translations[currentLanguage].table_quiz_question;
   }
 
   const tableQuizElementDisplay = document.getElementById("table-quiz-element");
-  if (tableQuizElementDisplay && tableQuizElementDisplay.textContent === "Discover elements first!") {
-    tableQuizElementDisplay.textContent = translations[currentLanguage].table_quiz_discover_first;
+  if (
+    tableQuizElementDisplay &&
+    tableQuizElementDisplay.textContent === "Discover elements first!"
+  ) {
+    tableQuizElementDisplay.textContent =
+      translations[currentLanguage].table_quiz_discover_first;
   }
 
   const winMessage = document.querySelector("#win-screen p");
@@ -1238,20 +2362,30 @@ function updateDynamicText() {
 
   const puzzleBlockerTitle = document.querySelector("#puzzle-blocker h2");
   if (puzzleBlockerTitle) {
-    puzzleBlockerTitle.textContent = translations[currentLanguage].puzzle_blocker_title;
+    puzzleBlockerTitle.textContent =
+      translations[currentLanguage].puzzle_blocker_title;
   }
-  const puzzleBlockerMessage1 = document.querySelector("#puzzle-blocker p:nth-of-type(1)");
+  const puzzleBlockerMessage1 = document.querySelector(
+    "#puzzle-blocker p:nth-of-type(1)"
+  );
   if (puzzleBlockerMessage1) {
-    puzzleBlockerMessage1.textContent = translations[currentLanguage].puzzle_blocker_message_1;
+    puzzleBlockerMessage1.textContent =
+      translations[currentLanguage].puzzle_blocker_message_1;
   }
-  const puzzleBlockerMessage2 = document.querySelector("#puzzle-blocker p:nth-of-type(2)");
+  const puzzleBlockerMessage2 = document.querySelector(
+    "#puzzle-blocker p:nth-of-type(2)"
+  );
   if (puzzleBlockerMessage2) {
-    puzzleBlockerMessage2.textContent = translations[currentLanguage].puzzle_blocker_message_2;
+    puzzleBlockerMessage2.textContent =
+      translations[currentLanguage].puzzle_blocker_message_2;
   }
 
-  const allQuizQuestionsTitle = document.querySelector("#question-review-modal h2");
+  const allQuizQuestionsTitle = document.querySelector(
+    "#question-review-modal h2"
+  );
   if (allQuizQuestionsTitle) {
-    allQuizQuestionsTitle.textContent = translations[currentLanguage].all_quiz_questions_title;
+    allQuizQuestionsTitle.textContent =
+      translations[currentLanguage].all_quiz_questions_title;
   }
 
   const questionInfo = document.getElementById("question-info");
@@ -1259,18 +2393,21 @@ function updateDynamicText() {
     questionInfo.innerHTML = `<p>${translations[currentLanguage].select_question_info}</p>`;
   }
 
-  const tableQuizOptionsButtons = document.querySelectorAll("#table-quiz-options button");
-  tableQuizOptionsButtons.forEach(btn => {
+  const tableQuizOptionsButtons = document.querySelectorAll(
+    "#table-quiz-options button"
+  );
+  tableQuizOptionsButtons.forEach((btn) => {
     const originalText = btn.dataset.originalText;
     if (originalText && categoryNames[originalText]) {
-      btn.textContent = translations[currentLanguage][originalText.replace(/-/g, '_')];
+      btn.textContent =
+        translations[currentLanguage][originalText.replace(/-/g, "_")];
     }
   });
 }
 
 function createElementDiv(el) {
   const div = document.createElement("div");
-  div.className = `pt-element ${el.category || ''}`;
+  div.className = `pt-element ${el.category || ""}`;
   div.setAttribute("data-phase", el.phase || "unknown");
 
   div.innerHTML = `
@@ -1305,17 +2442,20 @@ function createElementDiv(el) {
 
 const evaluationBtn = document.getElementById("evaluation-btn");
 const contactUsModal = document.getElementById("contact-us-modal");
-const closeContactUsModalBtn = document.getElementById("close-contact-us-modal");
+const closeContactUsModalBtn = document.getElementById(
+  "close-contact-us-modal"
+);
 const contactForm = document.getElementById("contact-form");
 const contactFormStatus = document.getElementById("contact-form-status");
 
 if (evaluationBtn) {
-  evaluationBtn.textContent = translations[currentLanguage].contact_us_button || "✉️ Contact Us!"; 
+  evaluationBtn.textContent =
+    translations[currentLanguage].contact_us_button || "✉️ Contact Us!";
   evaluationBtn.removeAttribute("href");
   evaluationBtn.removeAttribute("target");
   evaluationBtn.removeAttribute("title");
   evaluationBtn.setAttribute("data-i18n", "contact_us_button");
-  evaluationBtn.setAttribute("data-i18n-title", ""); 
+  evaluationBtn.setAttribute("data-i18n-title", "");
 
   evaluationBtn.addEventListener("click", () => {
     contactUsModal.classList.remove("hidden");
@@ -1329,7 +2469,7 @@ if (evaluationBtn) {
       sfx.currentTime = 0;
       sfx.play();
     }
-    contactFormStatus.classList.add("hidden"); 
+    contactFormStatus.classList.add("hidden");
     contactForm.reset();
   });
 }
@@ -1346,42 +2486,43 @@ closeContactUsModalBtn.addEventListener("click", () => {
 });
 
 contactForm.addEventListener("submit", async (e) => {
-  e.preventDefault(); 
+  e.preventDefault();
 
   const name = document.getElementById("contact-name").value;
   const email = document.getElementById("contact-email").value;
   const message = document.getElementById("contact-message").value;
 
   contactFormStatus.textContent = translations[currentLanguage].contact_sending;
-  contactFormStatus.style.color = "#facc15"; 
+  contactFormStatus.style.color = "#facc15";
   contactFormStatus.classList.remove("hidden");
   try {
-    await new Promise(resolve => setTimeout(resolve, 1500)); 
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const formspreeEndpoint = "https://formspree.io/f/xanbdkkg";
     const response = await fetch(formspreeEndpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         name: name,
         email: email,
-        message: message
-      })
+        message: message,
+      }),
     });
 
     if (response.ok) {
-      contactFormStatus.textContent = translations[currentLanguage].contact_success;
-      contactFormStatus.style.color = "#10b981"; 
+      contactFormStatus.textContent =
+        translations[currentLanguage].contact_success;
+      contactFormStatus.style.color = "#10b981";
       contactForm.reset();
     } else {
-      contactFormStatus.textContent = translations[currentLanguage].contact_error;
+      contactFormStatus.textContent =
+        translations[currentLanguage].contact_error;
       contactFormStatus.style.color = "#ef4444";
-      console.error("Formspree error:", await response.json()); 
+      console.error("Formspree error:", await response.json());
     }
-
   } catch (error) {
     console.error("Error sending message:", error);
     contactFormStatus.textContent = translations[currentLanguage].contact_error;
@@ -1393,21 +2534,23 @@ function createElementCard(symbol) {
   const div = document.createElement("div");
 
   if (symbol && symbol !== "") {
-    const el = elements.find(e => e.symbol === symbol.replace("*", ""));
+    const el = elements.find((e) => e.symbol === symbol.replace("*", ""));
     if (el) {
       const isDiscovered = discovered.includes(el.symbol);
       const fakeElementBox = createElementDiv(el);
       const elementBoxHTML = fakeElementBox.innerHTML;
 
-      div.className = `pt-element ${el.category || ''} ${isDiscovered ? 'discovered' : 'undiscovered'}`;
+      div.className = `pt-element ${el.category || ""} ${
+        isDiscovered ? "discovered" : "undiscovered"
+      }`;
       div.setAttribute("data-symbol", el.symbol);
       div.setAttribute("draggable", isDiscovered);
 
       div.innerHTML = `
         <div class="card-flip">
-          <div class="card-inner ${isDiscovered ? 'flipped' : ''}">
+          <div class="card-inner ${isDiscovered ? "flipped" : ""}">
             <div class="card-front"><div class="pt-symbol">?</div></div>
-            <div class="card-back ${el.category || ''}">${elementBoxHTML}</div>
+            <div class="card-back ${el.category || ""}">${elementBoxHTML}</div>
           </div>
         </div>
       `;
@@ -1443,10 +2586,10 @@ function addToMix(symbol) {
 }
 
 function renderDiscovered() {
-  discovered.forEach(sym => {
+  discovered.forEach((sym) => {
     if (document.querySelector(`.pt-element[data-symbol="${sym}"]`)) return;
 
-    const el = elements.find(e => e.symbol === sym);
+    const el = elements.find((e) => e.symbol === sym);
     if (el) {
       const card = createElementDiv(el);
       card.classList.add("flip");
@@ -1465,7 +2608,9 @@ function updateProgressBar() {
   const container = document.getElementById("progress-container");
 
   bar.style.width = `${percent}%`;
-  text.textContent = `${unlocked} / ${totalElements} ${translations[currentLanguage].elements_text || 'Elements'}`;
+  text.textContent = `${unlocked} / ${totalElements} ${
+    translations[currentLanguage].elements_text || "Elements"
+  }`;
 
   if (unlocked >= totalElements) {
     container.classList.add("hidden");
@@ -1500,25 +2645,29 @@ function renderPeriodicTable() {
     periodLabel.textContent = rowIndex + 1;
     grid.appendChild(periodLabel);
 
-    row.forEach(symbol => {
+    row.forEach((symbol) => {
       const div = document.createElement("div");
 
       if (symbol && symbol !== "") {
-        const el = elements.find(e => e.symbol === symbol.replace("*", ""));
+        const el = elements.find((e) => e.symbol === symbol.replace("*", ""));
         if (el) {
           const isDiscovered = discovered.includes(el.symbol);
           const fakeElementBox = createElementDiv(el);
           const elementBoxHTML = fakeElementBox.innerHTML;
 
-          div.className = `pt-element ${el.category || ''} ${isDiscovered ? 'discovered' : 'undiscovered'}`;
+          div.className = `pt-element ${el.category || ""} ${
+            isDiscovered ? "discovered" : "undiscovered"
+          }`;
           div.setAttribute("data-symbol", el.symbol);
           div.setAttribute("draggable", isDiscovered);
 
           div.innerHTML = `
             <div class="card-flip">
-              <div class="card-inner ${isDiscovered ? 'flipped' : ''}">
+              <div class="card-inner ${isDiscovered ? "flipped" : ""}">
                 <div class="card-front"><div class="pt-symbol">?</div></div>
-                <div class="card-back ${el.category || ''}">${elementBoxHTML}</div>
+                <div class="card-back ${
+                  el.category || ""
+                }">${elementBoxHTML}</div>
               </div>
             </div>
           `;
@@ -1563,7 +2712,7 @@ function renderLanthanides() {
     lanthanidesRow.appendChild(spacer);
   }
 
-  lanthanides.forEach(symbol => {
+  lanthanides.forEach((symbol) => {
     const div = createElementCard(symbol);
     lanthanidesRow.appendChild(div);
   });
@@ -1579,7 +2728,7 @@ function renderActinides() {
     actinidesRow.appendChild(spacer);
   }
 
-  actinides.forEach(symbol => {
+  actinides.forEach((symbol) => {
     const div = createElementCard(symbol);
     actinidesRow.appendChild(div);
   });
@@ -1592,25 +2741,27 @@ function addBlockRow(label, row) {
   title.style.gridColumn = "span 18";
   periodicTable.appendChild(title);
 
-  row.forEach(symbol => {
+  row.forEach((symbol) => {
     const div = document.createElement("div");
     if (symbol && symbol !== "") {
-      const el = elements.find(e => e.symbol === symbol);
+      const el = elements.find((e) => e.symbol === symbol);
       if (el) {
         const isDiscovered = discovered.includes(el.symbol);
         const fakeElementBox = createElementDiv(el);
         const elementBoxHTML = fakeElementBox.innerHTML;
 
-        div.className = `pt-element ${el.category || ''} ${isDiscovered ? 'discovered' : 'undiscovered'}`;
+        div.className = `pt-element ${el.category || ""} ${
+          isDiscovered ? "discovered" : "undiscovered"
+        }`;
         div.setAttribute("data-symbol", el.symbol);
 
         div.innerHTML = `
           <div class="card-flip">
-            <div class="card-inner ${isDiscovered ? 'flipped' : ''}">
+            <div class="card-inner ${isDiscovered ? "flipped" : ""}">
               <div class="card-front">
                 <div class="pt-symbol">?</div>
               </div>
-              <div class="card-back ${el.category || ''}">
+              <div class="card-back ${el.category || ""}">
                 ${elementBoxHTML}
               </div>
             </div>
@@ -1652,13 +2803,50 @@ function renderMixingArea() {
     return;
   }
 
-  mixed.forEach(symbol => {
-    const el = elements.find(e => e.symbol === symbol);
+  mixed.forEach((symbol, index) => {
+    const el = elements.find((e) => e.symbol === symbol);
     if (el) {
-      mixingArea.appendChild(createElementDiv(el));
+      const elementDiv = createElementDiv(el);
+
+      // Create remove button
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "remove-btn";
+      removeBtn.textContent = "×";
+      removeBtn.title = "Remove element";
+      removeBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent triggering addToMix on parent click
+        mixed.splice(index, 1);
+        renderMixingArea();
+        saveGameProgress();
+      });
+
+      elementDiv.style.position = "relative";
+      elementDiv.appendChild(removeBtn);
+
+      mixingArea.appendChild(elementDiv);
     }
   });
 }
+
+const resetProgressBtn = document.getElementById("reset-progress-btn");
+const resetProgressModal = document.getElementById("reset-progress-modal");
+const confirmResetProgressBtn = document.getElementById(
+  "confirm-reset-progress"
+);
+const cancelResetProgressBtn = document.getElementById("cancel-reset-progress");
+
+resetProgressBtn.addEventListener("click", () => {
+  resetProgressModal.classList.remove("hidden");
+});
+
+cancelResetProgressBtn.addEventListener("click", () => {
+  resetProgressModal.classList.add("hidden");
+});
+
+confirmResetProgressBtn.addEventListener("click", () => {
+  resetProgressModal.classList.add("hidden");
+  restartGame(); // This function resets all progress and UI
+});
 
 function checkCombination() {
   const sortedCombo = mixed.slice().sort().join("+");
@@ -1690,7 +2878,6 @@ function checkCombination() {
     updateVaultUI();
     playSuccessSound();
     flaskiiReact("😍", translations[currentLanguage].flaskii_happy_discovered);
-
   } else {
     resultArea.innerHTML = `<p>${translations[currentLanguage].no_combination}</p>`;
     playFailSound();
@@ -1707,22 +2894,23 @@ function animateCombination() {
   const particlesCount = 30;
 
   for (let i = 0; i < particlesCount; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle particle-' + (Math.floor(Math.random() * 3) + 1);
+    const particle = document.createElement("div");
+    particle.className =
+      "particle particle-" + (Math.floor(Math.random() * 3) + 1);
 
     particle.style.left = `${Math.random() * mixingAreaRect.width}px`;
     particle.style.top = `${Math.random() * mixingAreaRect.height}px`;
 
     mixingArea.appendChild(particle);
 
-    particle.addEventListener('animationend', () => {
+    particle.addEventListener("animationend", () => {
       particle.remove();
     });
   }
 
-  mixingArea.classList.add('combine-animation');
+  mixingArea.classList.add("combine-animation");
   setTimeout(() => {
-    mixingArea.classList.remove('combine-animation');
+    mixingArea.classList.remove("combine-animation");
   }, 1000);
 }
 
@@ -1739,9 +2927,9 @@ searchInput.addEventListener("input", () => {
   const query = searchInput.value.trim().toLowerCase();
   const allPTElements = document.querySelectorAll(".pt-element");
 
-  allPTElements.forEach(div => {
+  allPTElements.forEach((div) => {
     const symbol = div.dataset.symbol?.toLowerCase();
-    const element = elements.find(e => e.symbol.toLowerCase() === symbol);
+    const element = elements.find((e) => e.symbol.toLowerCase() === symbol);
     const name = element?.name.toLowerCase();
 
     const isDiscovered = discovered.includes(element?.symbol);
@@ -1792,9 +2980,9 @@ confirmBtn.addEventListener("click", () => {
   saveGameProgress();
 });
 
-const flaskii = document.getElementById('flaskii');
-const flaskiiFace = document.getElementById('flaskii-face');
-const flaskiiBubble = document.getElementById('flaskii-bubble');
+const flaskii = document.getElementById("flaskii");
+const flaskiiFace = document.getElementById("flaskii-face");
+const flaskiiBubble = document.getElementById("flaskii-bubble");
 
 const flaskiiLines = [
   "flaskii_mix_magic",
@@ -1802,19 +2990,19 @@ const flaskiiLines = [
   "flaskii_bubbly",
   "flaskii_try_new",
   "flaskii_carbon",
-  "flaskii_clicked"
+  "flaskii_clicked",
 ];
 
 const flaskiiHappyLines = [
   "flaskii_happy_discovered",
   "flaskii_happy_unlocked",
-  "flaskii_happy_genius"
+  "flaskii_happy_genius",
 ];
 
 const flaskiiSadLines = [
   "flaskii_sad_failed",
   "flaskii_sad_try_else",
-  "flaskii_sad_believe"
+  "flaskii_sad_believe",
 ];
 
 flaskii.addEventListener("click", () => {
@@ -1842,10 +3030,53 @@ let soundOn = true;
 function playSuccessSound() {
   if (soundOn) successSfx.play();
 }
-
 function playFailSound() {
   if (soundOn) failSfx.play();
 }
+
+// MultipleFiles/script.js
+
+// ... (existing code) ...
+
+// Add this function to show the sound prompt modal
+function showSoundPrompt() {
+  soundPromptModal.classList.remove("hidden");
+  const modalContent = soundPromptModal.querySelector(".modal-content");
+  modalContent.classList.remove("modal-arise");
+  void modalContent.offsetWidth; // Trigger reflow
+  modalContent.classList.add("modal-arise");
+}
+
+soundPromptToggleBtn.addEventListener("click", () => {
+  soundOn = true;
+  soundToggle.textContent = "🔊";
+  bgMusic.volume = 0.4;
+  bgMusic.loop = true; // Ensure bgMusic loops when turned on via prompt
+  bgMusic
+    .play()
+    .catch((e) => console.error("Error playing background music:", e));
+
+  // Also ensure intro-sound is stopped if it was playing
+  const introSound = document.getElementById("intro-sound");
+  if (introSound) {
+    introSound.pause();
+    introSound.currentTime = 0;
+  }
+
+  soundPromptModal.classList.add("hidden");
+  localStorage.setItem("chemicraft_soundPreference", "on"); // Save preference
+});
+
+soundPromptDismissBtn.addEventListener("click", () => {
+  soundOn = false;
+  soundToggle.textContent = "🔇";
+  bgMusic.volume = 0;
+  bgMusic.pause(); // Ensure it's paused if dismissed
+  soundPromptModal.classList.add("hidden");
+  localStorage.setItem("chemicraft_soundPreference", "off"); // Save preference
+});
+
+// ... (rest of your existing code) ...
 
 soundToggle.addEventListener("click", () => {
   soundOn = !soundOn;
@@ -1854,12 +3085,72 @@ soundToggle.addEventListener("click", () => {
   if (soundOn && bgMusic.paused) bgMusic.play();
 });
 
-window.addEventListener("DOMContentLoaded", () => {
-  bgMusic.volume = 0.4;
-  bgMusic.play().catch(() => {
-    console.log("Waiting for user interaction to start music...");
-  });
+// MultipleFiles/script.js
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadGameProgress();
+  setLanguage(currentLanguage);
+  renderPeriodicTable();
+  renderDiscovered();
+  renderLanthanides();
+  renderActinides();
+  updateVaultUI();
+  updateProgressBar();
+
+  if (quizFinished) {
+    const resumeBtn = document.getElementById("resume-quiz-btn");
+    resumeBtn.textContent = translations[currentLanguage].quiz_finished_message;
+    resumeBtn.classList.remove("hidden");
+    document.getElementById("start-quiz-btn").disabled = true;
+    document.getElementById("start-quiz-btn").textContent =
+      translations[currentLanguage].quiz_completed;
+  } else if (unlockQueue.length < elements.length) {
+    document.getElementById("resume-quiz-btn").classList.remove("hidden");
+    document.getElementById("start-quiz-btn").disabled = true;
+    document.getElementById("start-quiz-btn").textContent =
+      translations[currentLanguage].quiz_in_progress;
+  }
+
+  // Sound preference logic
+  const soundPreference = localStorage.getItem("chemicraft_soundPreference");
+  if (soundPreference === "on") {
+    soundOn = true;
+    soundToggle.textContent = "🔊";
+    bgMusic.volume = 0.4;
+    // Only try to play bgMusic if it's not already playing (e.g., from intro screen)
+    if (bgMusic.paused) {
+      bgMusic
+        .play()
+        .catch((e) => console.error("Error playing background music:", e));
+    }
+  } else if (soundPreference === "off") {
+    soundOn = false;
+    soundToggle.textContent = "🔇";
+    bgMusic.volume = 0;
+    bgMusic.pause();
+  } else {
+    // If no preference, show the prompt after a short delay
+    setTimeout(showSoundPrompt, 1000);
+  }
+
+  // Ensure intro-sound is managed correctly on initial load
+  const introSound = document.getElementById("intro-sound");
+  if (introSound) {
+    // If no sound preference is set, or if sound is on, play intro sound
+    if (soundPreference === null || soundPreference === "on") {
+      introSound.volume = soundOn ? 0.4 : 0; // Set volume based on soundOn
+      introSound.loop = true; // Ensure it loops
+      introSound
+        .play()
+        .catch((e) => console.error("Error playing intro music:", e));
+    } else {
+      // If sound is explicitly off, ensure intro sound is paused and muted
+      introSound.volume = 0;
+      introSound.pause();
+    }
+  }
 });
+// ... (rest of your existing code) ...
 
 function getEmojiFromResult(resultString) {
   const match = resultString.match(/^(.*?)\s/);
@@ -1876,9 +3167,15 @@ document.addEventListener("DOMContentLoaded", () => {
 function showElementPopup(el) {
   document.getElementById("popup-symbol").textContent = el.symbol;
   document.getElementById("popup-name").textContent = el.name;
-  document.getElementById("popup-atomic").textContent = `${translations[currentLanguage].atomic_number} ${el.atomicNumber}`;
-  document.getElementById("popup-mass").textContent = `${translations[currentLanguage].mass} ${el.atomicMass}`;
-  document.getElementById("popup-category").textContent = `${translations[currentLanguage].category} ${formatCategory(el.category)}`;
+  document.getElementById(
+    "popup-atomic"
+  ).textContent = `${translations[currentLanguage].atomic_number} ${el.atomicNumber}`;
+  document.getElementById(
+    "popup-mass"
+  ).textContent = `${translations[currentLanguage].mass} ${el.atomicMass}`;
+  document.getElementById("popup-category").textContent = `${
+    translations[currentLanguage].category
+  } ${formatCategory(el.category)}`;
 
   document.getElementById("element-popup").classList.remove("hidden");
 }
@@ -1889,7 +3186,10 @@ function hideElementPopup() {
 
 function formatCategory(cat) {
   const categoryKey = cat.replace(/-/g, "_");
-  return translations[currentLanguage][categoryKey] || cat.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  return (
+    translations[currentLanguage][categoryKey] ||
+    cat.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
+  );
 }
 
 const quizPopup = document.getElementById("quiz-popup");
@@ -1898,595 +3198,1539 @@ const quizOptions = document.getElementById("quiz-options");
 
 const quizData = {
   H: {
-    question: { en: "What is the most abundant element in the universe?", id: "Apa elemen paling melimpah di alam semesta?" },
-    options: [{ en: "Oxygen", id: "Oksigen" }, { en: "Hydrogen", id: "Hidrogen" }, { en: "Carbon", id: "Karbon" }, { en: "Helium", id: "Helium" }],
-    answer: { en: "Hydrogen", id: "Hidrogen" }
+    question: {
+      en: "What is the most abundant element in the universe?",
+      id: "Apa elemen paling melimpah di alam semesta?",
+    },
+    options: [
+      { en: "Oxygen", id: "Oksigen" },
+      { en: "Hydrogen", id: "Hidrogen" },
+      { en: "Carbon", id: "Karbon" },
+      { en: "Helium", id: "Helium" },
+    ],
+    answer: { en: "Hydrogen", id: "Hidrogen" },
   },
   He: {
-    question: { en: "What is the symbol for Helium?", id: "Apa simbol untuk Helium?" },
-    options: [{ en: "H", id: "H" }, { en: "He", id: "He" }, { en: "Li", id: "Li" }, { en: "Ne", id: "Ne" }],
-    answer: { en: "He", id: "He" }
+    question: {
+      en: "What is the symbol for Helium?",
+      id: "Apa simbol untuk Helium?",
+    },
+    options: [
+      { en: "H", id: "H" },
+      { en: "He", id: "He" },
+      { en: "Li", id: "Li" },
+      { en: "Ne", id: "Ne" },
+    ],
+    answer: { en: "He", id: "He" },
   },
   Li: {
-    question: { en: "Which element has 3 protons?", id: "Elemen mana yang memiliki 3 proton?" },
-    options: [{ en: "Be", id: "Be" }, { en: "He", id: "He" }, { en: "Li", id: "Li" }, { en: "B", id: "B" }],
-    answer: { en: "Li", id: "Li" }
+    question: {
+      en: "Which element has 3 protons?",
+      id: "Elemen mana yang memiliki 3 proton?",
+    },
+    options: [
+      { en: "Be", id: "Be" },
+      { en: "He", id: "He" },
+      { en: "Li", id: "Li" },
+      { en: "B", id: "B" },
+    ],
+    answer: { en: "Li", id: "Li" },
   },
   Be: {
-    question: { en: "Beryllium belongs to which group?", id: "Berilium termasuk dalam kelompok mana?" },
-    options: [{ en: "Alkali Metal", id: "Logam Alkali" }, { en: "Nonmetal", id: "Nonlogam" }, { en: "Alkaline Earth Metal", id: "Logam Alkali Tanah" }, { en: "Noble Gas", id: "Gas Mulia" }],
-    answer: { en: "Alkaline Earth Metal", id: "Logam Alkali Tanah" }
+    question: {
+      en: "Beryllium belongs to which group?",
+      id: "Berilium termasuk dalam kelompok mana?",
+    },
+    options: [
+      { en: "Alkali Metal", id: "Logam Alkali" },
+      { en: "Nonmetal", id: "Nonlogam" },
+      { en: "Alkaline Earth Metal", id: "Logam Alkali Tanah" },
+      { en: "Noble Gas", id: "Gas Mulia" },
+    ],
+    answer: { en: "Alkaline Earth Metal", id: "Logam Alkali Tanah" },
   },
   B: {
-    question: { en: "Which element is a metalloid?", id: "Elemen mana yang merupakan metaloid?" },
-    options: [{ en: "Carbon", id: "Karbon" }, { en: "Boron", id: "Boron" }, { en: "Aluminum", id: "Aluminium" }, { en: "Silicon", id: "Silikon" }],
-    answer: { en: "Boron", id: "Boron" }
+    question: {
+      en: "Which element is a metalloid?",
+      id: "Elemen mana yang merupakan metaloid?",
+    },
+    options: [
+      { en: "Carbon", id: "Karbon" },
+      { en: "Boron", id: "Boron" },
+      { en: "Aluminum", id: "Aluminium" },
+      { en: "Silicon", id: "Silikon" },
+    ],
+    answer: { en: "Boron", id: "Boron" },
   },
   C: {
-    question: { en: "Which element is the basis for organic life?", id: "Elemen mana yang menjadi dasar kehidupan organik?" },
-    options: [{ en: "Carbon", id: "Karbon" }, { en: "Hydrogen", id: "Hidrogen" }, { en: "Oxygen", id: "Oksigen" }, { en: "Nitrogen", id: "Nitrogen" }],
-    answer: { en: "Carbon", id: "Karbon" }
+    question: {
+      en: "Which element is the basis for organic life?",
+      id: "Elemen mana yang menjadi dasar kehidupan organik?",
+    },
+    options: [
+      { en: "Carbon", id: "Karbon" },
+      { en: "Hydrogen", id: "Hidrogen" },
+      { en: "Oxygen", id: "Oksigen" },
+      { en: "Nitrogen", id: "Nitrogen" },
+    ],
+    answer: { en: "Carbon", id: "Karbon" },
   },
   N: {
-    question: { en: "Which gas makes up about 78% of Earth's atmosphere?", id: "Gas mana yang membentuk sekitar 78% atmosfer Bumi?" },
-    options: [{ en: "Oxygen", id: "Oksigen" }, { en: "Carbon Dioxide", id: "Karbon Dioksida" }, { en: "Nitrogen", id: "Nitrogen" }, { en: "Hydrogen", id: "Hidrogen" }],
-    answer: { en: "Nitrogen", id: "Nitrogen" }
+    question: {
+      en: "Which gas makes up about 78% of Earth's atmosphere?",
+      id: "Gas mana yang membentuk sekitar 78% atmosfer Bumi?",
+    },
+    options: [
+      { en: "Oxygen", id: "Oksigen" },
+      { en: "Carbon Dioxide", id: "Karbon Dioksida" },
+      { en: "Nitrogen", id: "Nitrogen" },
+      { en: "Hydrogen", id: "Hidrogen" },
+    ],
+    answer: { en: "Nitrogen", id: "Nitrogen" },
   },
   O: {
-    question: { en: "Which element is essential for respiration?", id: "Elemen mana yang penting untuk pernapasan?" },
-    options: [{ en: "Oxygen", id: "Oksigen" }, { en: "Nitrogen", id: "Nitrogen" }, { en: "Hydrogen", id: "Hidrogen" }, { en: "Helium", id: "Helium" }],
-    answer: { en: "Oxygen", id: "Oksigen" }
+    question: {
+      en: "Which element is essential for respiration?",
+      id: "Elemen mana yang penting untuk pernapasan?",
+    },
+    options: [
+      { en: "Oxygen", id: "Oksigen" },
+      { en: "Nitrogen", id: "Nitrogen" },
+      { en: "Hydrogen", id: "Hidrogen" },
+      { en: "Helium", id: "Helium" },
+    ],
+    answer: { en: "Oxygen", id: "Oksigen" },
   },
   F: {
-    question: { en: "Which halogen is commonly found in toothpaste?", id: "Halogen mana yang umum ditemukan dalam pasta gigi?" },
-    options: [{ en: "Chlorine", id: "Klorin" }, { en: "Bromine", id: "Bromin" }, { en: "Iodine", id: "Iodin" }, { en: "Fluorine", id: "Fluorin" }],
-    answer: { en: "Fluorine", id: "Fluorin" }
+    question: {
+      en: "Which halogen is commonly found in toothpaste?",
+      id: "Halogen mana yang umum ditemukan dalam pasta gigi?",
+    },
+    options: [
+      { en: "Chlorine", id: "Klorin" },
+      { en: "Bromine", id: "Bromin" },
+      { en: "Iodine", id: "Iodin" },
+      { en: "Fluorine", id: "Fluorin" },
+    ],
+    answer: { en: "Fluorine", id: "Fluorin" },
   },
   Ne: {
-    question: { en: "Which noble gas glows red-orange in signs?", id: "Gas mulia mana yang bersinar merah-oranye pada tanda?" },
-    options: [{ en: "Argon", id: "Argon" }, { en: "Krypton", id: "Kripton" }, { en: "Neon", id: "Neon" }, { en: "Xenon", id: "Xenon" }],
-    answer: { en: "Neon", id: "Neon" }
+    question: {
+      en: "Which noble gas glows red-orange in signs?",
+      id: "Gas mulia mana yang bersinar merah-oranye pada tanda?",
+    },
+    options: [
+      { en: "Argon", id: "Argon" },
+      { en: "Krypton", id: "Kripton" },
+      { en: "Neon", id: "Neon" },
+      { en: "Xenon", id: "Xenon" },
+    ],
+    answer: { en: "Neon", id: "Neon" },
   },
   Na: {
-    question: { en: "Which element reacts violently with water?", id: "Elemen mana yang bereaksi keras dengan air?" },
-    options: [{ en: "Sodium", id: "Natrium" }, { en: "Calcium", id: "Kalsium" }, { en: "Iron", id: "Besi" }, { en: "Zinc", id: "Seng" }],
-    answer: { en: "Sodium", id: "Natrium" }
+    question: {
+      en: "Which element reacts violently with water?",
+      id: "Elemen mana yang bereaksi keras dengan air?",
+    },
+    options: [
+      { en: "Sodium", id: "Natrium" },
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Iron", id: "Besi" },
+      { en: "Zinc", id: "Seng" },
+    ],
+    answer: { en: "Sodium", id: "Natrium" },
   },
   Mg: {
-    question: { en: "Which element is essential in chlorophyll?", id: "Elemen mana yang penting dalam klorofil?" },
-    options: [{ en: "Magnesium", id: "Magnesium" }, { en: "Manganese", id: "Mangan" }, { en: "Calcium", id: "Kalsium" }, { en: "Iron", id: "Besi" }],
-    answer: { en: "Magnesium", id: "Magnesium" }
+    question: {
+      en: "Which element is essential in chlorophyll?",
+      id: "Elemen mana yang penting dalam klorofil?",
+    },
+    options: [
+      { en: "Magnesium", id: "Magnesium" },
+      { en: "Manganese", id: "Mangan" },
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Iron", id: "Besi" },
+    ],
+    answer: { en: "Magnesium", id: "Magnesium" },
   },
   Al: {
-    question: { en: "Which lightweight metal is used in aircraft?", id: "Logam ringan mana yang digunakan dalam pesawat terbang?" },
-    options: [{ en: "Copper", id: "Tembaga" }, { en: "Aluminum", id: "Aluminium" }, { en: "Iron", id: "Besi" }, { en: "Zinc", id: "Seng" }],
-    answer: { en: "Aluminum", id: "Aluminium" }
+    question: {
+      en: "Which lightweight metal is used in aircraft?",
+      id: "Logam ringan mana yang digunakan dalam pesawat terbang?",
+    },
+    options: [
+      { en: "Copper", id: "Tembaga" },
+      { en: "Aluminum", id: "Aluminium" },
+      { en: "Iron", id: "Besi" },
+      { en: "Zinc", id: "Seng" },
+    ],
+    answer: { en: "Aluminum", id: "Aluminium" },
   },
   Si: {
-    question: { en: "Which element is a key component of computer chips?", id: "Elemen mana yang merupakan komponen kunci chip komputer?" },
-    options: [{ en: "Silicon", id: "Silikon" }, { en: "Selenium", id: "Selenium" }, { en: "Silver", id: "Perak" }, { en: "Phosphorus", id: "Fosfor" }],
-    answer: { en: "Silicon", id: "Silikon" }
+    question: {
+      en: "Which element is a key component of computer chips?",
+      id: "Elemen mana yang merupakan komponen kunci chip komputer?",
+    },
+    options: [
+      { en: "Silicon", id: "Silikon" },
+      { en: "Selenium", id: "Selenium" },
+      { en: "Silver", id: "Perak" },
+      { en: "Phosphorus", id: "Fosfor" },
+    ],
+    answer: { en: "Silicon", id: "Silikon" },
   },
   P: {
-    question: { en: "Which element is found in bones and DNA?", id: "Elemen mana yang ditemukan dalam tulang dan DNA?" },
-    options: [{ en: "Phosphorus", id: "Fosfor" }, { en: "Potassium", id: "Kalium" }, { en: "Fluorine", id: "Fluorin" }, { en: "Iron", id: "Besi" }],
-    answer: { en: "Phosphorus", id: "Fosfor" }
+    question: {
+      en: "Which element is found in bones and DNA?",
+      id: "Elemen mana yang ditemukan dalam tulang dan DNA?",
+    },
+    options: [
+      { en: "Phosphorus", id: "Fosfor" },
+      { en: "Potassium", id: "Kalium" },
+      { en: "Fluorine", id: "Fluorin" },
+      { en: "Iron", id: "Besi" },
+    ],
+    answer: { en: "Phosphorus", id: "Fosfor" },
   },
   S: {
-    question: { en: "Which element smells like rotten eggs?", id: "Elemen mana yang berbau seperti telur busuk?" },
-    options: [{ en: "Sulfur", id: "Belerang" }, { en: "Chlorine", id: "Klorin" }, { en: "Oxygen", id: "Oksigen" }, { en: "Bromine", id: "Bromin" }],
-    answer: { en: "Sulfur", id: "Belerang" }
+    question: {
+      en: "Which element smells like rotten eggs?",
+      id: "Elemen mana yang berbau seperti telur busuk?",
+    },
+    options: [
+      { en: "Sulfur", id: "Belerang" },
+      { en: "Chlorine", id: "Klorin" },
+      { en: "Oxygen", id: "Oksigen" },
+      { en: "Bromine", id: "Bromin" },
+    ],
+    answer: { en: "Sulfur", id: "Belerang" },
   },
   Cl: {
-    question: { en: "Which halogen is used to disinfect swimming pools?", id: "Halogen mana yang digunakan untuk mendisinfeksi kolam renang?" },
-    options: [{ en: "Iodine", id: "Iodin" }, { en: "Chlorine", id: "Klorin" }, { en: "Fluorine", id: "Fluorin" }, { en: "Bromine", id: "Bromin" }],
-    answer: { en: "Chlorine", id: "Klorin" }
+    question: {
+      en: "Which halogen is used to disinfect swimming pools?",
+      id: "Halogen mana yang digunakan untuk mendisinfeksi kolam renang?",
+    },
+    options: [
+      { en: "Iodine", id: "Iodin" },
+      { en: "Chlorine", id: "Klorin" },
+      { en: "Fluorine", id: "Fluorin" },
+      { en: "Bromine", id: "Bromin" },
+    ],
+    answer: { en: "Chlorine", id: "Klorin" },
   },
   Ar: {
-    question: { en: "Which noble gas is the third most common in air?", id: "Gas mulia mana yang paling umum ketiga di udara?" },
-    options: [{ en: "Neon", id: "Neon" }, { en: "Xenon", id: "Xenon" }, { en: "Argon", id: "Argon" }, { en: "Helium", id: "Helium" }],
-    answer: { en: "Argon", id: "Argon" }
+    question: {
+      en: "Which noble gas is the third most common in air?",
+      id: "Gas mulia mana yang paling umum ketiga di udara?",
+    },
+    options: [
+      { en: "Neon", id: "Neon" },
+      { en: "Xenon", id: "Xenon" },
+      { en: "Argon", id: "Argon" },
+      { en: "Helium", id: "Helium" },
+    ],
+    answer: { en: "Argon", id: "Argon" },
   },
   K: {
-    question: { en: "Which element is essential for nerve function?", id: "Elemen mana yang penting untuk fungsi saraf?" },
-    options: [{ en: "Calcium", id: "Kalsium" }, { en: "Potassium", id: "Kalium" }, { en: "Sodium", id: "Natrium" }, { en: "Magnesium", id: "Magnesium" }],
-    answer: { en: "Potassium", id: "Kalium" }
+    question: {
+      en: "Which element is essential for nerve function?",
+      id: "Elemen mana yang penting untuk fungsi saraf?",
+    },
+    options: [
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Potassium", id: "Kalium" },
+      { en: "Sodium", id: "Natrium" },
+      { en: "Magnesium", id: "Magnesium" },
+    ],
+    answer: { en: "Potassium", id: "Kalium" },
   },
   Ca: {
-    question: { en: "Which element builds strong bones and teeth?", id: "Elemen mana yang membangun tulang dan gigi yang kuat?" },
-    options: [{ en: "Iron", id: "Besi" }, { en: "Calcium", id: "Kalsium" }, { en: "Phosphorus", id: "Fosfor" }, { en: "Zinc", id: "Seng" }],
-    answer: { en: "Calcium", id: "Kalsium" }
+    question: {
+      en: "Which element builds strong bones and teeth?",
+      id: "Elemen mana yang membangun tulang dan gigi yang kuat?",
+    },
+    options: [
+      { en: "Iron", id: "Besi" },
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Phosphorus", id: "Fosfor" },
+      { en: "Zinc", id: "Seng" },
+    ],
+    answer: { en: "Calcium", id: "Kalsium" },
   },
   Sc: {
-    question: { en: "Which rare transition metal is used in aerospace alloys?", id: "Logam transisi langka mana yang digunakan dalam paduan kedirgantaraan?" },
-    options: [{ en: "Scandium", id: "Skandium" }, { en: "Titanium", id: "Titanium" }, { en: "Zirconium", id: "Zirkonium" }, { en: "Yttrium", id: "Itrium" }],
-    answer: { en: "Scandium", id: "Skandium" }
+    question: {
+      en: "Which rare transition metal is used in aerospace alloys?",
+      id: "Logam transisi langka mana yang digunakan dalam paduan kedirgantaraan?",
+    },
+    options: [
+      { en: "Scandium", id: "Skandium" },
+      { en: "Titanium", id: "Titanium" },
+      { en: "Zirconium", id: "Zirkonium" },
+      { en: "Yttrium", id: "Itrium" },
+    ],
+    answer: { en: "Scandium", id: "Skandium" },
   },
   Ti: {
-    question: { en: "Which metal is known for being both strong and lightweight?", id: "Logam mana yang dikenal kuat dan ringan?" },
-    options: [{ en: "Iron", id: "Besi" }, { en: "Titanium", id: "Titanium" }, { en: "Zinc", id: "Seng" }, { en: "Aluminum", id: "Aluminium" }],
-    answer: { en: "Titanium", id: "Titanium" }
+    question: {
+      en: "Which metal is known for being both strong and lightweight?",
+      id: "Logam mana yang dikenal kuat dan ringan?",
+    },
+    options: [
+      { en: "Iron", id: "Besi" },
+      { en: "Titanium", id: "Titanium" },
+      { en: "Zinc", id: "Seng" },
+      { en: "Aluminum", id: "Aluminium" },
+    ],
+    answer: { en: "Titanium", id: "Titanium" },
   },
   V: {
-    question: { en: "Which metal is used to strengthen steel?", id: "Logam mana yang digunakan untuk memperkuat baja?" },
-    options: [{ en: "Vanadium", id: "Vanadium" }, { en: "Chromium", id: "Kromium" }, { en: "Copper", id: "Tembaga" }, { en: "Nickel", id: "Nikel" }],
-    answer: { en: "Vanadium", id: "Vanadium" }
+    question: {
+      en: "Which metal is used to strengthen steel?",
+      id: "Logam mana yang digunakan untuk memperkuat baja?",
+    },
+    options: [
+      { en: "Vanadium", id: "Vanadium" },
+      { en: "Chromium", id: "Kromium" },
+      { en: "Copper", id: "Tembaga" },
+      { en: "Nickel", id: "Nikel" },
+    ],
+    answer: { en: "Vanadium", id: "Vanadium" },
   },
   Cr: {
-    question: { en: "Which element gives stainless steel its shine?", id: "Elemen mana yang memberikan kilau pada baja tahan karat?" },
-    options: [{ en: "Iron", id: "Besi" }, { en: "Chromium", id: "Kromium" }, { en: "Carbon", id: "Karbon" }, { en: "Nickel", id: "Nikel" }],
-    answer: { en: "Chromium", id: "Kromium" }
+    question: {
+      en: "Which element gives stainless steel its shine?",
+      id: "Elemen mana yang memberikan kilau pada baja tahan karat?",
+    },
+    options: [
+      { en: "Iron", id: "Besi" },
+      { en: "Chromium", id: "Kromium" },
+      { en: "Carbon", id: "Karbon" },
+      { en: "Nickel", id: "Nikel" },
+    ],
+    answer: { en: "Chromium", id: "Kromium" },
   },
   Mn: {
-    question: { en: "Which metal is important for steel and has the symbol Mn?", id: "Logam mana yang penting untuk baja dan memiliki simbol Mn?" },
-    options: [{ en: "Manganese", id: "Mangan" }, { en: "Magnesium", id: "Magnesium" }, { en: "Mercury", id: "Raksa" }, { en: "Molybdenum", id: "Molibdenum" }],
-    answer: { en: "Manganese", id: "Mangan" }
+    question: {
+      en: "Which metal is important for steel and has the symbol Mn?",
+      id: "Logam mana yang penting untuk baja dan memiliki simbol Mn?",
+    },
+    options: [
+      { en: "Manganese", id: "Mangan" },
+      { en: "Magnesium", id: "Magnesium" },
+      { en: "Mercury", id: "Raksa" },
+      { en: "Molybdenum", id: "Molibdenum" },
+    ],
+    answer: { en: "Manganese", id: "Mangan" },
   },
   Fe: {
-    question: { en: "Which element is the main component of steel?", id: "Elemen mana yang merupakan komponen utama baja?" },
-    options: [{ en: "Iron", id: "Besi" }, { en: "Copper", id: "Tembaga" }, { en: "Nickel", id: "Nikel" }, { en: "Zinc", id: "Seng" }],
-    answer: { en: "Iron", id: "Besi" }
+    question: {
+      en: "Which element is the main component of steel?",
+      id: "Elemen mana yang merupakan komponen utama baja?",
+    },
+    options: [
+      { en: "Iron", id: "Besi" },
+      { en: "Copper", id: "Tembaga" },
+      { en: "Nickel", id: "Nikel" },
+      { en: "Zinc", id: "Seng" },
+    ],
+    answer: { en: "Iron", id: "Besi" },
   },
   Co: {
-    question: { en: "Which element is used in blue glass and has the symbol Co?", id: "Elemen mana yang digunakan dalam kaca biru dan memiliki simbol Co?" },
-    options: [{ en: "Cobalt", id: "Kobalt" }, { en: "Copper", id: "Tembaga" }, { en: "Calcium", id: "Kalsium" }, { en: "Carbon", id: "Karbon" }],
-    answer: { en: "Cobalt", id: "Kobalt" }
+    question: {
+      en: "Which element is used in blue glass and has the symbol Co?",
+      id: "Elemen mana yang digunakan dalam kaca biru dan memiliki simbol Co?",
+    },
+    options: [
+      { en: "Cobalt", id: "Kobalt" },
+      { en: "Copper", id: "Tembaga" },
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Carbon", id: "Karbon" },
+    ],
+    answer: { en: "Cobalt", id: "Kobalt" },
   },
   Ni: {
-    question: { en: "Which metal is commonly used to make coins?", id: "Logam mana yang umum digunakan untuk membuat koin?" },
-    options: [{ en: "Nickel", id: "Nikel" }, { en: "Silver", id: "Perak" }, { en: "Zinc", id: "Seng" }, { en: "Platinum", id: "Platinum" }],
-    answer: { en: "Nickel", id: "Nikel" }
+    question: {
+      en: "Which metal is commonly used to make coins?",
+      id: "Logam mana yang umum digunakan untuk membuat koin?",
+    },
+    options: [
+      { en: "Nickel", id: "Nikel" },
+      { en: "Silver", id: "Perak" },
+      { en: "Zinc", id: "Seng" },
+      { en: "Platinum", id: "Platinum" },
+    ],
+    answer: { en: "Nickel", id: "Nikel" },
   },
   Cu: {
-    question: { en: "Which metal is known for its reddish color and electrical conductivity?", id: "Logam mana yang dikenal karena warna kemerahan dan konduktivitas listriknya?" },
-    options: [{ en: "Iron", id: "Besi" }, { en: "Copper", id: "Tembaga" }, { en: "Zinc", id: "Seng" }, { en: "Silver", id: "Perak" }],
-    answer: { en: "Copper", id: "Tembaga" }
+    question: {
+      en: "Which metal is known for its reddish color and electrical conductivity?",
+      id: "Logam mana yang dikenal karena warna kemerahan dan konduktivitas listriknya?",
+    },
+    options: [
+      { en: "Iron", id: "Besi" },
+      { en: "Copper", id: "Tembaga" },
+      { en: "Zinc", id: "Seng" },
+      { en: "Silver", id: "Perak" },
+    ],
+    answer: { en: "Copper", id: "Tembaga" },
   },
   Zn: {
-    question: { en: "Which metal is used to galvanize steel?", id: "Logam mana yang digunakan untuk menggalvanisasi baja?" },
-    options: [{ en: "Tin", id: "Timah" }, { en: "Zinc", id: "Seng" }, { en: "Iron", id: "Besi" }, { en: "Lead", id: "Timbal" }],
-    answer: { en: "Zinc", id: "Seng" }
+    question: {
+      en: "Which metal is used to galvanize steel?",
+      id: "Logam mana yang digunakan untuk menggalvanisasi baja?",
+    },
+    options: [
+      { en: "Tin", id: "Timah" },
+      { en: "Zinc", id: "Seng" },
+      { en: "Iron", id: "Besi" },
+      { en: "Lead", id: "Timbal" },
+    ],
+    answer: { en: "Zinc", id: "Seng" },
   },
   Ga: {
-    question: { en: "Which metal melts in your hand and is used in electronics?", id: "Logam mana yang meleleh di tanganmu dan digunakan dalam elektronik?" },
-    options: [{ en: "Mercury", id: "Raksa" }, { en: "Gallium", id: "Galium" }, { en: "Aluminum", id: "Aluminium" }, { en: "Indium", id: "Indium" }],
-    answer: { en: "Gallium", id: "Galium" }
+    question: {
+      en: "Which metal melts in your hand and is used in electronics?",
+      id: "Logam mana yang meleleh di tanganmu dan digunakan dalam elektronik?",
+    },
+    options: [
+      { en: "Mercury", id: "Raksa" },
+      { en: "Gallium", id: "Galium" },
+      { en: "Aluminum", id: "Aluminium" },
+      { en: "Indium", id: "Indium" },
+    ],
+    answer: { en: "Gallium", id: "Galium" },
   },
   Ge: {
-    question: { en: "Which metalloid is used in semiconductors and has the symbol Ge?", id: "Metaloid mana yang digunakan dalam semikonduktor dan memiliki simbol Ge?" },
-    options: [{ en: "Silicon", id: "Silikon" }, { en: "Germanium", id: "Germanium" }, { en: "Gallium", id: "Galium" }, { en: "Tin", id: "Timah" }],
-    answer: { en: "Germanium", id: "Germanium" }
+    question: {
+      en: "Which metalloid is used in semiconductors and has the symbol Ge?",
+      id: "Metaloid mana yang digunakan dalam semikonduktor dan memiliki simbol Ge?",
+    },
+    options: [
+      { en: "Silicon", id: "Silikon" },
+      { en: "Germanium", id: "Germanium" },
+      { en: "Gallium", id: "Galium" },
+      { en: "Tin", id: "Timah" },
+    ],
+    answer: { en: "Germanium", id: "Germanium" },
   },
   As: {
-    question: { en: "Which toxic element has the symbol As?", id: "Elemen beracun mana yang memiliki simbol As?" },
-    options: [{ en: "Arsenic", id: "Arsenik" }, { en: "Antimony", id: "Antimon" }, { en: "Aluminum", id: "Aluminium" }, { en: "Actinium", id: "Aktinium" }],
-    answer: { en: "Arsenic", id: "Arsenik" }
+    question: {
+      en: "Which toxic element has the symbol As?",
+      id: "Elemen beracun mana yang memiliki simbol As?",
+    },
+    options: [
+      { en: "Arsenic", id: "Arsenik" },
+      { en: "Antimony", id: "Antimon" },
+      { en: "Aluminum", id: "Aluminium" },
+      { en: "Actinium", id: "Aktinium" },
+    ],
+    answer: { en: "Arsenic", id: "Arsenik" },
   },
   Se: {
-    question: { en: "Which element is essential in small amounts and used in photocopiers?", id: "Elemen mana yang penting dalam jumlah kecil dan digunakan dalam mesin fotokopi?" },
-    options: [{ en: "Selenium", id: "Selenium" }, { en: "Sulfur", id: "Belerang" }, { en: "Silicon", id: "Silikon" }, { en: "Silver", id: "Perak" }],
-    answer: { en: "Selenium", id: "Selenium" }
+    question: {
+      en: "Which element is essential in small amounts and used in photocopiers?",
+      id: "Elemen mana yang penting dalam jumlah kecil dan digunakan dalam mesin fotokopi?",
+    },
+    options: [
+      { en: "Selenium", id: "Selenium" },
+      { en: "Sulfur", id: "Belerang" },
+      { en: "Silicon", id: "Silikon" },
+      { en: "Silver", id: "Perak" },
+    ],
+    answer: { en: "Selenium", id: "Selenium" },
   },
   Br: {
-    question: { en: "Which reddish-brown liquid element is a halogen?", id: "Elemen cair berwarna merah-coklat mana yang merupakan halogen?" },
-    options: [{ en: "Bromine", id: "Bromin" }, { en: "Iodine", id: "Iodin" }, { en: "Chlorine", id: "Klorin" }, { en: "Fluorine", id: "Fluorin" }],
-    answer: { en: "Bromine", id: "Bromin" }
+    question: {
+      en: "Which reddish-brown liquid element is a halogen?",
+      id: "Elemen cair berwarna merah-coklat mana yang merupakan halogen?",
+    },
+    options: [
+      { en: "Bromine", id: "Bromin" },
+      { en: "Iodine", id: "Iodin" },
+      { en: "Chlorine", id: "Klorin" },
+      { en: "Fluorine", id: "Fluorin" },
+    ],
+    answer: { en: "Bromine", id: "Bromin" },
   },
   Kr: {
-    question: { en: "Which noble gas is used in photography and lighting?", id: "Gas mulia mana yang digunakan dalam fotografi dan pencahayaan?" },
-    options: [{ en: "Krypton", id: "Kripton" }, { en: "Neon", id: "Neon" }, { en: "Xenon", id: "Xenon" }, { en: "Argon", id: "Argon" }],
-    answer: { en: "Krypton", id: "Kripton" }
+    question: {
+      en: "Which noble gas is used in photography and lighting?",
+      id: "Gas mulia mana yang digunakan dalam fotografi dan pencahayaan?",
+    },
+    options: [
+      { en: "Krypton", id: "Kripton" },
+      { en: "Neon", id: "Neon" },
+      { en: "Xenon", id: "Xenon" },
+      { en: "Argon", id: "Argon" },
+    ],
+    answer: { en: "Krypton", id: "Kripton" },
   },
   Rb: {
-    question: { en: "Which highly reactive metal has the symbol Rb?", id: "Logam reaktif tinggi mana yang memiliki simbol Rb?" },
-    options: [{ en: "Rubidium", id: "Rubidium" }, { en: "Radium", id: "Radium" }, { en: "Rhenium", id: "Renim" }, { en: "Rhodium", id: "Rodium" }],
-    answer: { en: "Rubidium", id: "Rubidium" }
+    question: {
+      en: "Which highly reactive metal has the symbol Rb?",
+      id: "Logam reaktif tinggi mana yang memiliki simbol Rb?",
+    },
+    options: [
+      { en: "Rubidium", id: "Rubidium" },
+      { en: "Radium", id: "Radium" },
+      { en: "Rhenium", id: "Renim" },
+      { en: "Rhodium", id: "Rodium" },
+    ],
+    answer: { en: "Rubidium", id: "Rubidium" },
   },
   Sr: {
-    question: { en: "Which element is used in fireworks to produce red color?", id: "Elemen mana yang digunakan dalam kembang api untuk menghasilkan warna merah?" },
-    options: [{ en: "Strontium", id: "Stronsium" }, { en: "Sulfur", id: "Belerang" }, { en: "Selenium", id: "Selenium" }, { en: "Samarium", id: "Samarium" }],
-    answer: { en: "Strontium", id: "Stronsium" }
+    question: {
+      en: "Which element is used in fireworks to produce red color?",
+      id: "Elemen mana yang digunakan dalam kembang api untuk menghasilkan warna merah?",
+    },
+    options: [
+      { en: "Strontium", id: "Stronsium" },
+      { en: "Sulfur", id: "Belerang" },
+      { en: "Selenium", id: "Selenium" },
+      { en: "Samarium", id: "Samarium" },
+    ],
+    answer: { en: "Strontium", id: "Stronsium" },
   },
   Y: {
-    question: { en: "Which element is named after a Swedish village and used in LEDs?", id: "Elemen mana yang dinamai desa Swedia dan digunakan dalam LED?" },
-    options: [{ en: "Yttrium", id: "Itrium" }, { en: "Ytterbium", id: "Iterbium" }, { en: "Yttrinite", id: "Ittrinit" }, { en: "Yllem", id: "Ilem" }],
-    answer: { en: "Yttrium", id: "Itrium" }
+    question: {
+      en: "Which element is named after a Swedish village and used in LEDs?",
+      id: "Elemen mana yang dinamai desa Swedia dan digunakan dalam LED?",
+    },
+    options: [
+      { en: "Yttrium", id: "Itrium" },
+      { en: "Ytterbium", id: "Iterbium" },
+      { en: "Yttrinite", id: "Ittrinit" },
+      { en: "Yllem", id: "Ilem" },
+    ],
+    answer: { en: "Yttrium", id: "Itrium" },
   },
   Zr: {
-    question: { en: "Which metal is resistant to corrosion and used in nuclear reactors?", id: "Logam mana yang tahan korosi dan digunakan dalam reaktor nuklir?" },
-    options: [{ en: "Zirconium", id: "Zirkonium" }, { en: "Zinc", id: "Seng" }, { en: "Zircon", id: "Zirkon" }, { en: "Zebraium", id: "Zebraium" }],
-    answer: { en: "Zirconium", id: "Zirkonium" }
+    question: {
+      en: "Which metal is resistant to corrosion and used in nuclear reactors?",
+      id: "Logam mana yang tahan korosi dan digunakan dalam reaktor nuklir?",
+    },
+    options: [
+      { en: "Zirconium", id: "Zirkonium" },
+      { en: "Zinc", id: "Seng" },
+      { en: "Zircon", id: "Zirkon" },
+      { en: "Zebraium", id: "Zebraium" },
+    ],
+    answer: { en: "Zirconium", id: "Zirkonium" },
   },
   Nb: {
-    question: { en: "Which transition metal has the symbol Nb and is used in superconductors?", id: "Logam transisi mana yang memiliki simbol Nb dan digunakan dalam superkonduktor?" },
-    options: [{ en: "Niobium", id: "Niobium" }, { en: "Neodymium", id: "Neodimium" }, { en: "Nickel", id: "Nikel" }, { en: "Nobelium", id: "Nobelium" }],
-    answer: { en: "Niobium", id: "Niobium" }
+    question: {
+      en: "Which transition metal has the symbol Nb and is used in superconductors?",
+      id: "Logam transisi mana yang memiliki simbol Nb dan digunakan dalam superkonduktor?",
+    },
+    options: [
+      { en: "Niobium", id: "Niobium" },
+      { en: "Neodymium", id: "Neodimium" },
+      { en: "Nickel", id: "Nikel" },
+      { en: "Nobelium", id: "Nobelium" },
+    ],
+    answer: { en: "Niobium", id: "Niobium" },
   },
   Mo: {
-    question: { en: "Which element is used to make high-strength steel and has the symbol Mo?", id: "Elemen mana yang digunakan untuk membuat baja berkekuatan tinggi dan memiliki simbol Mo?" },
-    options: [{ en: "Molybdenum", id: "Molibdenum" }, { en: "Magnesium", id: "Magnesium" }, { en: "Mercury", id: "Raksa" }, { en: "Manganese", id: "Mangan" }],
-    answer: { en: "Molybdenum", id: "Molibdenum" }
+    question: {
+      en: "Which element is used to make high-strength steel and has the symbol Mo?",
+      id: "Elemen mana yang digunakan untuk membuat baja berkekuatan tinggi dan memiliki simbol Mo?",
+    },
+    options: [
+      { en: "Molybdenum", id: "Molibdenum" },
+      { en: "Magnesium", id: "Magnesium" },
+      { en: "Mercury", id: "Raksa" },
+      { en: "Manganese", id: "Mangan" },
+    ],
+    answer: { en: "Molybdenum", id: "Molibdenum" },
   },
   Tc: {
-    question: { en: "Which radioactive element has the symbol Tc?", id: "Elemen radioaktif mana yang memiliki simbol Tc?" },
-    options: [{ en: "Technetium", id: "Teknesium" }, { en: "Tellurium", id: "Telurium" }, { en: "Thorium", id: "Torium" }, { en: "Tantalum", id: "Tantalum" }],
-    answer: { en: "Technetium", id: "Teknesium" }
+    question: {
+      en: "Which radioactive element has the symbol Tc?",
+      id: "Elemen radioaktif mana yang memiliki simbol Tc?",
+    },
+    options: [
+      { en: "Technetium", id: "Teknesium" },
+      { en: "Tellurium", id: "Telurium" },
+      { en: "Thorium", id: "Torium" },
+      { en: "Tantalum", id: "Tantalum" },
+    ],
+    answer: { en: "Technetium", id: "Teknesium" },
   },
   Ru: {
-    question: { en: "Which rare metal has the symbol Ru and is used in electronics?", id: "Logam langka mana yang memiliki simbol Ru dan digunakan dalam elektronik?" },
-    options: [{ en: "Ruthenium", id: "Rutenium" }, { en: "Rhodium", id: "Rodium" }, { en: "Rubidium", id: "Rubidium" }, { en: "Radium", id: "Radium" }],
-    answer: { en: "Ruthenium", id: "Rutenium" }
+    question: {
+      en: "Which rare metal has the symbol Ru and is used in electronics?",
+      id: "Logam langka mana yang memiliki simbol Ru dan digunakan dalam elektronik?",
+    },
+    options: [
+      { en: "Ruthenium", id: "Rutenium" },
+      { en: "Rhodium", id: "Rodium" },
+      { en: "Rubidium", id: "Rubidium" },
+      { en: "Radium", id: "Radium" },
+    ],
+    answer: { en: "Ruthenium", id: "Rutenium" },
   },
   Rh: {
-    question: { en: "Which element is used in catalytic converters and has the symbol Rh?", id: "Elemen mana yang digunakan dalam konverter katalitik dan memiliki simbol Rh?" },
-    options: [{ en: "Rhodium", id: "Rodium" }, { en: "Rhenium", id: "Renim" }, { en: "Rubidium", id: "Rubidium" }, { en: "Radon", id: "Radon" }],
-    answer: { en: "Rhodium", id: "Rodium" }
+    question: {
+      en: "Which element is used in catalytic converters and has the symbol Rh?",
+      id: "Elemen mana yang digunakan dalam konverter katalitik dan memiliki simbol Rh?",
+    },
+    options: [
+      { en: "Rhodium", id: "Rodium" },
+      { en: "Rhenium", id: "Renim" },
+      { en: "Rubidium", id: "Rubidium" },
+      { en: "Radon", id: "Radon" },
+    ],
+    answer: { en: "Rhodium", id: "Rodium" },
   },
   Pd: {
-    question: { en: "Which precious metal is used in jewelry and electronics?", id: "Logam mulia mana yang digunakan dalam perhiasan dan elektronik?" },
-    options: [{ en: "Platinum", id: "Platinum" }, { en: "Palladium", id: "Paladium" }, { en: "Gold", id: "Emas" }, { en: "Silver", id: "Perak" }],
-    answer: { en: "Palladium", id: "Paladium" }
+    question: {
+      en: "Which precious metal is used in jewelry and electronics?",
+      id: "Logam mulia mana yang digunakan dalam perhiasan dan elektronik?",
+    },
+    options: [
+      { en: "Platinum", id: "Platinum" },
+      { en: "Palladium", id: "Paladium" },
+      { en: "Gold", id: "Emas" },
+      { en: "Silver", id: "Perak" },
+    ],
+    answer: { en: "Palladium", id: "Paladium" },
   },
   Ag: {
-    question: { en: "Which element is known as the best conductor of electricity?", id: "Elemen mana yang dikenal sebagai konduktor listrik terbaik?" },
-    options: [{ en: "Copper", id: "Tembaga" }, { en: "Gold", id: "Emas" }, { en: "Silver", id: "Perak" }, { en: "Aluminum", id: "Aluminium" }],
-    answer: { en: "Silver", id: "Perak" }
+    question: {
+      en: "Which element is known as the best conductor of electricity?",
+      id: "Elemen mana yang dikenal sebagai konduktor listrik terbaik?",
+    },
+    options: [
+      { en: "Copper", id: "Tembaga" },
+      { en: "Gold", id: "Emas" },
+      { en: "Silver", id: "Perak" },
+      { en: "Aluminum", id: "Aluminium" },
+    ],
+    answer: { en: "Silver", id: "Perak" },
   },
   Cd: {
-    question: { en: "Which toxic element is used in batteries and has the symbol Cd?", id: "Elemen beracun mana yang digunakan dalam baterai dan memiliki simbol Cd?" },
-    options: [{ en: "Cadmium", id: "Kadmium" }, { en: "Calcium", id: "Kalsium" }, { en: "Cobalt", id: "Kobalt" }, { en: "Cesium", id: "Sesium" }],
-    answer: { en: "Cadmium", id: "Kadmium" }
+    question: {
+      en: "Which toxic element is used in batteries and has the symbol Cd?",
+      id: "Elemen beracun mana yang digunakan dalam baterai dan memiliki simbol Cd?",
+    },
+    options: [
+      { en: "Cadmium", id: "Kadmium" },
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Cobalt", id: "Kobalt" },
+      { en: "Cesium", id: "Sesium" },
+    ],
+    answer: { en: "Cadmium", id: "Kadmium" },
   },
   In: {
-    question: { en: "Which soft metal is used in touchscreens and has the symbol In?", id: "Logam lunak mana yang digunakan dalam layar sentuh dan memiliki simbol In?" },
-    options: [{ en: "Indium", id: "Indium" }, { en: "Iodine", id: "Iodin" }, { en: "Iron", id: "Besi" }, { en: "Iridium", id: "Iridium" }],
-    answer: { en: "Indium", id: "Indium" }
+    question: {
+      en: "Which soft metal is used in touchscreens and has the symbol In?",
+      id: "Logam lunak mana yang digunakan dalam layar sentuh dan memiliki simbol In?",
+    },
+    options: [
+      { en: "Indium", id: "Indium" },
+      { en: "Iodine", id: "Iodin" },
+      { en: "Iron", id: "Besi" },
+      { en: "Iridium", id: "Iridium" },
+    ],
+    answer: { en: "Indium", id: "Indium" },
   },
   Sn: {
-    question: { en: "Which element is used in solder and has the symbol Sn?", id: "Elemen mana yang digunakan dalam solder dan memiliki simbol Sn?" },
-    options: [{ en: "Tin", id: "Timah" }, { en: "Lead", id: "Timbal" }, { en: "Zinc", id: "Seng" }, { en: "Silver", id: "Perak" }],
-    answer: { en: "Tin", id: "Timah" }
+    question: {
+      en: "Which element is used in solder and has the symbol Sn?",
+      id: "Elemen mana yang digunakan dalam solder dan memiliki simbol Sn?",
+    },
+    options: [
+      { en: "Tin", id: "Timah" },
+      { en: "Lead", id: "Timbal" },
+      { en: "Zinc", id: "Seng" },
+      { en: "Silver", id: "Perak" },
+    ],
+    answer: { en: "Tin", id: "Timah" },
   },
   Sb: {
-    question: { en: "Which metalloid has the symbol Sb and is used in flame retardants?", id: "Metaloid mana yang memiliki simbol Sb dan digunakan dalam penghambat api?" },
-    options: [{ en: "Antimony", id: "Antimon" }, { en: "Arsenic", id: "Arsenik" }, { en: "Aluminum", id: "Aluminium" }, { en: "Actinium", id: "Aktinium" }],
-    answer: { en: "Antimony", id: "Antimon" }
+    question: {
+      en: "Which metalloid has the symbol Sb and is used in flame retardants?",
+      id: "Metaloid mana yang memiliki simbol Sb dan digunakan dalam penghambat api?",
+    },
+    options: [
+      { en: "Antimony", id: "Antimon" },
+      { en: "Arsenic", id: "Arsenik" },
+      { en: "Aluminum", id: "Aluminium" },
+      { en: "Actinium", id: "Aktinium" },
+    ],
+    answer: { en: "Antimony", id: "Antimon" },
   },
   Te: {
-    question: { en: "Which brittle metalloid is used in solar panels and has the symbol Te?", id: "Metaloid rapuh mana yang digunakan dalam panel surya dan memiliki simbol Te?" },
-    options: [{ en: "Tellurium", id: "Telurium" }, { en: "Tantalum", id: "Tantalum" }, { en: "Thulium", id: "Tulium" }, { en: "Terbium", id: "Terbium" }],
-    answer: { en: "Tellurium", id: "Telurium" }
+    question: {
+      en: "Which brittle metalloid is used in solar panels and has the symbol Te?",
+      id: "Metaloid rapuh mana yang digunakan dalam panel surya dan memiliki simbol Te?",
+    },
+    options: [
+      { en: "Tellurium", id: "Telurium" },
+      { en: "Tantalum", id: "Tantalum" },
+      { en: "Thulium", id: "Tulium" },
+      { en: "Terbium", id: "Terbium" },
+    ],
+    answer: { en: "Tellurium", id: "Telurium" },
   },
   I: {
-    question: { en: "Which halogen is essential for thyroid function?", id: "Halogen mana yang penting untuk fungsi tiroid?" },
-    options: [{ en: "Chlorine", id: "Klorin" }, { en: "Fluorine", id: "Fluorin" }, { en: "Bromine", id: "Bromin" }, { en: "Iodine", id: "Iodin" }],
-    answer: { en: "Iodine", id: "Iodin" }
+    question: {
+      en: "Which halogen is essential for thyroid function?",
+      id: "Halogen mana yang penting untuk fungsi tiroid?",
+    },
+    options: [
+      { en: "Chlorine", id: "Klorin" },
+      { en: "Fluorine", id: "Fluorin" },
+      { en: "Bromine", id: "Bromin" },
+      { en: "Iodine", id: "Iodin" },
+    ],
+    answer: { en: "Iodine", id: "Iodin" },
   },
   Xe: {
-    question: { en: "Which noble gas is used in bright camera flashes?", id: "Gas mulia mana yang digunakan dalam lampu kilat kamera yang terang?" },
-    options: [{ en: "Neon", id: "Neon" }, { en: "Xenon", id: "Xenon" }, { en: "Krypton", id: "Kripton" }, { en: "Argon", id: "Argon" }],
-    answer: { en: "Xenon", id: "Xenon" }
+    question: {
+      en: "Which noble gas is used in bright camera flashes?",
+      id: "Gas mulia mana yang digunakan dalam lampu kilat kamera yang terang?",
+    },
+    options: [
+      { en: "Neon", id: "Neon" },
+      { en: "Xenon", id: "Xenon" },
+      { en: "Krypton", id: "Kripton" },
+      { en: "Argon", id: "Argon" },
+    ],
+    answer: { en: "Xenon", id: "Xenon" },
   },
   Cs: {
-    question: { en: "Which soft metal is used in atomic clocks?", id: "Logam lunak mana yang digunakan dalam jam atom?" },
-    options: [{ en: "Calcium", id: "Kalsium" }, { en: "Cesium", id: "Sesium" }, { en: "Cobalt", id: "Kobalt" }, { en: "Chromium", id: "Kromium" }],
-    answer: { en: "Cesium", id: "Sesium" }
+    question: {
+      en: "Which soft metal is used in atomic clocks?",
+      id: "Logam lunak mana yang digunakan dalam jam atom?",
+    },
+    options: [
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Cesium", id: "Sesium" },
+      { en: "Cobalt", id: "Kobalt" },
+      { en: "Chromium", id: "Kromium" },
+    ],
+    answer: { en: "Cesium", id: "Sesium" },
   },
   Ba: {
-    question: { en: "Which element is used in medical X-ray imaging?", id: "Elemen mana yang digunakan dalam pencitraan sinar-X medis?" },
-    options: [{ en: "Barium", id: "Barium" }, { en: "Bismuth", id: "Bismut" }, { en: "Boron", id: "Boron" }, { en: "Berkelium", id: "Berkelium" }],
-    answer: { en: "Barium", id: "Barium" }
+    question: {
+      en: "Which element is used in medical X-ray imaging?",
+      id: "Elemen mana yang digunakan dalam pencitraan sinar-X medis?",
+    },
+    options: [
+      { en: "Barium", id: "Barium" },
+      { en: "Bismuth", id: "Bismut" },
+      { en: "Boron", id: "Boron" },
+      { en: "Berkelium", id: "Berkelium" },
+    ],
+    answer: { en: "Barium", id: "Barium" },
   },
   La: {
-    question: { en: "Which element starts the lanthanide series?", id: "Elemen mana yang memulai seri lantanida?" },
-    options: [{ en: "Lanthanum", id: "Lantanum" }, { en: "Lutetium", id: "Lutetium" }, { en: "Lawrencium", id: "Lawrensium" }, { en: "Lithium", id: "Litium" }],
-    answer: { en: "Lanthanum", id: "Lantanum" }
+    question: {
+      en: "Which element starts the lanthanide series?",
+      id: "Elemen mana yang memulai seri lantanida?",
+    },
+    options: [
+      { en: "Lanthanum", id: "Lantanum" },
+      { en: "Lutetium", id: "Lutetium" },
+      { en: "Lawrencium", id: "Lawrensium" },
+      { en: "Lithium", id: "Litium" },
+    ],
+    answer: { en: "Lanthanum", id: "Lantanum" },
   },
   Ce: {
-    question: { en: "Which element is used in lighter flints?", id: "Elemen mana yang digunakan dalam batu korek api?" },
-    options: [{ en: "Cerium", id: "Serium" }, { en: "Calcium", id: "Kalsium" }, { en: "Cesium", id: "Sesium" }, { en: "Copper", id: "Tembaga" }],
-    answer: { en: "Cerium", id: "Serium" }
+    question: {
+      en: "Which element is used in lighter flints?",
+      id: "Elemen mana yang digunakan dalam batu korek api?",
+    },
+    options: [
+      { en: "Cerium", id: "Serium" },
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Cesium", id: "Sesium" },
+      { en: "Copper", id: "Tembaga" },
+    ],
+    answer: { en: "Cerium", id: "Serium" },
   },
   Pr: {
-    question: { en: "Which greenish lanthanide has the symbol Pr?", id: "Lantanida kehijauan mana yang memiliki simbol Pr?" },
-    options: [{ en: "Praseodymium", id: "Praseodimium" }, { en: "Promethium", id: "Prometium" }, { en: "Polonium", id: "Polonium" }, { en: "Platinum", id: "Platinum" }],
-    answer: { en: "Praseodymium", id: "Praseodimium" }
+    question: {
+      en: "Which greenish lanthanide has the symbol Pr?",
+      id: "Lantanida kehijauan mana yang memiliki simbol Pr?",
+    },
+    options: [
+      { en: "Praseodymium", id: "Praseodimium" },
+      { en: "Promethium", id: "Prometium" },
+      { en: "Polonium", id: "Polonium" },
+      { en: "Platinum", id: "Platinum" },
+    ],
+    answer: { en: "Praseodymium", id: "Praseodimium" },
   },
   Nd: {
-    question: { en: "Which element is used in powerful magnets?", id: "Elemen mana yang digunakan dalam magnet kuat?" },
-    options: [{ en: "Neodymium", id: "Neodimium" }, { en: "Nickel", id: "Nikel" }, { en: "Niobium", id: "Niobium" }, { en: "Nitrogen", id: "Nitrogen" }],
-    answer: { en: "Neodymium", id: "Neodimium" }
+    question: {
+      en: "Which element is used in powerful magnets?",
+      id: "Elemen mana yang digunakan dalam magnet kuat?",
+    },
+    options: [
+      { en: "Neodymium", id: "Neodimium" },
+      { en: "Nickel", id: "Nikel" },
+      { en: "Niobium", id: "Niobium" },
+      { en: "Nitrogen", id: "Nitrogen" },
+    ],
+    answer: { en: "Neodymium", id: "Neodimium" },
   },
   Pm: {
-    question: { en: "Which radioactive lanthanide has the symbol Pm?", id: "Lantanida radioaktif mana yang memiliki simbol Pm?" },
-    options: [{ en: "Promethium", id: "Prometium" }, { en: "Polonium", id: "Polonium" }, { en: "Protactinium", id: "Protaktinium" }, { en: "Phosphorus", id: "Fosfor" }],
-    answer: { en: "Promethium", id: "Prometium" }
+    question: {
+      en: "Which radioactive lanthanide has the symbol Pm?",
+      id: "Lantanida radioaktif mana yang memiliki simbol Pm?",
+    },
+    options: [
+      { en: "Promethium", id: "Prometium" },
+      { en: "Polonium", id: "Polonium" },
+      { en: "Protactinium", id: "Protaktinium" },
+      { en: "Phosphorus", id: "Fosfor" },
+    ],
+    answer: { en: "Promethium", id: "Prometium" },
   },
   Sm: {
-    question: { en: "Which lanthanide is used in magnets and has the symbol Sm?", id: "Lantanida mana yang digunakan dalam magnet dan memiliki simbol Sm?" },
-    options: [{ en: "Samarium", id: "Samarium" }, { en: "Scandium", id: "Skandium" }, { en: "Selenium", id: "Selenium" }, { en: "Sulfur", id: "Belerang" }],
-    answer: { en: "Samarium", id: "Samarium" }
+    question: {
+      en: "Which lanthanide is used in magnets and has the symbol Sm?",
+      id: "Lantanida mana yang digunakan dalam magnet dan memiliki simbol Sm?",
+    },
+    options: [
+      { en: "Samarium", id: "Samarium" },
+      { en: "Scandium", id: "Skandium" },
+      { en: "Selenium", id: "Selenium" },
+      { en: "Sulfur", id: "Belerang" },
+    ],
+    answer: { en: "Samarium", id: "Samarium" },
   },
   Eu: {
-    question: { en: "Which element is used in red TV phosphors and glows in the dark?", id: "Elemen mana yang digunakan dalam fosfor TV merah dan bersinar dalam gelap?" },
-    options: [{ en: "Europium", id: "Europium" }, { en: "Erbium", id: "Erbium" }, { en: "Einsteinium", id: "Einsteinium" }, { en: "Ethium", id: "Etium" }],
-    answer: { en: "Europium", id: "Europium" }
+    question: {
+      en: "Which element is used in red TV phosphors and glows in the dark?",
+      id: "Elemen mana yang digunakan dalam fosfor TV merah dan bersinar dalam gelap?",
+    },
+    options: [
+      { en: "Europium", id: "Europium" },
+      { en: "Erbium", id: "Erbium" },
+      { en: "Einsteinium", id: "Einsteinium" },
+      { en: "Ethium", id: "Etium" },
+    ],
+    answer: { en: "Europium", id: "Europium" },
   },
   Gd: {
-    question: { en: "Which element is used in MRI contrast agents?", id: "Elemen mana yang digunakan dalam agen kontras MRI?" },
-    options: [{ en: "Gadolinium", id: "Gadolinium" }, { en: "Gallium", id: "Galium" }, { en: "Germanium", id: "Germanium" }, { en: "Gold", id: "Emas" }],
-    answer: { en: "Gadolinium", id: "Gadolinium" }
+    question: {
+      en: "Which element is used in MRI contrast agents?",
+      id: "Elemen mana yang digunakan dalam agen kontras MRI?",
+    },
+    options: [
+      { en: "Gadolinium", id: "Gadolinium" },
+      { en: "Gallium", id: "Galium" },
+      { en: "Germanium", id: "Germanium" },
+      { en: "Gold", id: "Emas" },
+    ],
+    answer: { en: "Gadolinium", id: "Gadolinium" },
   },
   Tb: {
-    question: { en: "Which lanthanide is named after a Swedish village and has symbol Tb?", id: "Lantanida mana yang dinamai desa Swedia dan memiliki simbol Tb?" },
-    options: [{ en: "Terbium", id: "Terbium" }, { en: "Tellurium", id: "Telurium" }, { en: "Technetium", id: "Teknesium" }, { en: "Thulium", id: "Tulium" }],
-    answer: { en: "Terbium", id: "Terbium" }
+    question: {
+      en: "Which lanthanide is named after a Swedish village and has symbol Tb?",
+      id: "Lantanida mana yang dinamai desa Swedia dan memiliki simbol Tb?",
+    },
+    options: [
+      { en: "Terbium", id: "Terbium" },
+      { en: "Tellurium", id: "Telurium" },
+      { en: "Technetium", id: "Teknesium" },
+      { en: "Thulium", id: "Tulium" },
+    ],
+    answer: { en: "Terbium", id: "Terbium" },
   },
   Dy: {
-    question: { en: "Which element is used in hard disks and nuclear reactors?", id: "Elemen mana yang digunakan dalam hard disk dan reaktor nuklir?" },
-    options: [{ en: "Dysprosium", id: "Disprosium" }, { en: "Dubnium", id: "Dubnium" }, { en: "Darmstadtium", id: "Darmstadtium" }, { en: "Deuterium", id: "Deuterium" }],
-    answer: { en: "Dysprosium", id: "Disprosium" }
+    question: {
+      en: "Which element is used in hard disks and nuclear reactors?",
+      id: "Elemen mana yang digunakan dalam hard disk dan reaktor nuklir?",
+    },
+    options: [
+      { en: "Dysprosium", id: "Disprosium" },
+      { en: "Dubnium", id: "Dubnium" },
+      { en: "Darmstadtium", id: "Darmstadtium" },
+      { en: "Deuterium", id: "Deuterium" },
+    ],
+    answer: { en: "Dysprosium", id: "Disprosium" },
   },
   Ho: {
-    question: { en: "Which element has the symbol Ho and is used in lasers?", id: "Elemen mana yang memiliki simbol Ho dan digunakan dalam laser?" },
-    options: [{ en: "Holmium", id: "Holmium" }, { en: "Hafnium", id: "Hafnium" }, { en: "Helium", id: "Helium" }, { en: "Hydrogen", id: "Hidrogen" }],
-    answer: { en: "Holmium", id: "Holmium" }
+    question: {
+      en: "Which element has the symbol Ho and is used in lasers?",
+      id: "Elemen mana yang memiliki simbol Ho dan digunakan dalam laser?",
+    },
+    options: [
+      { en: "Holmium", id: "Holmium" },
+      { en: "Hafnium", id: "Hafnium" },
+      { en: "Helium", id: "Helium" },
+      { en: "Hydrogen", id: "Hidrogen" },
+    ],
+    answer: { en: "Holmium", id: "Holmium" },
   },
   Er: {
-    question: { en: "Which pink-colored lanthanide is used in fiber optics?", id: "Lantanida berwarna merah muda mana yang digunakan dalam serat optik?" },
-    options: [{ en: "Erbium", id: "Erbium" }, { en: "Einsteinium", id: "Einsteinium" }, { en: "Europium", id: "Europium" }, { en: "Ethium", id: "Etium" }],
-    answer: { en: "Erbium", id: "Erbium" }
+    question: {
+      en: "Which pink-colored lanthanide is used in fiber optics?",
+      id: "Lantanida berwarna merah muda mana yang digunakan dalam serat optik?",
+    },
+    options: [
+      { en: "Erbium", id: "Erbium" },
+      { en: "Einsteinium", id: "Einsteinium" },
+      { en: "Europium", id: "Europium" },
+      { en: "Ethium", id: "Etium" },
+    ],
+    answer: { en: "Erbium", id: "Erbium" },
   },
   Tm: {
-    question: { en: "Which element is used in portable X-ray machines?", id: "Elemen mana yang digunakan dalam mesin sinar-X portabel?" },
-    options: [{ en: "Thulium", id: "Tulium" }, { en: "Tantalum", id: "Tantalum" }, { en: "Technetium", id: "Teknesium" }, { en: "Thorium", id: "Torium" }],
-    answer: { en: "Thulium", id: "Tulium" }
+    question: {
+      en: "Which element is used in portable X-ray machines?",
+      id: "Elemen mana yang digunakan dalam mesin sinar-X portabel?",
+    },
+    options: [
+      { en: "Thulium", id: "Tulium" },
+      { en: "Tantalum", id: "Tantalum" },
+      { en: "Technetium", id: "Teknesium" },
+      { en: "Thorium", id: "Torium" },
+    ],
+    answer: { en: "Thulium", id: "Tulium" },
   },
   Yb: {
-    question: { en: "Which soft, silvery metal has the symbol Yb?", id: "Logam lunak berwarna keperakan mana yang memiliki simbol Yb?" },
-    options: [{ en: "Ytterbium", id: "Iterbium" }, { en: "Yttrium", id: "Itrium" }, { en: "Yttrinite", id: "Ittrinit" }, { en: "Yodoium", id: "Iodium" }],
-    answer: { en: "Ytterbium", id: "Iterbium" }
+    question: {
+      en: "Which soft, silvery metal has the symbol Yb?",
+      id: "Logam lunak berwarna keperakan mana yang memiliki simbol Yb?",
+    },
+    options: [
+      { en: "Ytterbium", id: "Iterbium" },
+      { en: "Yttrium", id: "Itrium" },
+      { en: "Yttrinite", id: "Ittrinit" },
+      { en: "Yodoium", id: "Iodium" },
+    ],
+    answer: { en: "Ytterbium", id: "Iterbium" },
   },
   Lu: {
-    question: { en: "Which element ends the lanthanide series?", id: "Elemen mana yang mengakhiri seri lantanida?" },
-    options: [{ en: "Lutetium", id: "Lutetium" }, { en: "Lawrencium", id: "Lawrensium" }, { en: "Lanthanum", id: "Lantanum" }, { en: "Lithium", id: "Litium" }],
-    answer: { en: "Lutetium", id: "Lutetium" }
+    question: {
+      en: "Which element ends the lanthanide series?",
+      id: "Elemen mana yang mengakhiri seri lantanida?",
+    },
+    options: [
+      { en: "Lutetium", id: "Lutetium" },
+      { en: "Lawrencium", id: "Lawrensium" },
+      { en: "Lanthanum", id: "Lantanum" },
+      { en: "Lithium", id: "Litium" },
+    ],
+    answer: { en: "Lutetium", id: "Lutetium" },
   },
   Hf: {
-    question: { en: "Which element is used in nuclear control rods and has the symbol Hf?", id: "Elemen mana yang digunakan dalam batang kendali nuklir dan memiliki simbol Hf?" },
-    options: [{ en: "Hafnium", id: "Hafnium" }, { en: "Holmium", id: "Holmium" }, { en: "Helium", id: "Helium" }, { en: "Hydrogen", id: "Hidrogen" }],
-    answer: { en: "Hafnium", id: "Hafnium" }
+    question: {
+      en: "Which element is used in nuclear control rods and has the symbol Hf?",
+      id: "Elemen mana yang digunakan dalam batang kendali nuklir dan memiliki simbol Hf?",
+    },
+    options: [
+      { en: "Hafnium", id: "Hafnium" },
+      { en: "Holmium", id: "Holmium" },
+      { en: "Helium", id: "Helium" },
+      { en: "Hydrogen", id: "Hidrogen" },
+    ],
+    answer: { en: "Hafnium", id: "Hafnium" },
   },
   Ta: {
-    question: { en: "Which metal is used in phone capacitors?", id: "Logam mana yang digunakan dalam kapasitor telepon?" },
-    options: [{ en: "Tantalum", id: "Tantalum" }, { en: "Titanium", id: "Titanium" }, { en: "Tin", id: "Timah" }, { en: "Tellurium", id: "Telurium" }],
-    answer: { en: "Tantalum", id: "Tantalum" }
+    question: {
+      en: "Which metal is used in phone capacitors?",
+      id: "Logam mana yang digunakan dalam kapasitor telepon?",
+    },
+    options: [
+      { en: "Tantalum", id: "Tantalum" },
+      { en: "Titanium", id: "Titanium" },
+      { en: "Tin", id: "Timah" },
+      { en: "Tellurium", id: "Telurium" },
+    ],
+    answer: { en: "Tantalum", id: "Tantalum" },
   },
   W: {
-    question: { en: "Which element has the highest melting point and symbol W?", id: "Elemen mana yang memiliki titik leleh tertinggi dan simbol W?" },
-    options: [{ en: "Tungsten", id: "Tungsten" }, { en: "Tellurium", id: "Telurium" }, { en: "Titanium", id: "Titanium" }, { en: "Tantalum", id: "Tantalum" }],
-    answer: { en: "Tungsten", id: "Tungsten" }
+    question: {
+      en: "Which element has the highest melting point and symbol W?",
+      id: "Elemen mana yang memiliki titik leleh tertinggi dan simbol W?",
+    },
+    options: [
+      { en: "Tungsten", id: "Tungsten" },
+      { en: "Tellurium", id: "Telurium" },
+      { en: "Titanium", id: "Titanium" },
+      { en: "Tantalum", id: "Tantalum" },
+    ],
+    answer: { en: "Tungsten", id: "Tungsten" },
   },
   Re: {
-    question: { en: "Which rare metal is used in jet engines and has the symbol Re?", id: "Logam langka mana yang digunakan dalam mesin jet dan memiliki simbol Re?" },
-    options: [{ en: "Rhenium", id: "Renim" }, { en: "Radon", id: "Radon" }, { en: "Ruthenium", id: "Rutenium" }, { en: "Rubidium", id: "Rubidium" }],
-    answer: { en: "Rhenium", id: "Renim" }
+    question: {
+      en: "Which rare metal is used in jet engines and has the symbol Re?",
+      id: "Logam langka mana yang digunakan dalam mesin jet dan memiliki simbol Re?",
+    },
+    options: [
+      { en: "Rhenium", id: "Renim" },
+      { en: "Radon", id: "Radon" },
+      { en: "Ruthenium", id: "Rutenium" },
+      { en: "Rubidium", id: "Rubidium" },
+    ],
+    answer: { en: "Rhenium", id: "Renim" },
   },
   Os: {
-    question: { en: "Which element is the densest naturally occurring one?", id: "Elemen mana yang paling padat secara alami?" },
-    options: [{ en: "Osmium", id: "Osmium" }, { en: "Iron", id: "Besi" }, { en: "Gold", id: "Emas" }, { en: "Uranium", id: "Uranium" }],
-    answer: { en: "Osmium", id: "Osmium" }
+    question: {
+      en: "Which element is the densest naturally occurring one?",
+      id: "Elemen mana yang paling padat secara alami?",
+    },
+    options: [
+      { en: "Osmium", id: "Osmium" },
+      { en: "Iron", id: "Besi" },
+      { en: "Gold", id: "Emas" },
+      { en: "Uranium", id: "Uranium" },
+    ],
+    answer: { en: "Osmium", id: "Osmium" },
   },
   Ir: {
-    question: { en: "Which element is highly corrosion-resistant and has the symbol Ir?", id: "Elemen mana yang sangat tahan korosi dan memiliki simbol Ir?" },
-    options: [{ en: "Iridium", id: "Iridium" }, { en: "Iodine", id: "Iodin" }, { en: "Iron", id: "Besi" }, { en: "Indium", id: "Indium" }],
-    answer: { en: "Iridium", id: "Iridium" }
+    question: {
+      en: "Which element is highly corrosion-resistant and has the symbol Ir?",
+      id: "Elemen mana yang sangat tahan korosi dan memiliki simbol Ir?",
+    },
+    options: [
+      { en: "Iridium", id: "Iridium" },
+      { en: "Iodine", id: "Iodin" },
+      { en: "Iron", id: "Besi" },
+      { en: "Indium", id: "Indium" },
+    ],
+    answer: { en: "Iridium", id: "Iridium" },
   },
   Pt: {
-    question: { en: "Which precious metal is often used in jewelry and catalytic converters?", id: "Logam mulia mana yang sering digunakan dalam perhiasan dan konverter katalitik?" },
-    options: [{ en: "Platinum", id: "Platinum" }, { en: "Palladium", id: "Paladium" }, { en: "Silver", id: "Perak" }, { en: "Gold", id: "Emas" }],
-    answer: { en: "Platinum", id: "Platinum" }
+    question: {
+      en: "Which precious metal is often used in jewelry and catalytic converters?",
+      id: "Logam mulia mana yang sering digunakan dalam perhiasan dan konverter katalitik?",
+    },
+    options: [
+      { en: "Platinum", id: "Platinum" },
+      { en: "Palladium", id: "Paladium" },
+      { en: "Silver", id: "Perak" },
+      { en: "Gold", id: "Emas" },
+    ],
+    answer: { en: "Platinum", id: "Platinum" },
   },
   Au: {
-    question: { en: "Which metal has the highest electrical conductivity after silver?", id: "Logam mana yang memiliki konduktivitas listrik tertinggi setelah perak?" },
-    options: [{ en: "Gold", id: "Emas" }, { en: "Copper", id: "Tembaga" }, { en: "Platinum", id: "Platinum" }, { en: "Nickel", id: "Nikel" }],
-    answer: { en: "Gold", id: "Emas" }
+    question: {
+      en: "Which metal has the highest electrical conductivity after silver?",
+      id: "Logam mana yang memiliki konduktivitas listrik tertinggi setelah perak?",
+    },
+    options: [
+      { en: "Gold", id: "Emas" },
+      { en: "Copper", id: "Tembaga" },
+      { en: "Platinum", id: "Platinum" },
+      { en: "Nickel", id: "Nikel" },
+    ],
+    answer: { en: "Gold", id: "Emas" },
   },
   Hg: {
-    question: { en: "Which liquid metal is toxic and used in old thermometers?", id: "Logam cair mana yang beracun dan digunakan dalam termometer lama?" },
-    options: [{ en: "Mercury", id: "Raksa" }, { en: "Magnesium", id: "Magnesium" }, { en: "Molybdenum", id: "Molibdenum" }, { en: "Manganese", id: "Mangan" }],
-    answer: { en: "Mercury", id: "Raksa" }
+    question: {
+      en: "Which liquid metal is toxic and used in old thermometers?",
+      id: "Logam cair mana yang beracun dan digunakan dalam termometer lama?",
+    },
+    options: [
+      { en: "Mercury", id: "Raksa" },
+      { en: "Magnesium", id: "Magnesium" },
+      { en: "Molybdenum", id: "Molibdenum" },
+      { en: "Manganese", id: "Mangan" },
+    ],
+    answer: { en: "Mercury", id: "Raksa" },
   },
   Tl: {
-    question: { en: "Which toxic metal has the symbol Tl and was used in rat poison?", id: "Logam beracun mana yang memiliki simbol Tl dan digunakan dalam racun tikus?" },
-    options: [{ en: "Thallium", id: "Talium" }, { en: "Tin", id: "Timah" }, { en: "Tellurium", id: "Telurium" }, { en: "Tantalum", id: "Tantalum" }],
-    answer: { en: "Thallium", id: "Talium" }
+    question: {
+      en: "Which toxic metal has the symbol Tl and was used in rat poison?",
+      id: "Logam beracun mana yang memiliki simbol Tl dan digunakan dalam racun tikus?",
+    },
+    options: [
+      { en: "Thallium", id: "Talium" },
+      { en: "Tin", id: "Timah" },
+      { en: "Tellurium", id: "Telurium" },
+      { en: "Tantalum", id: "Tantalum" },
+    ],
+    answer: { en: "Thallium", id: "Talium" },
   },
   Pb: {
-    question: { en: "Which heavy metal was once used in paints and gasoline?", id: "Logam berat mana yang pernah digunakan dalam cat dan bensin?" },
-    options: [{ en: "Lead", id: "Timbal" }, { en: "Platinum", id: "Platinum" }, { en: "Palladium", id: "Paladium" }, { en: "Lithium", id: "Litium" }],
-    answer: { en: "Lead", id: "Timbal" }
+    question: {
+      en: "Which heavy metal was once used in paints and gasoline?",
+      id: "Logam berat mana yang pernah digunakan dalam cat dan bensin?",
+    },
+    options: [
+      { en: "Lead", id: "Timbal" },
+      { en: "Platinum", id: "Platinum" },
+      { en: "Palladium", id: "Paladium" },
+      { en: "Lithium", id: "Litium" },
+    ],
+    answer: { en: "Lead", id: "Timbal" },
   },
   Bi: {
-    question: { en: "Which metal is considered the heaviest non-toxic element?", id: "Logam mana yang dianggap sebagai elemen non-beracun terberat?" },
-    options: [{ en: "Bismuth", id: "Bismut" }, { en: "Boron", id: "Boron" }, { en: "Barium", id: "Barium" }, { en: "Berkelium", id: "Berkelium" }],
-    answer: { en: "Bismuth", id: "Bismut" }
+    question: {
+      en: "Which metal is considered the heaviest non-toxic element?",
+      id: "Logam mana yang dianggap sebagai elemen non-beracun terberat?",
+    },
+    options: [
+      { en: "Bismuth", id: "Bismut" },
+      { en: "Boron", id: "Boron" },
+      { en: "Barium", id: "Barium" },
+      { en: "Berkelium", id: "Berkelium" },
+    ],
+    answer: { en: "Bismuth", id: "Bismut" },
   },
   Po: {
-    question: { en: "Which highly radioactive element was discovered by Marie Curie?", id: "Elemen radioaktif tinggi mana yang ditemukan oleh Marie Curie?" },
-    options: [{ en: "Polonium", id: "Polonium" }, { en: "Protactinium", id: "Protaktinium" }, { en: "Promethium", id: "Prometium" }, { en: "Plutonium", id: "Plutonium" }],
-    answer: { en: "Polonium", id: "Polonium" }
+    question: {
+      en: "Which highly radioactive element was discovered by Marie Curie?",
+      id: "Elemen radioaktif tinggi mana yang ditemukan oleh Marie Curie?",
+    },
+    options: [
+      { en: "Polonium", id: "Polonium" },
+      { en: "Protactinium", id: "Protaktinium" },
+      { en: "Promethium", id: "Prometium" },
+      { en: "Plutonium", id: "Plutonium" },
+    ],
+    answer: { en: "Polonium", id: "Polonium" },
   },
   At: {
-    question: { en: "Which rare halogen is radioactive and has the symbol At?", id: "Halogen langka mana yang radioaktif dan memiliki simbol At?" },
-    options: [{ en: "Astatine", id: "Astatin" }, { en: "Actinium", id: "Aktinium" }, { en: "Arsenic", id: "Arsenik" }, { en: "Americium", id: "Amerisium" }],
-    answer: { en: "Astatine", id: "Astatin" }
+    question: {
+      en: "Which rare halogen is radioactive and has the symbol At?",
+      id: "Halogen langka mana yang radioaktif dan memiliki simbol At?",
+    },
+    options: [
+      { en: "Astatine", id: "Astatin" },
+      { en: "Actinium", id: "Aktinium" },
+      { en: "Arsenic", id: "Arsenik" },
+      { en: "Americium", id: "Amerisium" },
+    ],
+    answer: { en: "Astatine", id: "Astatin" },
   },
   Rn: {
-    question: { en: "Which radioactive noble gas can accumulate in basements?", id: "Gas mulia radioaktif mana yang dapat menumpuk di ruang bawah tanah?" },
-    options: [{ en: "Radon", id: "Radon" }, { en: "Rhodium", id: "Rodium" }, { en: "Rhenium", id: "Renim" }, { en: "Radium", id: "Radium" }],
-    answer: { en: "Radon", id: "Radon" }
+    question: {
+      en: "Which radioactive noble gas can accumulate in basements?",
+      id: "Gas mulia radioaktif mana yang dapat menumpuk di ruang bawah tanah?",
+    },
+    options: [
+      { en: "Radon", id: "Radon" },
+      { en: "Rhodium", id: "Rodium" },
+      { en: "Rhenium", id: "Renim" },
+      { en: "Radium", id: "Radium" },
+    ],
+    answer: { en: "Radon", id: "Radon" },
   },
   Fr: {
-    question: { en: "Which alkali metal is extremely rare and radioactive?", id: "Logam alkali mana yang sangat langka dan radioaktif?" },
-    options: [{ en: "Francium", id: "Fransium" }, { en: "Fermium", id: "Fermium" }, { en: "Fluorine", id: "Fluorin" }, { en: "Flerovium", id: "Flerovium" }],
-    answer: { en: "Francium", id: "Fransium" }
+    question: {
+      en: "Which alkali metal is extremely rare and radioactive?",
+      id: "Logam alkali mana yang sangat langka dan radioaktif?",
+    },
+    options: [
+      { en: "Francium", id: "Fransium" },
+      { en: "Fermium", id: "Fermium" },
+      { en: "Fluorine", id: "Fluorin" },
+      { en: "Flerovium", id: "Flerovium" },
+    ],
+    answer: { en: "Francium", id: "Fransium" },
   },
   Ra: {
-    question: { en: "Which element glows in the dark and was once used in watches?", id: "Elemen mana yang bersinar dalam gelap dan pernah digunakan dalam jam tangan?" },
-    options: [{ en: "Radium", id: "Radium" }, { en: "Rhenium", id: "Renim" }, { en: "Rubidium", id: "Rubidium" }, { en: "Rutherfordium", id: "Ruterfordium" }],
-    answer: { en: "Radium", id: "Radium" }
+    question: {
+      en: "Which element glows in the dark and was once used in watches?",
+      id: "Elemen mana yang bersinar dalam gelap dan pernah digunakan dalam jam tangan?",
+    },
+    options: [
+      { en: "Radium", id: "Radium" },
+      { en: "Rhenium", id: "Renim" },
+      { en: "Rubidium", id: "Rubidium" },
+      { en: "Rutherfordium", id: "Ruterfordium" },
+    ],
+    answer: { en: "Radium", id: "Radium" },
   },
   Ac: {
-    question: { en: "Which element starts the actinide series?", id: "Elemen mana yang memulai seri aktinida?" },
-    options: [{ en: "Actinium", id: "Aktinium" }, { en: "Americium", id: "Amerisium" }, { en: "Arsenic", id: "Arsenik" }, { en: "Astatine", id: "Astatin" }],
-    answer: { en: "Actinium", id: "Aktinium" }
+    question: {
+      en: "Which element starts the actinide series?",
+      id: "Elemen mana yang memulai seri aktinida?",
+    },
+    options: [
+      { en: "Actinium", id: "Aktinium" },
+      { en: "Americium", id: "Amerisium" },
+      { en: "Arsenic", id: "Arsenik" },
+      { en: "Astatine", id: "Astatin" },
+    ],
+    answer: { en: "Actinium", id: "Aktinium" },
   },
   Th: {
-    question: { en: "Which radioactive element is used in camping lanterns?", id: "Elemen radioaktif mana yang digunakan dalam lentera kemah?" },
-    options: [{ en: "Thorium", id: "Torium" }, { en: "Technetium", id: "Teknesium" }, { en: "Tellurium", id: "Telurium" }, { en: "Tin", id: "Timah" }],
-    answer: { en: "Thorium", id: "Torium" }
+    question: {
+      en: "Which radioactive element is used in camping lanterns?",
+      id: "Elemen radioaktif mana yang digunakan dalam lentera kemah?",
+    },
+    options: [
+      { en: "Thorium", id: "Torium" },
+      { en: "Technetium", id: "Teknesium" },
+      { en: "Tellurium", id: "Telurium" },
+      { en: "Tin", id: "Timah" },
+    ],
+    answer: { en: "Thorium", id: "Torium" },
   },
   Pa: {
-    question: { en: "Which element has the symbol Pa and is used in nuclear research?", id: "Elemen mana yang memiliki simbol Pa dan digunakan dalam penelitian nuklir?" },
-    options: [{ en: "Protactinium", id: "Protaktinium" }, { en: "Polonium", id: "Polonium" }, { en: "Plutonium", id: "Plutonium" }, { en: "Phosphorus", id: "Fosfor" }],
-    answer: { en: "Protactinium", id: "Protaktinium" }
+    question: {
+      en: "Which element has the symbol Pa and is used in nuclear research?",
+      id: "Elemen mana yang memiliki simbol Pa dan digunakan dalam penelitian nuklir?",
+    },
+    options: [
+      { en: "Protactinium", id: "Protaktinium" },
+      { en: "Polonium", id: "Polonium" },
+      { en: "Plutonium", id: "Plutonium" },
+      { en: "Phosphorus", id: "Fosfor" },
+    ],
+    answer: { en: "Protactinium", id: "Protaktinium" },
   },
   U: {
-    question: { en: "Which element is used as fuel in nuclear reactors?", id: "Elemen mana yang digunakan sebagai bahan bakar dalam reaktor nuklir?" },
-    options: [{ en: "Uranium", id: "Uranium" }, { en: "Ununium", id: "Ununium" }, { en: "Uranite", id: "Uranit" }, { en: "Ultrium", id: "Ultrium" }],
-    answer: { en: "Uranium", id: "Uranium" }
+    question: {
+      en: "Which element is used as fuel in nuclear reactors?",
+      id: "Elemen mana yang digunakan sebagai bahan bakar dalam reaktor nuklir?",
+    },
+    options: [
+      { en: "Uranium", id: "Uranium" },
+      { en: "Ununium", id: "Ununium" },
+      { en: "Uranite", id: "Uranit" },
+      { en: "Ultrium", id: "Ultrium" },
+    ],
+    answer: { en: "Uranium", id: "Uranium" },
   },
   Np: {
-    question: { en: "Which element follows Uranium in the periodic table?", id: "Elemen mana yang mengikuti Uranium dalam tabel periodik?" },
-    options: [{ en: "Neptunium", id: "Neptunium" }, { en: "Nickel", id: "Nikel" }, { en: "Nobelium", id: "Nobelium" }, { en: "Niobium", id: "Niobium" }],
-    answer: { en: "Neptunium", id: "Neptunium" }
+    question: {
+      en: "Which element follows Uranium in the periodic table?",
+      id: "Elemen mana yang mengikuti Uranium dalam tabel periodik?",
+    },
+    options: [
+      { en: "Neptunium", id: "Neptunium" },
+      { en: "Nickel", id: "Nikel" },
+      { en: "Nobelium", id: "Nobelium" },
+      { en: "Niobium", id: "Niobium" },
+    ],
+    answer: { en: "Neptunium", id: "Neptunium" },
   },
   Pu: {
-    question: { en: "Which radioactive element is used in nuclear weapons?", id: "Elemen radioaktif mana yang digunakan dalam senjata nuklir?" },
-    options: [{ en: "Plutonium", id: "Plutonium" }, { en: "Polonium", id: "Polonium" }, { en: "Promethium", id: "Prometium" }, { en: "Protactinium", id: "Protaktinium" }],
-    answer: { en: "Plutonium", id: "Plutonium" }
+    question: {
+      en: "Which radioactive element is used in nuclear weapons?",
+      id: "Elemen radioaktif mana yang digunakan dalam senjata nuklir?",
+    },
+    options: [
+      { en: "Plutonium", id: "Plutonium" },
+      { en: "Polonium", id: "Polonium" },
+      { en: "Promethium", id: "Prometium" },
+      { en: "Protactinium", id: "Protaktinium" },
+    ],
+    answer: { en: "Plutonium", id: "Plutonium" },
   },
   Am: {
-    question: { en: "Which synthetic element is used in smoke detectors?", id: "Elemen sintetis mana yang digunakan dalam detektor asap?" },
-    options: [{ en: "Americium", id: "Amerisium" }, { en: "Arsenic", id: "Arsenik" }, { en: "Astatine", id: "Astatin" }, { en: "Aluminum", id: "Aluminium" }],
-    answer: { en: "Americium", id: "Amerisium" }
+    question: {
+      en: "Which synthetic element is used in smoke detectors?",
+      id: "Elemen sintetis mana yang digunakan dalam detektor asap?",
+    },
+    options: [
+      { en: "Americium", id: "Amerisium" },
+      { en: "Arsenic", id: "Arsenik" },
+      { en: "Astatine", id: "Astatin" },
+      { en: "Aluminum", id: "Aluminium" },
+    ],
+    answer: { en: "Americium", id: "Amerisium" },
   },
   Cm: {
-    question: { en: "Which element is named after Marie and Pierre Curie?", id: "Elemen mana yang dinamai Marie dan Pierre Curie?" },
-    options: [{ en: "Curium", id: "Kurium" }, { en: "Californium", id: "Kalifornium" }, { en: "Cesium", id: "Sesium" }, { en: "Cobalt", id: "Kobalt" }],
-    answer: { en: "Curium", id: "Kurium" }
+    question: {
+      en: "Which element is named after Marie and Pierre Curie?",
+      id: "Elemen mana yang dinamai Marie dan Pierre Curie?",
+    },
+    options: [
+      { en: "Curium", id: "Kurium" },
+      { en: "Californium", id: "Kalifornium" },
+      { en: "Cesium", id: "Sesium" },
+      { en: "Cobalt", id: "Kobalt" },
+    ],
+    answer: { en: "Curium", id: "Kurium" },
   },
   Bk: {
-    question: { en: "Which element is named after a US city in California?", id: "Elemen mana yang dinamai kota AS di California?" },
-    options: [{ en: "Berkelium", id: "Berkelium" }, { en: "Bismuth", id: "Bismut" }, { en: "Boron", id: "Boron" }, { en: "Bromine", id: "Bromin" }],
-    answer: { en: "Berkelium", id: "Berkelium" }
+    question: {
+      en: "Which element is named after a US city in California?",
+      id: "Elemen mana yang dinamai kota AS di California?",
+    },
+    options: [
+      { en: "Berkelium", id: "Berkelium" },
+      { en: "Bismuth", id: "Bismut" },
+      { en: "Boron", id: "Boron" },
+      { en: "Bromine", id: "Bromin" },
+    ],
+    answer: { en: "Berkelium", id: "Berkelium" },
   },
   Cf: {
-    question: { en: "Which radioactive metal has the symbol Cf?", id: "Logam radioaktif mana yang memiliki simbol Cf?" },
-    options: [{ en: "Californium", id: "Kalifornium" }, { en: "Carbon", id: "Karbon" }, { en: "Cerium", id: "Serium" }, { en: "Chlorine", id: "Klorin" }],
-    answer: { en: "Californium", id: "Kalifornium" }
+    question: {
+      en: "Which radioactive metal has the symbol Cf?",
+      id: "Logam radioaktif mana yang memiliki simbol Cf?",
+    },
+    options: [
+      { en: "Californium", id: "Kalifornium" },
+      { en: "Carbon", id: "Karbon" },
+      { en: "Cerium", id: "Serium" },
+      { en: "Chlorine", id: "Klorin" },
+    ],
+    answer: { en: "Californium", id: "Kalifornium" },
   },
   Es: {
-    question: { en: "Which element is named after Albert Einstein?", id: "Elemen mana yang dinamai Albert Einstein?" },
-    options: [{ en: "Einsteinium", id: "Einsteinium" }, { en: "Erbium", id: "Erbium" }, { en: "Europium", id: "Europium" }, { en: "Ethium", id: "Etium" }],
-    answer: { en: "Einsteinium", id: "Einsteinium" }
+    question: {
+      en: "Which element is named after Albert Einstein?",
+      id: "Elemen mana yang dinamai Albert Einstein?",
+    },
+    options: [
+      { en: "Einsteinium", id: "Einsteinium" },
+      { en: "Erbium", id: "Erbium" },
+      { en: "Europium", id: "Europium" },
+      { en: "Ethium", id: "Etium" },
+    ],
+    answer: { en: "Einsteinium", id: "Einsteinium" },
   },
   Fm: {
-    question: { en: "Which radioactive element is named after Enrico Fermi?", id: "Elemen radioaktif mana yang dinamai Enrico Fermi?" },
-    options: [{ en: "Fermium", id: "Fermium" }, { en: "Francium", id: "Fransium" }, { en: "Fluorine", id: "Fluorin" }, { en: "Flerovium", id: "Flerovium" }],
-    answer: { en: "Fermium", id: "Fermium" }
+    question: {
+      en: "Which radioactive element is named after Enrico Fermi?",
+      id: "Elemen radioaktif mana yang dinamai Enrico Fermi?",
+    },
+    options: [
+      { en: "Fermium", id: "Fermium" },
+      { en: "Francium", id: "Fransium" },
+      { en: "Fluorine", id: "Fluorin" },
+      { en: "Flerovium", id: "Flerovium" },
+    ],
+    answer: { en: "Fermium", id: "Fermium" },
   },
   Md: {
-    question: { en: "Which element is named after Dmitri Mendeleev?", id: "Elemen mana yang dinamai Dmitri Mendeleev?" },
-    options: [{ en: "Mendelevium", id: "Mendelevium" }, { en: "Magnesium", id: "Magnesium" }, { en: "Manganese", id: "Mangan" }, { en: "Meitnerium", id: "Meitnerium" }],
-    answer: { en: "Mendelevium", id: "Mendelevium" }
+    question: {
+      en: "Which element is named after Dmitri Mendeleev?",
+      id: "Elemen mana yang dinamai Dmitri Mendeleev?",
+    },
+    options: [
+      { en: "Mendelevium", id: "Mendelevium" },
+      { en: "Magnesium", id: "Magnesium" },
+      { en: "Manganese", id: "Mangan" },
+      { en: "Meitnerium", id: "Meitnerium" },
+    ],
+    answer: { en: "Mendelevium", id: "Mendelevium" },
   },
   No: {
-    question: { en: "Which element is named after Alfred Nobel?", id: "Elemen mana yang dinamai Alfred Nobel?" },
-    options: [{ en: "Nobelium", id: "Nobelium" }, { en: "Neptunium", id: "Neptunium" }, { en: "Nickel", id: "Nikel" }, { en: "Nitrogen", id: "Nitrogen" }],
-    answer: { en: "Nobelium", id: "Nobelium" }
+    question: {
+      en: "Which element is named after Alfred Nobel?",
+      id: "Elemen mana yang dinamai Alfred Nobel?",
+    },
+    options: [
+      { en: "Nobelium", id: "Nobelium" },
+      { en: "Neptunium", id: "Neptunium" },
+      { en: "Nickel", id: "Nikel" },
+      { en: "Nitrogen", id: "Nitrogen" },
+    ],
+    answer: { en: "Nobelium", id: "Nobelium" },
   },
   Lr: {
-    question: { en: "Which element completes the actinide series?", id: "Elemen mana yang melengkapi seri aktinida?" },
-    options: [{ en: "Lawrencium", id: "Lawrensium" }, { en: "Lutetium", id: "Lutetium" }, { en: "Lanthanum", id: "Lantanum" }, { en: "Lithium", id: "Litium" }],
-    answer: { en: "Lawrencium", id: "Lawrensium" }
+    question: {
+      en: "Which element completes the actinide series?",
+      id: "Elemen mana yang melengkapi seri aktinida?",
+    },
+    options: [
+      { en: "Lawrencium", id: "Lawrensium" },
+      { en: "Lutetium", id: "Lutetium" },
+      { en: "Lanthanum", id: "Lantanum" },
+      { en: "Lithium", id: "Litium" },
+    ],
+    answer: { en: "Lawrencium", id: "Lawrensium" },
   },
   Rf: {
-    question: { en: "Which element starts the transactinide series?", id: "Elemen mana yang memulai seri transaktinida?" },
-    options: [{ en: "Rutherfordium", id: "Ruterfordium" }, { en: "Radium", id: "Radium" }, { en: "Roentgenium", id: "Roentgenium" }, { en: "Rubidium", id: "Rubidium" }],
-    answer: { en: "Rutherfordium", id: "Ruterfordium" }
+    question: {
+      en: "Which element starts the transactinide series?",
+      id: "Elemen mana yang memulai seri transaktinida?",
+    },
+    options: [
+      { en: "Rutherfordium", id: "Ruterfordium" },
+      { en: "Radium", id: "Radium" },
+      { en: "Roentgenium", id: "Roentgenium" },
+      { en: "Rubidium", id: "Rubidium" },
+    ],
+    answer: { en: "Rutherfordium", id: "Ruterfordium" },
   },
   Db: {
-    question: { en: "Which element has the symbol Db and is named after a Russian town?", id: "Elemen mana yang memiliki simbol Db dan dinamai kota Rusia?" },
-    options: [{ en: "Dubnium", id: "Dubnium" }, { en: "Dysprosium", id: "Disprosium" }, { en: "Darmstadtium", id: "Darmstadtium" }, { en: "Dubrinium", id: "Dubrinium" }],
-    answer: { en: "Dubnium", id: "Dubnium" }
+    question: {
+      en: "Which element has the symbol Db and is named after a Russian town?",
+      id: "Elemen mana yang memiliki simbol Db dan dinamai kota Rusia?",
+    },
+    options: [
+      { en: "Dubnium", id: "Dubnium" },
+      { en: "Dysprosium", id: "Disprosium" },
+      { en: "Darmstadtium", id: "Darmstadtium" },
+      { en: "Dubrinium", id: "Dubrinium" },
+    ],
+    answer: { en: "Dubnium", id: "Dubnium" },
   },
   Sg: {
-    question: { en: "Which element is named after a famous nuclear physicist Glenn Seaborg?", id: "Elemen mana yang dinamai fisikawan nuklir terkenal Glenn Seaborg?" },
-    options: [{ en: "Seaborgium", id: "Seaborgium" }, { en: "Scandium", id: "Skandium" }, { en: "Silicon", id: "Silikon" }, { en: "Strontium", id: "Stronsium" }],
-    answer: { en: "Seaborgium", id: "Seaborgium" }
+    question: {
+      en: "Which element is named after a famous nuclear physicist Glenn Seaborg?",
+      id: "Elemen mana yang dinamai fisikawan nuklir terkenal Glenn Seaborg?",
+    },
+    options: [
+      { en: "Seaborgium", id: "Seaborgium" },
+      { en: "Scandium", id: "Skandium" },
+      { en: "Silicon", id: "Silikon" },
+      { en: "Strontium", id: "Stronsium" },
+    ],
+    answer: { en: "Seaborgium", id: "Seaborgium" },
   },
   Bh: {
-    question: { en: "Which element has the symbol Bh?", id: "Elemen mana yang memiliki simbol Bh?" },
-    options: [{ en: "Bohrium", id: "Bohrium" }, { en: "Barium", id: "Barium" }, { en: "Beryllium", id: "Berilium" }, { en: "Bromium", id: "Bromium" }],
-    answer: { en: "Bohrium", id: "Bohrium" }
+    question: {
+      en: "Which element has the symbol Bh?",
+      id: "Elemen mana yang memiliki simbol Bh?",
+    },
+    options: [
+      { en: "Bohrium", id: "Bohrium" },
+      { en: "Barium", id: "Barium" },
+      { en: "Beryllium", id: "Berilium" },
+      { en: "Bromium", id: "Bromium" },
+    ],
+    answer: { en: "Bohrium", id: "Bohrium" },
   },
   Hs: {
-    question: { en: "Which synthetic element has the symbol Hs?", id: "Elemen sintetis mana yang memiliki simbol Hs?" },
-    options: [{ en: "Hassium", id: "Hasium" }, { en: "Holmium", id: "Holmium" }, { en: "Hafnium", id: "Hafnium" }, { en: "Helium", id: "Helium" }],
-    answer: { en: "Hassium", id: "Hasium" }
+    question: {
+      en: "Which synthetic element has the symbol Hs?",
+      id: "Elemen sintetis mana yang memiliki simbol Hs?",
+    },
+    options: [
+      { en: "Hassium", id: "Hasium" },
+      { en: "Holmium", id: "Holmium" },
+      { en: "Hafnium", id: "Hafnium" },
+      { en: "Helium", id: "Helium" },
+    ],
+    answer: { en: "Hassium", id: "Hasium" },
   },
   Mt: {
-    question: { en: "Which element is named after physicist Lise Meitner?", id: "Elemen mana yang dinamai fisikawan Lise Meitner?" },
-    options: [{ en: "Meitnerium", id: "Meitnerium" }, { en: "Mendelevium", id: "Mendelevium" }, { en: "Magnesium", id: "Magnesium" }, { en: "Moscovium", id: "Moscovium" }],
-    answer: { en: "Meitnerium", id: "Meitnerium" }
+    question: {
+      en: "Which element is named after physicist Lise Meitner?",
+      id: "Elemen mana yang dinamai fisikawan Lise Meitner?",
+    },
+    options: [
+      { en: "Meitnerium", id: "Meitnerium" },
+      { en: "Mendelevium", id: "Mendelevium" },
+      { en: "Magnesium", id: "Magnesium" },
+      { en: "Moscovium", id: "Moscovium" },
+    ],
+    answer: { en: "Meitnerium", id: "Meitnerium" },
   },
   Ds: {
-    question: { en: "Which element is named after the German city Darmstadt?", id: "Elemen mana yang dinamai kota Darmstadt di Jerman?" },
-    options: [{ en: "Darmstadtium", id: "Darmstadtium" }, { en: "Dubnium", id: "Dubnium" }, { en: "Dysprosium", id: "Disprosium" }, { en: "Dysdrasium", id: "Disdrasium" }],
-    answer: { en: "Darmstadtium", id: "Darmstadtium" }
+    question: {
+      en: "Which element is named after the German city Darmstadt?",
+      id: "Elemen mana yang dinamai kota Darmstadt di Jerman?",
+    },
+    options: [
+      { en: "Darmstadtium", id: "Darmstadtium" },
+      { en: "Dubnium", id: "Dubnium" },
+      { en: "Dysprosium", id: "Disprosium" },
+      { en: "Dysdrasium", id: "Disdrasium" },
+    ],
+    answer: { en: "Darmstadtium", id: "Darmstadtium" },
   },
   Rg: {
-    question: { en: "Which element has the symbol Rg?", id: "Elemen mana yang memiliki simbol Rg?" },
-    options: [{ en: "Roentgenium", id: "Roentgenium" }, { en: "Radium", id: "Radium" }, { en: "Rhenium", id: "Renim" }, { en: "Rhodium", id: "Rodium" }],
-    answer: { en: "Roentgenium", id: "Roentgenium" }
+    question: {
+      en: "Which element has the symbol Rg?",
+      id: "Elemen mana yang memiliki simbol Rg?",
+    },
+    options: [
+      { en: "Roentgenium", id: "Roentgenium" },
+      { en: "Radium", id: "Radium" },
+      { en: "Rhenium", id: "Renim" },
+      { en: "Rhodium", id: "Rodium" },
+    ],
+    answer: { en: "Roentgenium", id: "Roentgenium" },
   },
   Cn: {
-    question: { en: "Which synthetic element has the symbol Cn?", id: "Elemen sintetis mana yang memiliki simbol Cn?" },
-    options: [{ en: "Copernicium", id: "Kopernisium" }, { en: "Calcium", id: "Kalsium" }, { en: "Carbon", id: "Karbon" }, { en: "Cerium", id: "Serium" }],
-    answer: { en: "Copernicium", id: "Kopernisium" }
+    question: {
+      en: "Which synthetic element has the symbol Cn?",
+      id: "Elemen sintetis mana yang memiliki simbol Cn?",
+    },
+    options: [
+      { en: "Copernicium", id: "Kopernisium" },
+      { en: "Calcium", id: "Kalsium" },
+      { en: "Carbon", id: "Karbon" },
+      { en: "Cerium", id: "Serium" },
+    ],
+    answer: { en: "Copernicium", id: "Kopernisium" },
   },
   Nh: {
-    question: { en: "Which element with the symbol Nh is named after Japan?", id: "Elemen mana dengan simbol Nh yang dinamai Jepang?" },
-    options: [{ en: "Nihonium", id: "Nihonium" }, { en: "Neptunium", id: "Neptunium" }, { en: "Neon", id: "Neon" }, { en: "Neodymium", id: "Neodimium" }],
-    answer: { en: "Nihonium", id: "Nihonium" }
+    question: {
+      en: "Which element with the symbol Nh is named after Japan?",
+      id: "Elemen mana dengan simbol Nh yang dinamai Jepang?",
+    },
+    options: [
+      { en: "Nihonium", id: "Nihonium" },
+      { en: "Neptunium", id: "Neptunium" },
+      { en: "Neon", id: "Neon" },
+      { en: "Neodymium", id: "Neodimium" },
+    ],
+    answer: { en: "Nihonium", id: "Nihonium" },
   },
   Fl: {
-    question: { en: "Which element is named after the Joint Institute for Nuclear Research in Dubna and the US state?", id: "Elemen mana yang dinamai Joint Institute for Nuclear Research di Dubna dan negara bagian AS?" },
-    options: [{ en: "Flerovium", id: "Flerovium" }, { en: "Francium", id: "Fransium" }, { en: "Fluorine", id: "Fluorin" }, { en: "Fermium", id: "Fermium" }],
-    answer: { en: "Flerovium", id: "Flerovium" }
+    question: {
+      en: "Which element is named after the Joint Institute for Nuclear Research in Dubna and the US state?",
+      id: "Elemen mana yang dinamai Joint Institute for Nuclear Research di Dubna dan negara bagian AS?",
+    },
+    options: [
+      { en: "Flerovium", id: "Flerovium" },
+      { en: "Francium", id: "Fransium" },
+      { en: "Fluorine", id: "Fluorin" },
+      { en: "Fermium", id: "Fermium" },
+    ],
+    answer: { en: "Flerovium", id: "Flerovium" },
   },
   Mc: {
-    question: { en: "Which element is named after Moscow, the capital of Russia?", id: "Elemen mana yang dinamai Moskow, ibu kota Rusia?" },
-    options: [{ en: "Moscovium", id: "Moscovium" }, { en: "Magnesium", id: "Magnesium" }, { en: "Manganese", id: "Mangan" }, { en: "Mercury", id: "Raksa" }],
-    answer: { en: "Moscovium", id: "Moscovium" }
+    question: {
+      en: "Which element is named after Moscow, the capital of Russia?",
+      id: "Elemen mana yang dinamai Moskow, ibu kota Rusia?",
+    },
+    options: [
+      { en: "Moscovium", id: "Moscovium" },
+      { en: "Magnesium", id: "Magnesium" },
+      { en: "Manganese", id: "Mangan" },
+      { en: "Mercury", id: "Raksa" },
+    ],
+    answer: { en: "Moscovium", id: "Moscovium" },
   },
   Lv: {
-    question: { en: "Which element has the symbol Lv?", id: "Elemen mana yang memiliki simbol Lv?" },
-    options: [{ en: "Livermorium", id: "Livermorium" }, { en: "Lanthanum", id: "Lantanum" }, { en: "Lutetium", id: "Lutetium" }, { en: "Lawrencium", id: "Lawrensium" }],
-    answer: { en: "Livermorium", id: "Livermorium" }
+    question: {
+      en: "Which element has the symbol Lv?",
+      id: "Elemen mana yang memiliki simbol Lv?",
+    },
+    options: [
+      { en: "Livermorium", id: "Livermorium" },
+      { en: "Lanthanum", id: "Lantanum" },
+      { en: "Lutetium", id: "Lutetium" },
+      { en: "Lawrencium", id: "Lawrensium" },
+    ],
+    answer: { en: "Livermorium", id: "Livermorium" },
   },
   Ts: {
-    question: { en: "Which element is named after the US state Tennessee?", id: "Elemen mana yang dinamai negara bagian AS Tennessee?" },
-    options: [{ en: "Tennessine", id: "Tennessine" }, { en: "Tellurium", id: "Telurium" }, { en: "Terbium", id: "Terbium" }, { en: "Thorium", id: "Torium" }],
-    answer: { en: "Tennessine", id: "Tennessine" }
+    question: {
+      en: "Which element is named after the US state Tennessee?",
+      id: "Elemen mana yang dinamai negara bagian AS Tennessee?",
+    },
+    options: [
+      { en: "Tennessine", id: "Tennessine" },
+      { en: "Tellurium", id: "Telurium" },
+      { en: "Terbium", id: "Terbium" },
+      { en: "Thorium", id: "Torium" },
+    ],
+    answer: { en: "Tennessine", id: "Tennessine" },
   },
   Og: {
-    question: { en: "Which element is currently the last on the periodic table?", id: "Elemen mana yang saat ini terakhir di tabel periodik?" },
-    options: [{ en: "Oganesson", id: "Oganesson" }, { en: "Osmium", id: "Osmium" }, { en: "Oxygen", id: "Oksigen" }, { en: "Ordonium", id: "Ordonium" }],
-    answer: { en: "Oganesson", id: "Oganesson" }
-  }
+    question: {
+      en: "Which element is currently the last on the periodic table?",
+      id: "Elemen mana yang saat ini terakhir di tabel periodik?",
+    },
+    options: [
+      { en: "Oganesson", id: "Oganesson" },
+      { en: "Osmium", id: "Osmium" },
+      { en: "Oxygen", id: "Oksigen" },
+      { en: "Ordonium", id: "Ordonium" },
+    ],
+    answer: { en: "Oganesson", id: "Oganesson" },
+  },
 };
 
 function showNextQuiz() {
@@ -2500,7 +4744,7 @@ function showNextQuiz() {
   quizQuestion.textContent = quiz.question[currentLanguage];
   quizOptions.innerHTML = "";
 
-  quiz.options.forEach(opt => {
+  quiz.options.forEach((opt) => {
     const btn = document.createElement("button");
     btn.textContent = opt[currentLanguage];
 
@@ -2511,7 +4755,7 @@ function showNextQuiz() {
         question: quiz.question.en,
         selectedAnswer: opt.en,
         correctAnswer: quiz.answer.en,
-        isCorrect: isCorrect
+        isCorrect: isCorrect,
       });
       saveGameProgress();
 
@@ -2523,18 +4767,22 @@ function showNextQuiz() {
         saveGameProgress();
 
         if (faviconLink) {
-          faviconLink.classList.remove('favicon-animate');
+          faviconLink.classList.remove("favicon-animate");
           void faviconLink.offsetWidth;
-          faviconLink.classList.add('favicon-animate');
+          faviconLink.classList.add("favicon-animate");
         }
 
         setTimeout(() => {
-          const cell = document.querySelector(`[data-symbol="${nextElement}"] .card-inner`);
-          if (cell) cell.classList.add('flipped');
+          const cell = document.querySelector(
+            `[data-symbol="${nextElement}"] .card-inner`
+          );
+          if (cell) cell.classList.add("flipped");
         }, 100);
 
         quizOptions.classList.add("hidden");
-        document.getElementById("quiz-result-text").textContent = `${translations[currentLanguage].quiz_correct} ${quiz.answer[currentLanguage]}`;
+        document.getElementById(
+          "quiz-result-text"
+        ).textContent = `${translations[currentLanguage].quiz_correct} ${quiz.answer[currentLanguage]}`;
         document.getElementById("quiz-result").classList.remove("hidden");
 
         quizPopup.dataset.justUnlocked = nextElement;
@@ -2544,7 +4792,8 @@ function showNextQuiz() {
       } else {
         btn.style.borderColor = "#ef4444";
         btn.style.background = "linear-gradient(to right, #fca5a5, #ef4444)";
-        document.getElementById("quiz-result-text").textContent = translations[currentLanguage].quiz_try_again;
+        document.getElementById("quiz-result-text").textContent =
+          translations[currentLanguage].quiz_try_again;
         document.getElementById("quiz-result-text").style.color = "white";
 
         btn.classList.add("shake");
@@ -2602,12 +4851,12 @@ document.getElementById("close-quiz-btn").addEventListener("click", () => {
 });
 
 function resetQuizUI() {
-  document.querySelectorAll('.pt-element.correct-flash').forEach(el => {
-    el.classList.remove('correct-flash');
+  document.querySelectorAll(".pt-element.correct-flash").forEach((el) => {
+    el.classList.remove("correct-flash");
   });
 
-  document.querySelectorAll('.quiz-options button').forEach(btn => {
-    btn.classList.remove('correct', 'incorrect');
+  document.querySelectorAll(".quiz-options button").forEach((btn) => {
+    btn.classList.remove("correct", "incorrect");
   });
 
   const feedback = document.querySelector(".quiz-feedback");
@@ -2649,6 +4898,15 @@ document.getElementById("enter-btn").addEventListener("click", () => {
     introSound.currentTime = 0;
   }
 
+  // Start background music if sound is enabled
+  if (soundOn) {
+    bgMusic.volume = 0.4;
+    bgMusic.loop = true; // Ensure bgMusic loops
+    bgMusic
+      .play()
+      .catch((e) => console.error("Error playing background music:", e));
+  }
+
   document.getElementById("intro-screen").style.display = "none";
   document.getElementById("readme").style.display = "flex";
 });
@@ -2665,11 +4923,11 @@ document.getElementById("close-readme").addEventListener("click", () => {
 const readme = document.getElementById("readme");
 readme.classList.add("show");
 
-const wowSound = new Audio('wow.mp3');
+const wowSound = new Audio("wow.mp3");
 
 function showCompoundPopup(name, formula) {
-  const popup = document.createElement('div');
-  popup.className = 'compound-popup';
+  const popup = document.createElement("div");
+  popup.className = "compound-popup";
   popup.innerHTML = `<h2>${name}</h2><p>${formula}</p>`;
   document.body.appendChild(popup);
   setTimeout(() => popup.remove(), 3000);
@@ -2709,15 +4967,19 @@ vaultClose.addEventListener("click", () => {
   }, 300);
 });
 
-document.getElementById("vault-search").addEventListener("input", updateVaultUI);
-document.getElementById("vault-filter").addEventListener("change", updateVaultUI);
+document
+  .getElementById("vault-search")
+  .addEventListener("input", updateVaultUI);
+document
+  .getElementById("vault-filter")
+  .addEventListener("change", updateVaultUI);
 
 function updateVaultUI() {
   const search = document.getElementById("vault-search").value.toLowerCase();
   const filterType = document.getElementById("vault-filter").value;
   const sortBy = document.getElementById("vault-sort").value;
 
-  let filtered = discoveredVault.filter(symbol => {
+  let filtered = discoveredVault.filter((symbol) => {
     const data = vaultData[symbol];
     if (!data) return false;
 
@@ -2733,31 +4995,45 @@ function updateVaultUI() {
   if (sortBy === "name") {
     filtered.sort((a, b) => vaultData[a].name.localeCompare(vaultData[b].name));
   } else if (sortBy === "symbol") {
-    filtered.sort((a, b) => vaultData[a].formula.localeCompare(vaultData[b].formula));
+    filtered.sort((a, b) =>
+      vaultData[a].formula.localeCompare(vaultData[b].formula)
+    );
   }
 
   vaultList.innerHTML = "";
   if (filtered.length === 0) {
     vaultList.innerHTML = `<p style='text-align: center; margin-top: 20px;'>${translations[currentLanguage].no_compounds_found}</p>`;
   } else {
-    filtered.forEach(symbol => {
+    filtered.forEach((symbol) => {
       const data = vaultData[symbol];
       const card = document.createElement("div");
       card.className = "vault-card";
       card.innerHTML = `
         <h3>${data.emoji} ${data.name}</h3>
-        <p><strong>${translations[currentLanguage].sort_formula_option.split(':')[0]}:</strong> ${data.formula}</p>
-        <p><strong>${translations[currentLanguage].use_label || 'Use'}:</strong> ${data.use}</p>
-        <p><strong>${translations[currentLanguage].trivia_label || 'Trivia'}:</strong> ${data.trivia}</p>
-        <p><strong>${translations[currentLanguage].category}:</strong> ${data.type}</p>
+        <p><strong>${
+          translations[currentLanguage].sort_formula_option.split(":")[0]
+        }:</strong> ${data.formula}</p>
+        <p><strong>${
+          translations[currentLanguage].use_label || "Use"
+        }:</strong> ${data.use}</p>
+        <p><strong>${
+          translations[currentLanguage].trivia_label || "Trivia"
+        }:</strong> ${data.trivia}</p>
+        <p><strong>${translations[currentLanguage].category}:</strong> ${
+        data.type
+      }</p>
       `;
       vaultList.appendChild(card);
     });
   }
 }
 
-document.getElementById("vault-search").addEventListener("input", updateVaultUI);
-document.getElementById("vault-filter").addEventListener("change", updateVaultUI);
+document
+  .getElementById("vault-search")
+  .addEventListener("input", updateVaultUI);
+document
+  .getElementById("vault-filter")
+  .addEventListener("change", updateVaultUI);
 document.getElementById("vault-sort").addEventListener("change", updateVaultUI);
 
 document.getElementById("vault-clear").addEventListener("click", () => {
@@ -2784,27 +5060,34 @@ function giveHint() {
   }
 
   const random = undiscovered[Math.floor(Math.random() * undiscovered.length)];
-  const recipeKey = Object.keys(compoundRecipes).find(key => compoundRecipes[key].symbol === random.symbol);
-  const recipeKeyElements = recipeKey.split('+');
+  const recipeKey = Object.keys(compoundRecipes).find(
+    (key) => compoundRecipes[key].symbol === random.symbol
+  );
+  const recipeKeyElements = recipeKey.split("+");
 
-  const hintText = translations[currentLanguage].hint_elements_count.replace('{count}', recipeKeyElements.length);
-  const elementsList = recipeKeyElements.map(e => e[0] + "…").join(", ");
-  const tryCombiningText = translations[currentLanguage].hint_try_combining.replace('{elements}', elementsList);
+  const hintText = translations[currentLanguage].hint_elements_count.replace(
+    "{count}",
+    recipeKeyElements.length
+  );
+  const elementsList = recipeKeyElements.map((e) => e[0] + "…").join(", ");
+  const tryCombiningText = translations[
+    currentLanguage
+  ].hint_try_combining.replace("{elements}", elementsList);
 
   hintArea.innerHTML = `${hintText}<br>${tryCombiningText}`;
   hintArea.classList.add("show");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const hintBtn = document.getElementById('hint-btn');
+  const hintBtn = document.getElementById("hint-btn");
   if (!hintBtn) return;
 
   let lastActivityTime = Date.now();
 
-  ['click', 'mousemove', 'keydown', 'touchstart'].forEach(event => {
+  ["click", "mousemove", "keydown", "touchstart"].forEach((event) => {
     window.addEventListener(event, () => {
       lastActivityTime = Date.now();
-      hintBtn.classList.remove('bounce');
+      hintBtn.classList.remove("bounce");
     });
   });
 
@@ -2813,13 +5096,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const inactiveFor = now - lastActivityTime;
 
     if (inactiveFor > 60000) {
-      hintBtn.classList.add('bounce');
+      hintBtn.classList.add("bounce");
     }
   }, 10000);
 });
 
 setTimeout(() => {
-  document.getElementById('flaskii').classList.add('reacting');
+  document.getElementById("flaskii").classList.add("reacting");
 }, 90000);
 
 const tableQuizBtn = document.getElementById("start-table-quiz-btn");
@@ -2843,26 +5126,28 @@ const categoryNames = {
   "alkaline-earth-metal": "alkaline_earth",
   "transition-metal": "transition_metal",
   "post-transition-metal": "post_transition",
-  "metalloid": "metalloid",
-  "nonmetal": "nonmetal",
-  "halogen": "halogen",
+  metalloid: "metalloid",
+  nonmetal: "nonmetal",
+  halogen: "halogen",
   "noble-gas": "noble_gas",
-  "lanthanide": "lanthanide",
-  "actinide": "actinide",
-  "unknown": "unknown"
+  lanthanide: "lanthanide",
+  actinide: "actinide",
+  unknown: "unknown",
 };
 
 let currentQuizElement = null;
 
 function startTableQuiz() {
-  const elementPool = elements.filter(el => discovered.includes(el.symbol));
+  const elementPool = elements.filter((el) => discovered.includes(el.symbol));
   if (elementPool.length === 0) {
-    tableQuizElement.textContent = translations[currentLanguage].table_quiz_discover_first;
+    tableQuizElement.textContent =
+      translations[currentLanguage].table_quiz_discover_first;
     tableQuizOptions.innerHTML = "";
     tableQuizResult.textContent = "";
     return;
   }
-  const randomElement = elementPool[Math.floor(Math.random() * elementPool.length)];
+  const randomElement =
+    elementPool[Math.floor(Math.random() * elementPool.length)];
   currentQuizElement = randomElement;
 
   tableQuizElement.textContent = `${randomElement.symbol} - ${randomElement.name}`;
@@ -2874,12 +5159,13 @@ function startTableQuiz() {
   choices.add(randomElement.category);
 
   while (choices.size < 4) {
-    const randomCategory = allCategories[Math.floor(Math.random() * allCategories.length)];
+    const randomCategory =
+      allCategories[Math.floor(Math.random() * allCategories.length)];
     choices.add(randomCategory);
   }
 
   const shuffledChoices = Array.from(choices).sort(() => 0.5 - Math.random());
-  shuffledChoices.forEach(cat => {
+  shuffledChoices.forEach((cat) => {
     const btn = document.createElement("button");
     btn.textContent = translations[currentLanguage][categoryNames[cat]];
     btn.dataset.originalText = cat;
@@ -2888,7 +5174,9 @@ function startTableQuiz() {
 
       tableQuizResult.textContent = isCorrect
         ? translations[currentLanguage].table_quiz_correct
-        : `${translations[currentLanguage].table_quiz_incorrect} ${translations[currentLanguage][categoryNames[randomElement.category]]}`;
+        : `${translations[currentLanguage].table_quiz_incorrect} ${
+            translations[currentLanguage][categoryNames[randomElement.category]]
+          }`;
       tableQuizResult.style.color = isCorrect ? "#22c55e" : "#ef4444";
 
       btn.style.borderColor = isCorrect ? "#22c55e" : "#ef4444";
@@ -2901,7 +5189,9 @@ function startTableQuiz() {
         setTimeout(() => btn.classList.remove("shake"), 500);
       }
 
-      Array.from(tableQuizOptions.children).forEach(button => button.disabled = true);
+      Array.from(tableQuizOptions.children).forEach(
+        (button) => (button.disabled = true)
+      );
     };
 
     tableQuizOptions.appendChild(btn);
@@ -2935,7 +5225,11 @@ function updateProgressBar() {
   const percent = Math.floor((unlocked / totalElements) * 100);
 
   document.getElementById("progress-bar").style.width = `${percent}%`;
-  document.getElementById("progress-text").textContent = `${unlocked} / ${totalElements} ${translations[currentLanguage].elements_text || 'Elements'}`;
+  document.getElementById(
+    "progress-text"
+  ).textContent = `${unlocked} / ${totalElements} ${
+    translations[currentLanguage].elements_text || "Elements"
+  }`;
 
   if (unlocked >= totalElements && !quizFinished) {
     quizFinished = true;
@@ -2957,13 +5251,123 @@ function restartGame() {
   mixed = [];
   discoveredVault = [];
   unlockQueue = [
-    "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
-    "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
-    "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe",
-    "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",
-    "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn",
-    "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
-    "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"
+    "He",
+    "Li",
+    "Be",
+    "B",
+    "C",
+    "N",
+    "O",
+    "F",
+    "Ne",
+    "Na",
+    "Mg",
+    "Al",
+    "Si",
+    "P",
+    "S",
+    "Cl",
+    "Ar",
+    "K",
+    "Ca",
+    "Sc",
+    "Ti",
+    "V",
+    "Cr",
+    "Mn",
+    "Fe",
+    "Co",
+    "Ni",
+    "Cu",
+    "Zn",
+    "Ga",
+    "Ge",
+    "As",
+    "Se",
+    "Br",
+    "Kr",
+    "Rb",
+    "Sr",
+    "Y",
+    "Zr",
+    "Nb",
+    "Mo",
+    "Tc",
+    "Ru",
+    "Rh",
+    "Pd",
+    "Ag",
+    "Cd",
+    "In",
+    "Sn",
+    "Sb",
+    "Te",
+    "I",
+    "Xe",
+    "Cs",
+    "Ba",
+    "La",
+    "Ce",
+    "Pr",
+    "Nd",
+    "Pm",
+    "Sm",
+    "Eu",
+    "Gd",
+    "Tb",
+    "Dy",
+    "Ho",
+    "Er",
+    "Tm",
+    "Yb",
+    "Lu",
+    "Hf",
+    "Ta",
+    "W",
+    "Re",
+    "Os",
+    "Ir",
+    "Pt",
+    "Au",
+    "Hg",
+    "Tl",
+    "Pb",
+    "Bi",
+    "Po",
+    "At",
+    "Rn",
+    "Fr",
+    "Ra",
+    "Ac",
+    "Th",
+    "Pa",
+    "U",
+    "Np",
+    "Pu",
+    "Am",
+    "Cm",
+    "Bk",
+    "Cf",
+    "Es",
+    "Fm",
+    "Md",
+    "No",
+    "Lr",
+    "Rf",
+    "Db",
+    "Sg",
+    "Bh",
+    "Hs",
+    "Mt",
+    "Ds",
+    "Rg",
+    "Cn",
+    "Nh",
+    "Fl",
+    "Mc",
+    "Lv",
+    "Ts",
+    "Og",
   ];
   quizHistory.length = 0;
   quizFinished = false;
@@ -2979,21 +5383,22 @@ function restartGame() {
   renderActinides();
   updateProgressBar();
   document.getElementById("start-quiz-btn").disabled = false;
-  document.getElementById("start-quiz-btn").textContent = translations[currentLanguage].start_quiz_button;
+  document.getElementById("start-quiz-btn").textContent =
+    translations[currentLanguage].start_quiz_button;
   document.getElementById("resume-quiz-btn").classList.add("hidden");
 }
 
 function devUnlockAll() {
-  discovered = elements.map(e => e.symbol);
+  discovered = elements.map((e) => e.symbol);
 
-  elements.forEach(el => {
+  elements.forEach((el) => {
     const quiz = quizData[el.symbol];
     if (quiz) {
       quizHistory.push({
         question: quiz.question.en,
         selectedAnswer: quiz.answer.en,
         correctAnswer: quiz.answer.en,
-        isCorrect: true
+        isCorrect: true,
       });
     }
   });
@@ -3024,12 +5429,13 @@ function filterByPhase(phase) {
 
   const allTiles = document.querySelectorAll(".pt-element");
 
-  allTiles.forEach(tile => {
+  allTiles.forEach((tile) => {
     const symbol = tile.dataset.symbol;
-    const element = elements.find(e => e.symbol === symbol);
+    const element = elements.find((e) => e.symbol === symbol);
     if (!element) return;
 
-    const match = element.phase && element.phase.toLowerCase() === phase.toLowerCase();
+    const match =
+      element.phase && element.phase.toLowerCase() === phase.toLowerCase();
 
     if (match) {
       tile.classList.add("highlight-phase");
@@ -3044,7 +5450,7 @@ function filterByPhase(phase) {
 function clearPhaseFilter() {
   if (filterSfx) filterSfx.play();
 
-  document.querySelectorAll(".pt-element").forEach(tile => {
+  document.querySelectorAll(".pt-element").forEach((tile) => {
     tile.classList.remove("highlight-phase", "dimmed-phase");
   });
 }
@@ -3059,7 +5465,7 @@ function renderPuzzleBank() {
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
 
-  shuffled.forEach(el => {
+  shuffled.forEach((el) => {
     const tile = document.createElement("div");
     tile.className = "puzzle-tile";
     tile.draggable = true;
@@ -3068,7 +5474,7 @@ function renderPuzzleBank() {
       <div class="pt-symbol">${el.symbol}</div>
       <div class="pt-number">${el.atomicNumber}</div>
     `;
-    tile.addEventListener("dragstart", function(e) {
+    tile.addEventListener("dragstart", function (e) {
       const dragGhost = tile.cloneNode(true);
       dragGhost.style.position = "absolute";
       dragGhost.style.top = "-9999px";
@@ -3092,7 +5498,7 @@ function renderPuzzleGrid() {
       cell.className = "puzzle-cell";
       if (symbol && symbol !== "") {
         cell.dataset.correctSymbol = symbol.replace("*", "");
-        cell.ondragover = e => e.preventDefault();
+        cell.ondragover = (e) => e.preventDefault();
         cell.ondrop = onDrop;
         cell.innerHTML = "";
       } else {
@@ -3113,7 +5519,9 @@ function onDrop(e) {
   const cell = e.target.closest(".puzzle-cell");
 
   if (cell && !cell.querySelector(".puzzle-tile")) {
-    const tile = document.querySelector(`.puzzle-tile[data-symbol="${droppedSymbol}"]`);
+    const tile = document.querySelector(
+      `.puzzle-tile[data-symbol="${droppedSymbol}"]`
+    );
 
     if (tile) {
       tile.draggable = false;
@@ -3127,7 +5535,7 @@ function checkPuzzleAnswers() {
   const cells = document.querySelectorAll(".puzzle-cell");
   let mistakes = 0;
 
-  cells.forEach(cell => {
+  cells.forEach((cell) => {
     const placed = cell.querySelector(".puzzle-tile");
     const correct = cell.dataset.correctSymbol;
 
@@ -3140,12 +5548,13 @@ function checkPuzzleAnswers() {
   });
 
   const result = document.getElementById("puzzle-result");
-  result.textContent = mistakes === 0
-    ? translations[currentLanguage].puzzle_perfect
-    : `${translations[currentLanguage].puzzle_misplaced_prefix} ${mistakes} ${translations[currentLanguage].puzzle_misplaced_suffix}`;
+  result.textContent =
+    mistakes === 0
+      ? translations[currentLanguage].puzzle_perfect
+      : `${translations[currentLanguage].puzzle_misplaced_prefix} ${mistakes} ${translations[currentLanguage].puzzle_misplaced_suffix}`;
 }
 
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", function () {
   document.getElementById("start-puzzle-btn").addEventListener("click", () => {
     const unlocked = discovered.length;
 
@@ -3216,45 +5625,63 @@ function showBlockedPuzzlePopup() {
 }
 
 function openQuestionReviewModal() {
-  const buttonsContainer = document.getElementById('question-buttons');
-  const infoContainer = document.getElementById('question-info');
+  const buttonsContainer = document.getElementById("question-buttons");
+  const infoContainer = document.getElementById("question-info");
 
-  buttonsContainer.innerHTML = '';
+  buttonsContainer.innerHTML = "";
   infoContainer.innerHTML = `<p>${translations[currentLanguage].select_question_info}</p>`;
 
-  document.querySelectorAll('.qa-grid button').forEach(btn => btn.classList.remove('active'));
+  document
+    .querySelectorAll(".qa-grid button")
+    .forEach((btn) => btn.classList.remove("active"));
 
   Object.keys(quizData).forEach((symbol, index) => {
     const entry = quizData[symbol];
-    const btn = document.createElement('button');
+    const btn = document.createElement("button");
     btn.textContent = `Q${index + 1}`;
     btn.dataset.questionSymbol = symbol;
 
-    const answeredEntry = quizHistory.find(hist => hist.question === entry.question.en);
+    const answeredEntry = quizHistory.find(
+      (hist) => hist.question === entry.question.en
+    );
 
     if (answeredEntry) {
-      btn.classList.add('answered');
+      btn.classList.add("answered");
       if (answeredEntry.isCorrect) {
-        btn.classList.add('correct-answered');
+        btn.classList.add("correct-answered");
       } else {
-        btn.classList.add('incorrect-answered');
+        btn.classList.add("incorrect-answered");
       }
     }
 
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.qa-grid button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".qa-grid button")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
-      let infoHtml = `<h3>${translations[currentLanguage].question_label} ${index + 1} (${symbol})</h3>`;
+      let infoHtml = `<h3>${translations[currentLanguage].question_label} ${
+        index + 1
+      } (${symbol})</h3>`;
       infoHtml += `<p><strong>${translations[currentLanguage].question_label}:</strong> ${entry.question[currentLanguage]}</p>`;
 
       if (answeredEntry) {
         infoHtml += `<p><strong>${translations[currentLanguage].your_answer_label}:</strong> ${answeredEntry.selectedAnswer}</p>`;
         infoHtml += `<p><strong>${translations[currentLanguage].correct_answer_label}:</strong> ${answeredEntry.correctAnswer}</p>`;
-        infoHtml += `<p><strong>${translations[currentLanguage].result_label}:</strong> <span class="${answeredEntry.isCorrect ? 'correct-result' : 'incorrect-result'}">${answeredEntry.isCorrect ? translations[currentLanguage].correct_result : translations[currentLanguage].incorrect_result}</span></p>`;
+        infoHtml += `<p><strong>${
+          translations[currentLanguage].result_label
+        }:</strong> <span class="${
+          answeredEntry.isCorrect ? "correct-result" : "incorrect-result"
+        }">${
+          answeredEntry.isCorrect
+            ? translations[currentLanguage].correct_result
+            : translations[currentLanguage].incorrect_result
+        }</span></p>`;
       } else {
         infoHtml += `<p><strong>${translations[currentLanguage].correct_answer_label}:</strong> ${entry.answer[currentLanguage]}</p>`;
-        infoHtml += `<p>${translations[currentLanguage].not_answered_yet || 'Not answered yet.'}</p>`;
+        infoHtml += `<p>${
+          translations[currentLanguage].not_answered_yet || "Not answered yet."
+        }</p>`;
       }
 
       infoContainer.innerHTML = infoHtml;
@@ -3281,7 +5708,7 @@ function openQuestionReviewModal() {
   }
 
   infoContainer.innerHTML = `<p>${translations[currentLanguage].reviewing_all_quiz_questions}</p>`;
-  document.getElementById('question-review-modal').classList.remove('hidden');
+  document.getElementById("question-review-modal").classList.remove("hidden");
 }
 
 function closeQuestionReview() {
@@ -3316,22 +5743,32 @@ function closePuzzleBlocker() {
 function saveGameProgress() {
   try {
     localStorage.setItem("chemicraft_discovered", JSON.stringify(discovered));
-    localStorage.setItem("chemicraft_discoveredVault", JSON.stringify(discoveredVault));
+    localStorage.setItem(
+      "chemicraft_discoveredVault",
+      JSON.stringify(discoveredVault)
+    );
     localStorage.setItem("chemicraft_unlockQueue", JSON.stringify(unlockQueue));
     localStorage.setItem("chemicraft_quizHistory", JSON.stringify(quizHistory));
-    localStorage.setItem("chemicraft_quizFinished", JSON.stringify(quizFinished));
+    localStorage.setItem(
+      "chemicraft_quizFinished",
+      JSON.stringify(quizFinished)
+    );
     localStorage.setItem("chemicraft_currentLanguage", currentLanguage);
     console.log("Game progress saved to Local Storage.");
   } catch (e) {
     console.error("Error saving game progress:", e);
-    alert("Could not save game progress. Your browser's storage might be full or disabled.");
+    alert(
+      "Could not save game progress. Your browser's storage might be full or disabled."
+    );
   }
 }
 
 function loadGameProgress() {
   try {
     const savedDiscovered = localStorage.getItem("chemicraft_discovered");
-    const savedDiscoveredVault = localStorage.getItem("chemicraft_discoveredVault");
+    const savedDiscoveredVault = localStorage.getItem(
+      "chemicraft_discoveredVault"
+    );
     const savedUnlockQueue = localStorage.getItem("chemicraft_unlockQueue");
     const savedQuizHistory = localStorage.getItem("chemicraft_quizHistory");
     const savedQuizFinished = localStorage.getItem("chemicraft_quizFinished");
@@ -3354,7 +5791,7 @@ function loadGameProgress() {
     if (savedQuizHistory) {
       quizHistory.length = 0;
       const parsedHistory = JSON.parse(savedQuizHistory);
-      parsedHistory.forEach(item => quizHistory.push(item));
+      parsedHistory.forEach((item) => quizHistory.push(item));
     } else {
       quizHistory.length = 0;
     }
@@ -3366,7 +5803,7 @@ function loadGameProgress() {
     if (savedLanguage && translations[savedLanguage]) {
       currentLanguage = savedLanguage;
     } else {
-      currentLanguage = 'en';
+      currentLanguage = "en";
     }
 
     console.log("Game progress loaded from Local Storage.");
@@ -3378,22 +5815,132 @@ function loadGameProgress() {
     mixed = [];
     discoveredVault = [];
     unlockQueue = [
-      "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
-      "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
-      "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe",
-      "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",
-      "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn",
-      "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
-      "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"
+      "He",
+      "Li",
+      "Be",
+      "B",
+      "C",
+      "N",
+      "O",
+      "F",
+      "Ne",
+      "Na",
+      "Mg",
+      "Al",
+      "Si",
+      "P",
+      "S",
+      "Cl",
+      "Ar",
+      "K",
+      "Ca",
+      "Sc",
+      "Ti",
+      "V",
+      "Cr",
+      "Mn",
+      "Fe",
+      "Co",
+      "Ni",
+      "Cu",
+      "Zn",
+      "Ga",
+      "Ge",
+      "As",
+      "Se",
+      "Br",
+      "Kr",
+      "Rb",
+      "Sr",
+      "Y",
+      "Zr",
+      "Nb",
+      "Mo",
+      "Tc",
+      "Ru",
+      "Rh",
+      "Pd",
+      "Ag",
+      "Cd",
+      "In",
+      "Sn",
+      "Sb",
+      "Te",
+      "I",
+      "Xe",
+      "Cs",
+      "Ba",
+      "La",
+      "Ce",
+      "Pr",
+      "Nd",
+      "Pm",
+      "Sm",
+      "Eu",
+      "Gd",
+      "Tb",
+      "Dy",
+      "Ho",
+      "Er",
+      "Tm",
+      "Yb",
+      "Lu",
+      "Hf",
+      "Ta",
+      "W",
+      "Re",
+      "Os",
+      "Ir",
+      "Pt",
+      "Au",
+      "Hg",
+      "Tl",
+      "Pb",
+      "Bi",
+      "Po",
+      "At",
+      "Rn",
+      "Fr",
+      "Ra",
+      "Ac",
+      "Th",
+      "Pa",
+      "U",
+      "Np",
+      "Pu",
+      "Am",
+      "Cm",
+      "Bk",
+      "Cf",
+      "Es",
+      "Fm",
+      "Md",
+      "No",
+      "Lr",
+      "Rf",
+      "Db",
+      "Sg",
+      "Bh",
+      "Hs",
+      "Mt",
+      "Ds",
+      "Rg",
+      "Cn",
+      "Nh",
+      "Fl",
+      "Mc",
+      "Lv",
+      "Ts",
+      "Og",
     ];
     quizHistory.length = 0;
     quizFinished = false;
-    currentLanguage = 'en';
+    currentLanguage = "en";
   }
 }
 
-document.querySelectorAll('.language-selector button').forEach(button => {
-  button.addEventListener('click', () => {
+document.querySelectorAll(".language-selector button").forEach((button) => {
+  button.addEventListener("click", () => {
     setLanguage(button.dataset.lang);
   });
 });
@@ -3413,12 +5960,32 @@ document.addEventListener("DOMContentLoaded", () => {
     resumeBtn.textContent = translations[currentLanguage].quiz_finished_message;
     resumeBtn.classList.remove("hidden");
     document.getElementById("start-quiz-btn").disabled = true;
-    document.getElementById("start-quiz-btn").textContent = translations[currentLanguage].quiz_completed;
+    document.getElementById("start-quiz-btn").textContent =
+      translations[currentLanguage].quiz_completed;
   } else if (unlockQueue.length < elements.length) {
     document.getElementById("resume-quiz-btn").classList.remove("hidden");
     document.getElementById("start-quiz-btn").disabled = true;
-    document.getElementById("start-quiz-btn").textContent = translations[currentLanguage].quiz_in_progress;
+    document.getElementById("start-quiz-btn").textContent =
+      translations[currentLanguage].quiz_in_progress;
   }
 });
 
-window.addEventListener('beforeunload', saveGameProgress);
+window.addEventListener("beforeunload", saveGameProgress);
+
+document.addEventListener("DOMContentLoaded", () => {
+  const customCursor = document.getElementById("custom-cursor");
+  if (customCursor) {
+    document.addEventListener("mousemove", (e) => {
+      customCursor.style.left = e.clientX + "px";
+      customCursor.style.top = e.clientY + "px";
+    });
+
+    document.addEventListener("mousedown", () => {
+      document.body.classList.add("clicking");
+    });
+
+    document.addEventListener("mouseup", () => {
+      document.body.classList.remove("clicking");
+    });
+  }
+});
