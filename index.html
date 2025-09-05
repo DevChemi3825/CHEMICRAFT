@@ -6,18 +6,19 @@
   <title>CHEMICRAFT</title>
   <link rel="icon" href="favicon.png" type="image/png" id="favicon-link">
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <!-- UPDATED Google Fonts link to include Mulish with wght 500, and Press Start 2P -->
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@500&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 </head>
 <body>
-  <audio id="bg-music" src="sounds/bg-music.mp3" loop></audio>
+<body>
+  <audio id="bg-music" src="sounds/bg-music.mp3" loop></audio>>
   <audio id="success" src="sounds/success.mp3"></audio>
   <audio id="fail" src="sounds/fail.mp3"></audio>
   <audio id="locked-popup-sfx" src="sounds/locked.mp3"></audio>
   <audio id="quiz-start-sfx" src="sounds/quiz-start.mp3"></audio>
-  <audio id="intro-sound" src="sounds/intro.mp3" autoplay loop></audio>
+<audio id="intro-sound" src="sounds/intro.mp3"></audio>
   <button id="sound-toggle" aria-label="sounds/sound-toggle">🔊</button>
   <audio id="filter-sfx" src="sounds/filter-click.mp3"></audio>
   <audio id="table-quiz-wipe-sfx" src="sounds/wipe-transition.mp3"></audio>
@@ -38,14 +39,14 @@
     <button class="alert-close" onclick="dismissAlert()">×</button>
   </div>
 
-  <div id="intro-screen">
-    <div class="intro-content">
-	  <img src="favicon.png" alt="Chemicraft Icon" class="logo-img">
-      <h1 class="intro-title">CHEMICRAFT</h1>
-      <p class="intro-subtitle" data-i18n="intro_subtitle">🧪 Unlock the secrets of the periodic table</p>
-      <button id="enter-btn" data-i18n="play_button">Play</button>
-    </div>
+<div id="intro-screen">
+  <div class="intro-content">
+    <h1 class="intro-title">CHEMICRAFT</h1>
+    <p class="intro-subtitle" data-i18n="intro_subtitle">🧪 Unlock the secrets of the periodic table</p>
+    <button id="enter-btn" data-i18n="play_button">Play</button>
   </div>
+</div>
+
 
   <div class="readme-overlay" id="readme">
     <div class="readme-box">
@@ -113,7 +114,8 @@
         <button id="hint-btn" data-i18n="get_hint_button">💡 Get a Hint</button>
         <p id="hint-area"></p>
         <button id="mix-btn" data-i18n="mix_button">Mix!</button>
-        <button id="reset-btn" data-i18n="reset_button">Reset</button>
+        <button id="reset-btn" data-i18n="reset_button">Delete</button>
+        <button id="reset-progress-btn" data-i18n="reset_progress_button">Reset All Progress</button>
         <div class="result-area" id="result-area">
           <p data-i18n="combination_results_placeholder">Combination results will appear here</p>
         </div>
@@ -292,6 +294,18 @@
       </div>
     </div>
 
+    <div id="reset-progress-modal" class="modal hidden">
+  <div class="modal-content">
+    <p data-i18n="reset_progress_confirmation">
+      ⚠️ This will reset all your progress including discovered elements and quizzes. Are you sure?
+    </p>
+    <div class="modal-buttons">
+      <button id="confirm-reset-progress" data-i18n="yes_reset_progress_button">Yes, Reset All</button>
+      <button id="cancel-reset-progress" data-i18n="cancel_button">Cancel</button>
+    </div>
+  </div>
+</div>
+
     <div id="sound-prompt-modal" class="modal hidden">
       <div class="modal-content">
         <h2 data-i18n="sound_prompt_title">Enhance Your Experience!</h2>
@@ -302,6 +316,7 @@
         </div>
       </div>
     </div>
+    
   </main>
   <script src="script.js"></script>
 </body>
