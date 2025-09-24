@@ -6132,7 +6132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const OPENAI_API_KEY =
-  "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"; // paste your key here
+  ""; // paste your key here
 
 async function askFlaskii(prompt) {
   try {
@@ -6186,3 +6186,4 @@ function speak(text) {
     speechSynthesis.speak(utterance);
   }
 }
+
