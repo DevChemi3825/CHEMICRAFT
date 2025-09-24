@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CHEMICRAFT</title>
-  <link rel="icon" href="favicon.png" type="image/png" id="favicon-link">
+  <link rel="icon" href="img/favicon.png" type="image/png" id="favicon-link">
   <link rel="stylesheet" href="style.css" />
-  <!-- UPDATED Google Fonts link to include Mulish with wght 500, and Press Start 2P -->
   <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@500&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -29,15 +28,64 @@
     <button data-lang="id">ID</button>
   </div>
 
-  <div id="flaskii">
-    <div class="flaskii-body" id="flaskii-face">🧪</div>
-    <div class="flaskii-bubble" id="flaskii-bubble" data-i18n="flaskii_hi">Hi! I’m Flaskii 💖</div>
+  <button id="open-team-btn">Meet the Team</button>
+<button id="open-why-btn">Why Chemicraft</button>
+
+<!-- Meet the Team Modal -->
+<div id="team-modal" class="modal hidden">
+  <div class="modal-content dev-modal">
+    <button id="close-team-btn" class="close-btn">×</button>
+    <h4>🧪 Meet the Team</h4>
+
+    <div class="team-grid">
+      <!-- Annisa -->
+      <div class="team-card">
+        <img src="img/Annisa.jpeg" alt="Annisa Khairani" class="avatar">
+        <div class="member-info">
+          <p><strong>Web Developer</strong></p>
+          <p>Annisa Khairani</p>
+        </div>
+      </div>
+
+      <!-- Gusan -->
+      <div class="team-card">
+        <img src="img/Gusan.jpeg" alt="Muhammad Gusan Cesar Yudhistira" class="avatar">
+        <div class="member-info">
+          <p><strong>Material Searcher</strong></p>
+          <p>Muhammad Gusan Cesar Yudhistira</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reason why section -->
+    <div class="reason-section">
+      <h5>🌟 Why We Built Chemicraft</h5>
+      <p>
+        We wanted to make learning chemistry more fun and interactive.  
+        By turning the periodic table into a game, students can explore,  
+        combine elements, and enjoy discovery while studying!
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="learning-objective">
+    <button class="close-btn" onclick="closeLearningObjective()">×</button>
+    <div class="objective-content">
+      <h4>🎯 Why ChemiCraft?</h4>
+      <p>Making chemistry <strong>fun</strong> and <strong>interactive</strong>! Discover elements through engaging quizzes, unlock the periodic table piece by piece, and master chemical combinations in a gamified learning experience.</p>
+      <p><em>"Learning chemistry has never been this exciting!"</em></p>
+    </div>
   </div>
 
-  <div id="dev-alert" class="alert">
-    <span data-i18n="dev_alert_message">⚠️ This game is still in development. More features are coming soon.</span>
-    <button class="alert-close" onclick="dismissAlert()">×</button>
+  
+  <div id="flaskii">
+    <div class="flaskii-body" id="flaskii-face">🧪</div>
+    <div class="flaskii-bubble" id="flaskii-bubble" data-i18n="flaskii_hi">Hi! I'm Flaskii 💖</div>
   </div>
+  
 
 <div id="intro-screen">
   <div class="intro-content">
@@ -105,8 +153,6 @@
 
     <div class="game-columns">
       <div class="discovery-section">
-        <h2 data-i18n="your_elements_title">Your Elements</h2>
-        <div class="elements-grid" id="discovered-elements"></div>
         <h2 data-i18n="mixing_area_title">Mixing Area</h2>
         <div class="mixing-area empty" id="mixing-area">
           <p data-i18n="mixing_area_placeholder">Drag elements here or click elements below</p>
@@ -269,7 +315,7 @@
     <div id="win-screen" class="modal hidden">
       <div class="modal-content win-style">
         <h2 data-i18n="win_title">🎉 <span style="color:#60a5fa">You completed the Periodic Table!</span></h2>
-        <p style="margin-top: 10px;" data-i18n="win_message">118 elements discovered.<br>You’re basically a <strong>chemistry god</strong> now.</p>
+        <p style="margin-top: 10px;" data-i18n="win_message">118 elements discovered.<br>You're basically a <strong>chemistry god</strong> now.</p>
         <button class="btn-confirm" onclick="closeWinScreen()" data-i18n="okay_button">Okay 🧪</button>
       </div>
     </div>
@@ -277,7 +323,7 @@
     <div id="puzzle-blocker" class="modal hidden">
       <div class="modal-content">
         <h2 data-i18n="puzzle_blocker_title">HOLD UP!</h2>
-        <p data-i18n="puzzle_blocker_message_1">You haven’t unlocked all the elements yet :P</p>
+        <p data-i18n="puzzle_blocker_message_1">You haven't unlocked all the elements yet :P</p>
         <p data-i18n="puzzle_blocker_message_2">Nice try sneaking into the puzzle early, scientist...</p>
         <div class="modal-buttons">
           <button onclick="closePuzzleBlocker()" data-i18n="okay_fine_button">Okay fine..</button>
