@@ -1982,8 +1982,6 @@ const translations = {
   en: {
     unknown: "Unknown Category",
     flaskii_hi: "Hi! I’m Flaskii 💖",
-    dev_alert_message:
-      "⚠️ This game is still in development. More features are coming soon.",
     intro_subtitle: "🧪 Unlock the secrets of the periodic table",
     play_button: "Play",
     welcome_title: "👋 Welcome to CHEMICRAFT!",
@@ -2120,8 +2118,6 @@ const translations = {
     trivia_label: "Fakta Menarik",
     unknown: "Tidak Diketahui",
     flaskii_hi: "Hai! Aku Flaskii 💖",
-    dev_alert_message:
-      "⚠️ Game ini masih dalam pengembangan. Fitur lainnya akan segera hadir.",
     intro_subtitle: "🧪 Ungkap rahasia tabel periodik",
     play_button: "Main",
     welcome_title: "👋 Selamat datang di CHEMICRAFT!",
@@ -2878,10 +2874,53 @@ function checkCombination() {
     updateVaultUI();
     playSuccessSound();
     flaskiiReact("😍", translations[currentLanguage].flaskii_happy_discovered);
+    if (currentLanguage === "id") {
+      speak(`Kamu berhasil membuat ${result}`);
+    } else {
+      speak(`You created ${result}`);
+    }
   } else {
-    resultArea.innerHTML = `<p>${translations[currentLanguage].no_combination}</p>`;
+    resultArea.innerHTML = `
+    <p>${translations[currentLanguage].no_combination}</p>
+    <button id="explain-btn">🔍 Explanation</button>
+    <div id="ai-explanation" class="hidden"></div>
+  `;
     playFailSound();
-    flaskiiReact("😭", translations[currentLanguage].flaskii_sad_try_else);
+
+    // Button handler
+    const explainBtn = document.getElementById("explain-btn");
+    const aiExplanationDiv = document.getElementById("ai-explanation");
+
+    explainBtn.addEventListener("click", () => {
+      explainBtn.disabled = true;
+      explainBtn.textContent =
+        currentLanguage === "id" ? "Berpikir... ⏳" : "Thinking... ⏳";
+
+      // 🔹 Prompt depends on language
+      const prompt =
+        currentLanguage === "id"
+          ? `Jelaskan mengapa kombinasi ${mixed.join(
+              " + "
+            )} tidak benar dalam kimia, dan berikan penjelasan sederhana dalam bahasa Indonesia.`
+          : `Explain why the combination ${mixed.join(
+              " + "
+            )} is incorrect in chemistry, and give a simple student-friendly explanation in English.`;
+
+      askFlaskii(prompt)
+        .then((answer) => {
+          aiExplanationDiv.textContent = answer;
+          aiExplanationDiv.classList.remove("hidden");
+
+          explainBtn.style.display = "none"; // hide button after shown
+        })
+        .catch(() => {
+          aiExplanationDiv.textContent =
+            currentLanguage === "id"
+              ? "Maaf, Flaskii tidak dapat menemukan jawaban sekarang."
+              : "Sorry, Flaskii couldn’t find an answer right now.";
+          aiExplanationDiv.classList.remove("hidden");
+        });
+    });
   }
 
   mixed = [];
@@ -4780,24 +4819,81 @@ function showNextQuiz() {
         }, 100);
 
         quizOptions.classList.add("hidden");
-        document.getElementById(
-          "quiz-result-text"
-        ).textContent = `${translations[currentLanguage].quiz_correct} ${quiz.answer[currentLanguage]}`;
-        document.getElementById("quiz-result").classList.remove("hidden");
 
+        // ✅ Correct answer with Explanation button
+        document.getElementById("quiz-result-text").innerHTML = `
+    ${translations[currentLanguage].quiz_correct} ${
+          quiz.answer[currentLanguage]
+        }
+    <br><button id="quiz-explain-btn">🔍 ${
+      currentLanguage === "id" ? "Penjelasan" : "Explanation"
+    }</button>
+    <div id="quiz-ai-explanation" class="hidden"></div>
+  `;
+        document.getElementById("quiz-result").classList.remove("hidden");
         quizPopup.dataset.justUnlocked = nextElement;
 
         btn.style.borderColor = "#22c55e";
         btn.style.background = "linear-gradient(to right, #4ade80, #22c55e)";
+
+        // ✅ Correct explanation handler
+        const explainBtn = document.getElementById("quiz-explain-btn");
+        const aiExplanationDiv = document.getElementById("quiz-ai-explanation");
+
+        explainBtn.addEventListener("click", () => {
+          explainBtn.disabled = true;
+          explainBtn.textContent =
+            currentLanguage === "id" ? "Berpikir... ⏳" : "Thinking... ⏳";
+
+          const prompt =
+            currentLanguage === "id"
+              ? `Pertanyaan kuis: "${quiz.question.id}". Jawaban benar adalah "${quiz.answer.id}". Jelaskan mengapa jawaban ini benar dalam bahasa Indonesia.`
+              : `Quiz question: "${quiz.question.en}". The correct answer is "${quiz.answer.en}". Explain why this answer is correct in English.`;
+
+          askFlaskii(prompt).then((answer) => {
+            aiExplanationDiv.textContent = answer;
+            aiExplanationDiv.classList.remove("hidden");
+            explainBtn.style.display = "none";
+          });
+        });
       } else {
         btn.style.borderColor = "#ef4444";
         btn.style.background = "linear-gradient(to right, #fca5a5, #ef4444)";
-        document.getElementById("quiz-result-text").textContent =
-          translations[currentLanguage].quiz_try_again;
+
+        // ❌ Wrong answer with Explanation button
+        document.getElementById("quiz-result-text").innerHTML = `
+    ${translations[currentLanguage].quiz_try_again}
+    <br><button id="quiz-explain-btn">🔍 ${
+      currentLanguage === "id" ? "Penjelasan" : "Explanation"
+    }</button>
+    <div id="quiz-ai-explanation" class="hidden"></div>
+  `;
         document.getElementById("quiz-result-text").style.color = "white";
 
         btn.classList.add("shake");
         setTimeout(() => btn.classList.remove("shake"), 500);
+
+        // ❌ Wrong explanation handler
+        const explainBtn = document.getElementById("quiz-explain-btn");
+        const aiExplanationDiv = document.getElementById("quiz-ai-explanation");
+
+        explainBtn.addEventListener("click", () => {
+          explainBtn.disabled = true;
+          explainBtn.textContent =
+            currentLanguage === "id" ? "Berpikir... ⏳" : "Thinking... ⏳";
+
+          const prompt =
+            currentLanguage === "id"
+              ? `Pertanyaan kuis: "${quiz.question.id}". Jawaban yang dipilih: "${opt.id}". Jawaban benar: "${quiz.answer.id}". Jelaskan mengapa jawaban ini salah, dan berikan penjelasan dalam bahasa Indonesia.`
+              : `Quiz question: "${quiz.question.en}". Player chose: "${opt.en}". The correct answer is "${quiz.answer.en}". Explain why this answer is wrong and what the correct answer is in English.`;
+
+          askFlaskii(prompt).then((answer) => {
+            aiExplanationDiv.textContent = answer;
+            aiExplanationDiv.classList.remove("hidden");
+
+            explainBtn.style.display = "none";
+          });
+        });
       }
     });
 
@@ -5728,17 +5824,36 @@ function closeWinScreen() {
   document.getElementById("win-screen").classList.add("hidden");
 }
 
-function dismissAlert() {
-  const alert = document.getElementById("dev-alert");
-  if (alert) alert.remove();
-}
-
 function closePuzzleBlocker() {
   const blocker = document.getElementById("puzzle-blocker");
   if (blocker) {
     blocker.classList.add("hidden");
   }
 }
+
+// Grab elements
+const devProfile = document.querySelector(".developer-profile");
+const learningObj = document.querySelector(".learning-objective");
+const openTeamBtn = document.getElementById("open-team-btn");
+const openWhyBtn = document.getElementById("open-why-btn");
+
+// Functions
+function openDeveloperProfile() {
+  devProfile.style.display = "block";
+}
+function closeDeveloperProfile() {
+  devProfile.style.display = "none";
+}
+function openLearningObjective() {
+  learningObj.style.display = "block";
+}
+function closeLearningObjective() {
+  learningObj.style.display = "none";
+}
+
+// Button listeners
+if (openTeamBtn) openTeamBtn.addEventListener("click", openDeveloperProfile);
+if (openWhyBtn) openWhyBtn.addEventListener("click", openLearningObjective);
 
 function saveGameProgress() {
   try {
@@ -5989,3 +6104,85 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Meet the Team
+  const teamModal = document.getElementById("team-modal");
+  document.getElementById("open-team-btn").addEventListener("click", () => {
+    teamModal.classList.remove("hidden");
+  });
+  document.getElementById("close-team-btn").addEventListener("click", () => {
+    teamModal.classList.add("hidden");
+  });
+  teamModal.addEventListener("click", (e) => {
+    if (e.target === teamModal) teamModal.classList.add("hidden");
+  });
+
+  // Why Chemicraft
+  const whyModal = document.getElementById("why-modal");
+  document.getElementById("open-why-btn").addEventListener("click", () => {
+    whyModal.classList.remove("hidden");
+  });
+  document.getElementById("close-why-btn").addEventListener("click", () => {
+    whyModal.classList.add("hidden");
+  });
+  whyModal.addEventListener("click", (e) => {
+    if (e.target === whyModal) whyModal.classList.add("hidden");
+  });
+});
+
+const OPENAI_API_KEY =
+  "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"; // paste your key here
+
+async function askFlaskii(prompt) {
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini", // or "gpt-3.5-turbo" if you prefer
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 150,
+      }),
+    });
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (error) {
+    console.error("Flaskii AI error:", error);
+    return "Hmm, I can’t explain that right now.";
+  }
+}
+function speak(text) {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US"; // you can change to "id-ID" for Bahasa
+    utterance.rate = 1; // speed (0.8 = slower, 1 = normal, 1.2 = faster)
+    utterance.pitch = 1; // voice pitch
+    speechSynthesis.speak(utterance);
+  } else {
+    console.warn("Speech synthesis not supported in this browser.");
+  }
+}
+
+function speak(text) {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // 🔹 Choose language based on currentLanguage
+    if (currentLanguage === "id") {
+      utterance.lang = "id-ID"; // Indonesian voice
+    } else {
+      utterance.lang = "en-US"; // English voice
+    }
+
+    // Optional tweaks
+    utterance.rate = 1; // 1 = normal speed
+    utterance.pitch = 1; // 1 = normal pitch
+
+    speechSynthesis.speak(utterance);
+  }
+}
