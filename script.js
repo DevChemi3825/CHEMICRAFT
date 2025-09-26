@@ -1977,270 +1977,6 @@ let unlockQueue = [
 
 let discovered = [];
 let mixed = [];
-
-const translations = {
-  en: {
-    unknown: "Unknown Category",
-    flaskii_hi: "Hi! I’m Flaskii 💖",
-    intro_subtitle: "🧪 Unlock the secrets of the periodic table",
-    play_button: "Play",
-    welcome_title: "👋 Welcome to CHEMICRAFT!",
-    welcome_message:
-      "You're about to unlock the world of chemistry, one element at a time!",
-    rule_quiz: "🧪 Answer quizzes to unlock elements",
-    rule_flip: "🔓 Unlocked elements will flip into view",
-    rule_drag: "🧬 Drag unlocked elements into the mixing area",
-    rule_combine: "🎯 Combine them to discover compounds!",
-    lets_go_button: "Let's Go!",
-    puzzle_button: "🧩 Puzzle",
-    start_quiz_button: "Start Quiz",
-    periodic_table_quiz_button: "Periodic Table Quiz",
-    game_subtitle: "Drag elements to combine them and discover new compounds!",
-    element_vault_button: "Element Vault",
-    resume_quiz_button: "Resume Quiz",
-    atomic_number: "Atomic Number:",
-    mass: "Mass:",
-    category: "Category:",
-    your_elements_title: "Your Elements",
-    mixing_area_title: "Mixing Area",
-    mixing_area_placeholder: "Drag elements here or click elements below",
-    get_hint_button: "💡 Get a Hint",
-    mix_button: "Mix!",
-    reset_button: "Reset",
-    combination_results_placeholder: "Combination results will appear here",
-    periodic_table_title: "Periodic Table",
-    search_element_placeholder: "Search element...",
-    solid_button: "Solid",
-    liquid_button: "Liquid",
-    gas_button: "Gas",
-    artificial_button: "Artificial",
-    show_all_button: "Show All",
-    click_hint: "💡 Try and click any unlocked element!",
-    alkali_metal: "Alkali Metal",
-    alkaline_earth: "Alkaline Earth",
-    transition_metal: "Transition Metal",
-    post_transition: "Post-Transition",
-    metalloid: "Metalloid",
-    nonmetal: "Nonmetal",
-    halogen: "Halogen",
-    noble_gas: "Noble Gas",
-    lanthanide: "Lanthanide",
-    actinide: "Actinide",
-    reset_confirmation:
-      "⚠️ This will reset your discovered elements. Are you sure?",
-    yes_reset_button: "Yes, Reset",
-    cancel_button: "Cancel",
-    contact_us_title: "Contact Us",
-    contact_name_label: "Your Name:",
-    contact_email_label: "Your Email:",
-    contact_message_label: "Message:",
-    send_message_button: "Send Message",
-    contact_sending: "Sending message...",
-    contact_success: "Message sent successfully! Thank you.",
-    contact_error: "Failed to send message. Please try again later.",
-    dev_unlock_button: "Unlock All (dev)",
-    element_vault_title: "🔓 Your Element Vault",
-    vault_search_placeholder: "Search by name or symbol...",
-    all_types_option: "All Types",
-    molecules_option: "Molecules",
-    ionic_compounds_option: "Ionic Compounds",
-    gases_option: "Gases",
-    sort_default_option: "Sort: Default",
-    sort_name_option: "Sort: A → Z",
-    sort_formula_option: "Sort: Formula",
-    close_button: "Close",
-    periodic_table_puzzle_title: "🧩 Periodic Table Puzzle",
-    puzzle_info: "Drag each element to its correct spot.",
-    submit_button: "Submit",
-    table_quiz_question: "Which category does this element belong to?",
-    next_button: "Next",
-    win_title: "🎉 You completed the Periodic Table!",
-    win_message:
-      "118 elements discovered.<br>You’re basically a <strong>chemistry god</strong> now.",
-    okay_button: "Okay 🧪",
-    puzzle_blocker_title: "🚫 Hold it right there!",
-    puzzle_blocker_message_1: "You haven’t unlocked all the elements yet 😤",
-    puzzle_blocker_message_2:
-      "Nice try sneaking into the puzzle early, scientist...",
-    okay_fine_button: "Okay fine 😒",
-    all_quiz_questions_title: "📘 All Quiz Questions",
-    view_all_quiz_button: "📖 View All Quiz Q&A",
-    quiz_correct: "✅ Correct! You unlocked ",
-    quiz_try_again: "❌ Try again!",
-    no_combination: "❌ No valid combination",
-    hint_elements_count:
-      "🧪 Hint: This compound uses <strong>{count}</strong> elements.",
-    hint_try_combining: "Try combining: {elements}.",
-    hint_all_discovered: "🥳 You've discovered everything!",
-    table_quiz_discover_first: "Discover elements first!",
-    table_quiz_correct: "✅ Correct!",
-    table_quiz_incorrect: "❌ Nope! It's ",
-    quiz_in_progress: "Quiz in Progress...",
-    quiz_started: "Quiz Started!",
-    quiz_completed: "Quiz Completed!",
-    quiz_finished_message: "🎉 You Finished the Quiz!",
-    no_compounds_found: "No compounds found matching your criteria.",
-    flaskii_mix_magic: "Mix me something magical! ✨",
-    flaskii_flaskinated: "I'm flaskinated 🧪",
-    flaskii_bubbly: "I feel bubbly today~ 🫧",
-    flaskii_try_new: "Try something new... 👀",
-    flaskii_carbon: "Whoa! Is that Carbon?! 💎",
-    flaskii_clicked: "Did you just click me? hehe 😳",
-    flaskii_happy_discovered: "Yay! You discovered something! 🎉",
-    flaskii_happy_unlocked: "New compound unlocked! 🧬",
-    flaskii_happy_genius: "I knew you were a genius 💖",
-    flaskii_sad_failed: "Oh no... that didn’t work 😭",
-    flaskii_sad_try_else: "Try something else, babe~",
-    flaskii_sad_believe: "I believe in your next combo! 🫶",
-    select_question_info: "Select a question to view details.",
-    question_label: "Question",
-    your_answer_label: "Your Answer",
-    correct_answer_label: "Correct Answer",
-    result_label: "Result",
-    correct_result: "✅ Correct",
-    incorrect_result: "❌ Incorrect",
-    reviewing_all_quiz_questions: "Reviewing all available quiz questions.",
-    use_label: "Use",
-    trivia_label: "Trivia",
-    reset_progress_button: "Reset All Progress",
-    reset_progress_confirmation:
-      "⚠️ This will reset all your progress including discovered elements and quizzes. Are you sure?",
-    yes_reset_progress_button: "Yes, Reset All",
-    loading_message: "Loading Chemicraft...",
-  },
-  id: {
-    loading_message: "Memuat Chemicraft...",
-    reset_progress_button: "Atur Ulang Semua Progres",
-    reset_progress_confirmation:
-      "⚠️ Ini akan mengatur ulang semua progresmu termasuk elemen yang ditemukan dan kuis. Kamu yakin?",
-    yes_reset_progress_button: "Ya, Atur Ulang Semua",
-    use_label: "Penggunaan",
-    trivia_label: "Fakta Menarik",
-    unknown: "Tidak Diketahui",
-    flaskii_hi: "Hai! Aku Flaskii 💖",
-    intro_subtitle: "🧪 Ungkap rahasia tabel periodik",
-    play_button: "Main",
-    welcome_title: "👋 Selamat datang di CHEMICRAFT!",
-    welcome_message:
-      "Kamu akan membuka dunia kimia, satu elemen pada satu waktu!",
-    rule_quiz: "🧪 Jawab kuis untuk membuka elemen",
-    rule_flip: "🔓 Elemen yang terbuka akan muncul",
-    rule_drag: "🧬 Seret elemen yang terbuka ke area pencampuran",
-    rule_combine: "🎯 Gabungkan mereka untuk menemukan senyawa!",
-    lets_go_button: "Ayo Mulai!",
-    puzzle_button: "🧩 Teka-teki",
-    start_quiz_button: "Mulai Kuis",
-    periodic_table_quiz_button: "Kuis Tabel Periodik",
-    game_subtitle:
-      "Seret elemen untuk menggabungkannya dan temukan senyawa baru!",
-    element_vault_button: "Gudang Elemen",
-    resume_quiz_button: "Lanjutkan Kuis",
-    atomic_number: "Nomor Atom:",
-    mass: "Massa:",
-    category: "Kategori:",
-    your_elements_title: "Elemenmu",
-    mixing_area_title: "Area Pencampuran",
-    mixing_area_placeholder: "Seret elemen ke sini atau klik elemen di bawah",
-    get_hint_button: "💡 Dapatkan Petunjuk",
-    mix_button: "Campur!",
-    reset_button: "Atur Ulang",
-    combination_results_placeholder: "Hasil kombinasi akan muncul di sini",
-    periodic_table_title: "Tabel Periodik",
-    search_element_placeholder: "Cari elemen...",
-    solid_button: "Padat",
-    liquid_button: "Cair",
-    gas_button: "Gas",
-    artificial_button: "Buatan",
-    show_all_button: "Tampilkan Semua",
-    click_hint: "💡 Coba dan klik elemen yang terbuka!",
-    alkali_metal: "Logam Alkali",
-    alkaline_earth: "Logam Alkali Tanah",
-    transition_metal: "Logam Transisi",
-    post_transition: "Pasca-Transisi",
-    metalloid: "Metaloid",
-    nonmetal: "Nonlogam",
-    halogen: "Halogen",
-    noble_gas: "Gas Mulia",
-    lanthanide: "Lantanida",
-    actinide: "Aktinida",
-    reset_confirmation:
-      "⚠️ Ini akan mengatur ulang elemen yang kamu temukan. Kamu yakin?",
-    yes_reset_button: "Ya, Atur Ulang",
-    cancel_button: "Batal",
-    contact_us_title: "Hubungi Kami",
-    contact_name_label: "Nama Anda:",
-    contact_email_label: "Email Anda:",
-    contact_message_label: "Pesan:",
-    send_message_button: "Kirim Pesan",
-    contact_sending: "Mengirim pesan...",
-    contact_success: "Pesan berhasil dikirim! Terima kasih.",
-    contact_error: "Gagal mengirim pesan. Silakan coba lagi nanti.",
-    dev_unlock_button: "Buka Semua (dev)",
-    element_vault_title: "🔓 Gudang Elemenmu",
-    vault_search_placeholder: "Cari berdasarkan nama atau simbol...",
-    all_types_option: "Semua Tipe",
-    molecules_option: "Molekul",
-    ionic_compounds_option: "Senyawa Ionik",
-    gases_option: "Gas",
-    sort_default_option: "Urutkan: Default",
-    sort_name_option: "Urutkan: A → Z",
-    sort_formula_option: "Urutkan: Formula",
-    close_button: "Tutup",
-    periodic_table_puzzle_title: "🧩 Teka-teki Tabel Periodik",
-    puzzle_info: "Seret setiap elemen ke tempat yang benar.",
-    submit_button: "Kirim",
-    table_quiz_question: "Elemen ini termasuk kategori apa?",
-    next_button: "Selanjutnya",
-    win_title: "🎉 Kamu menyelesaikan Tabel Periodik!",
-    win_message:
-      "118 elemen ditemukan.<br>Kamu pada dasarnya adalah <strong>dewa kimia</strong> sekarang.",
-    okay_button: "Oke 🧪",
-    puzzle_blocker_title: "🚫 Tunggu dulu!",
-    puzzle_blocker_message_1: "Kamu belum membuka semua elemen 😤",
-    puzzle_blocker_message_2: "Coba lagi nanti, ilmuwan...",
-    okay_fine_button: "Oke baiklah 😒",
-    all_quiz_questions_title: "📘 Semua Pertanyaan Kuis",
-    view_all_quiz_button: "📖 Lihat Semua Tanya Jawab Kuis",
-    quiz_correct: "✅ Benar! Kamu membuka ",
-    quiz_try_again: "❌ Coba lagi!",
-    no_combination: "❌ Tidak ada kombinasi yang valid",
-    hint_elements_count:
-      "🧪 Petunjuk: Senyawa ini menggunakan <strong>{count}</strong> elemen.",
-    hint_try_combining: "Coba gabungkan: {elements}.",
-    hint_all_discovered: "🥳 Kamu sudah menemukan semuanya!",
-    table_quiz_discover_first: "Temukan elemen dulu!",
-    table_quiz_correct: "✅ Benar!",
-    table_quiz_incorrect: "❌ Salah! Itu adalah ",
-    quiz_in_progress: "Kuis Sedang Berlangsung...",
-    quiz_started: "Kuis Dimulai!",
-    quiz_completed: "Kuis Selesai!",
-    quiz_finished_message: "🎉 Kamu Menyelesaikan Kuis!",
-    no_compounds_found:
-      "Tidak ada senyawa yang ditemukan sesuai kriteria Anda.",
-    flaskii_mix_magic: "Campurkan sesuatu yang ajaib! ✨",
-    flaskii_flaskinated: "Aku ter-flaskinasi 🧪",
-    flaskii_bubbly: "Aku merasa bersemangat hari ini~ 🫧",
-    flaskii_try_new: "Coba sesuatu yang baru... 👀",
-    flaskii_carbon: "Wah! Itu Karbon?! 💎",
-    flaskii_clicked: "Kamu baru saja mengklikku? hehe 😳",
-    flaskii_happy_discovered: "Hore! Kamu menemukan sesuatu! 🎉",
-    flaskii_happy_unlocked: "Senyawa baru terbuka! 🧬",
-    flaskii_happy_genius: "Aku tahu kamu jenius 💖",
-    flaskii_sad_failed: "Oh tidak... itu tidak berhasil 😭",
-    flaskii_sad_try_else: "Coba yang lain, sayang~",
-    flaskii_sad_believe: "Aku percaya pada kombinasi berikutnya! 🫶",
-    select_question_info: "Pilih pertanyaan untuk melihat detail.",
-    question_label: "Pertanyaan",
-    your_answer_label: "Jawabanmu",
-    correct_answer_label: "Jawaban Benar",
-    result_label: "Hasil",
-    correct_result: "✅ Benar",
-    incorrect_result: "❌ Salah",
-    reviewing_all_quiz_questions:
-      "Meninjau semua pertanyaan kuis yang tersedia.",
-  },
-};
-
 let currentLanguage = "en";
 
 function setLanguage(lang) {
@@ -2844,13 +2580,30 @@ confirmResetProgressBtn.addEventListener("click", () => {
   restartGame(); // This function resets all progress and UI
 });
 
+function speak(text, lang = "en") {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Pick language
+    utterance.lang = lang === "id" ? "id-ID" : "en-US";
+
+    // Flaskii personality
+    utterance.pitch = 1.4; // playful, higher pitch
+    utterance.rate = 1.15; // slightly faster
+    utterance.volume = 1;
+
+    speechSynthesis.speak(utterance);
+  } else {
+    console.log("Speech not supported in this browser.");
+  }
+}
+
 function checkCombination() {
   const sortedCombo = mixed.slice().sort().join("+");
   const exactCombo = mixed.join("+");
 
   let recipe = compoundRecipes[sortedCombo] || compoundRecipes[exactCombo];
   let result = "";
-
   if (recipe) {
     result = recipe.result;
 
@@ -2860,10 +2613,10 @@ function checkCombination() {
     }
 
     resultArea.innerHTML = `
-      <div id="bounce-result" class="combo-success">
-        <h2>${result}</h2>
-      </div>
-    `;
+    <div id="bounce-result" class="combo-success">
+      <h2>${result}</h2>
+    </div>
+  `;
 
     const bounceEl = document.getElementById("bounce-result");
     bounceEl.classList.remove("bounce-result");
@@ -2873,54 +2626,27 @@ function checkCombination() {
     animateCombination();
     updateVaultUI();
     playSuccessSound();
-    flaskiiReact("😍", translations[currentLanguage].flaskii_happy_discovered);
+
+    // 👇 Speak in current language
     if (currentLanguage === "id") {
-      speak(`Kamu berhasil membuat ${result}`);
+      speak(`${mixed.join(" ditambah ")} menjadi ${result}`, "id");
     } else {
-      speak(`You created ${result}`);
+      speak(`${mixed.join(" plus ")} makes ${result}`, "en");
     }
+
+    flaskiiReact("😍", translations[currentLanguage].flaskii_happy_discovered);
   } else {
-    resultArea.innerHTML = `
-    <p>${translations[currentLanguage].no_combination}</p>
-    <button id="explain-btn">🔍 Explanation</button>
-    <div id="ai-explanation" class="hidden"></div>
-  `;
+    resultArea.innerHTML = `<p>${translations[currentLanguage].no_combination}</p>`;
     playFailSound();
 
-    // Button handler
-    const explainBtn = document.getElementById("explain-btn");
-    const aiExplanationDiv = document.getElementById("ai-explanation");
+    // 👇 Fail message
+    if (currentLanguage === "id") {
+      speak(`Maaf, ${mixed.join(" dan ")} tidak bisa digabungkan`, "id");
+    } else {
+      speak(`Sorry, ${mixed.join(" and ")} cannot be combined`, "en");
+    }
 
-    explainBtn.addEventListener("click", () => {
-      explainBtn.disabled = true;
-      explainBtn.textContent =
-        currentLanguage === "id" ? "Berpikir... ⏳" : "Thinking... ⏳";
-
-      // 🔹 Prompt depends on language
-      const prompt =
-        currentLanguage === "id"
-          ? `Jelaskan mengapa kombinasi ${mixed.join(
-              " + "
-            )} tidak benar dalam kimia, dan berikan penjelasan sederhana dalam bahasa Indonesia.`
-          : `Explain why the combination ${mixed.join(
-              " + "
-            )} is incorrect in chemistry, and give a simple student-friendly explanation in English.`;
-
-      askFlaskii(prompt)
-        .then((answer) => {
-          aiExplanationDiv.textContent = answer;
-          aiExplanationDiv.classList.remove("hidden");
-
-          explainBtn.style.display = "none"; // hide button after shown
-        })
-        .catch(() => {
-          aiExplanationDiv.textContent =
-            currentLanguage === "id"
-              ? "Maaf, Flaskii tidak dapat menemukan jawaban sekarang."
-              : "Sorry, Flaskii couldn’t find an answer right now.";
-          aiExplanationDiv.classList.remove("hidden");
-        });
-    });
+    flaskiiReact("😭", translations[currentLanguage].flaskii_sad_try_else);
   }
 
   mixed = [];
@@ -4819,81 +4545,24 @@ function showNextQuiz() {
         }, 100);
 
         quizOptions.classList.add("hidden");
-
-        // ✅ Correct answer with Explanation button
-        document.getElementById("quiz-result-text").innerHTML = `
-    ${translations[currentLanguage].quiz_correct} ${
-          quiz.answer[currentLanguage]
-        }
-    <br><button id="quiz-explain-btn">🔍 ${
-      currentLanguage === "id" ? "Penjelasan" : "Explanation"
-    }</button>
-    <div id="quiz-ai-explanation" class="hidden"></div>
-  `;
+        document.getElementById(
+          "quiz-result-text"
+        ).textContent = `${translations[currentLanguage].quiz_correct} ${quiz.answer[currentLanguage]}`;
         document.getElementById("quiz-result").classList.remove("hidden");
+
         quizPopup.dataset.justUnlocked = nextElement;
 
         btn.style.borderColor = "#22c55e";
         btn.style.background = "linear-gradient(to right, #4ade80, #22c55e)";
-
-        // ✅ Correct explanation handler
-        const explainBtn = document.getElementById("quiz-explain-btn");
-        const aiExplanationDiv = document.getElementById("quiz-ai-explanation");
-
-        explainBtn.addEventListener("click", () => {
-          explainBtn.disabled = true;
-          explainBtn.textContent =
-            currentLanguage === "id" ? "Berpikir... ⏳" : "Thinking... ⏳";
-
-          const prompt =
-            currentLanguage === "id"
-              ? `Pertanyaan kuis: "${quiz.question.id}". Jawaban benar adalah "${quiz.answer.id}". Jelaskan mengapa jawaban ini benar dalam bahasa Indonesia.`
-              : `Quiz question: "${quiz.question.en}". The correct answer is "${quiz.answer.en}". Explain why this answer is correct in English.`;
-
-          askFlaskii(prompt).then((answer) => {
-            aiExplanationDiv.textContent = answer;
-            aiExplanationDiv.classList.remove("hidden");
-            explainBtn.style.display = "none";
-          });
-        });
       } else {
         btn.style.borderColor = "#ef4444";
         btn.style.background = "linear-gradient(to right, #fca5a5, #ef4444)";
-
-        // ❌ Wrong answer with Explanation button
-        document.getElementById("quiz-result-text").innerHTML = `
-    ${translations[currentLanguage].quiz_try_again}
-    <br><button id="quiz-explain-btn">🔍 ${
-      currentLanguage === "id" ? "Penjelasan" : "Explanation"
-    }</button>
-    <div id="quiz-ai-explanation" class="hidden"></div>
-  `;
+        document.getElementById("quiz-result-text").textContent =
+          translations[currentLanguage].quiz_try_again;
         document.getElementById("quiz-result-text").style.color = "white";
 
         btn.classList.add("shake");
         setTimeout(() => btn.classList.remove("shake"), 500);
-
-        // ❌ Wrong explanation handler
-        const explainBtn = document.getElementById("quiz-explain-btn");
-        const aiExplanationDiv = document.getElementById("quiz-ai-explanation");
-
-        explainBtn.addEventListener("click", () => {
-          explainBtn.disabled = true;
-          explainBtn.textContent =
-            currentLanguage === "id" ? "Berpikir... ⏳" : "Thinking... ⏳";
-
-          const prompt =
-            currentLanguage === "id"
-              ? `Pertanyaan kuis: "${quiz.question.id}". Jawaban yang dipilih: "${opt.id}". Jawaban benar: "${quiz.answer.id}". Jelaskan mengapa jawaban ini salah, dan berikan penjelasan dalam bahasa Indonesia.`
-              : `Quiz question: "${quiz.question.en}". Player chose: "${opt.en}". The correct answer is "${quiz.answer.en}". Explain why this answer is wrong and what the correct answer is in English.`;
-
-          askFlaskii(prompt).then((answer) => {
-            aiExplanationDiv.textContent = answer;
-            aiExplanationDiv.classList.remove("hidden");
-
-            explainBtn.style.display = "none";
-          });
-        });
       }
     });
 
@@ -5824,36 +5493,17 @@ function closeWinScreen() {
   document.getElementById("win-screen").classList.add("hidden");
 }
 
+function dismissAlert() {
+  const alert = document.getElementById("dev-alert");
+  if (alert) alert.remove();
+}
+
 function closePuzzleBlocker() {
   const blocker = document.getElementById("puzzle-blocker");
   if (blocker) {
     blocker.classList.add("hidden");
   }
 }
-
-// Grab elements
-const devProfile = document.querySelector(".developer-profile");
-const learningObj = document.querySelector(".learning-objective");
-const openTeamBtn = document.getElementById("open-team-btn");
-const openWhyBtn = document.getElementById("open-why-btn");
-
-// Functions
-function openDeveloperProfile() {
-  devProfile.style.display = "block";
-}
-function closeDeveloperProfile() {
-  devProfile.style.display = "none";
-}
-function openLearningObjective() {
-  learningObj.style.display = "block";
-}
-function closeLearningObjective() {
-  learningObj.style.display = "none";
-}
-
-// Button listeners
-if (openTeamBtn) openTeamBtn.addEventListener("click", openDeveloperProfile);
-if (openWhyBtn) openWhyBtn.addEventListener("click", openLearningObjective);
 
 function saveGameProgress() {
   try {
@@ -6105,85 +5755,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Meet the Team
-  const teamModal = document.getElementById("team-modal");
-  document.getElementById("open-team-btn").addEventListener("click", () => {
-    teamModal.classList.remove("hidden");
-  });
-  document.getElementById("close-team-btn").addEventListener("click", () => {
-    teamModal.classList.add("hidden");
-  });
-  teamModal.addEventListener("click", (e) => {
-    if (e.target === teamModal) teamModal.classList.add("hidden");
-  });
+// Developer Profiles Modal
+const devProfilesModal = document.getElementById("dev-profiles-modal");
+const openDevProfilesBtn = document.getElementById("open-dev-profiles");
+const closeDevProfilesBtn = document.getElementById("close-dev-profiles");
 
-  // Why Chemicraft
-  const whyModal = document.getElementById("why-modal");
-  document.getElementById("open-why-btn").addEventListener("click", () => {
-    whyModal.classList.remove("hidden");
-  });
-  document.getElementById("close-why-btn").addEventListener("click", () => {
-    whyModal.classList.add("hidden");
-  });
-  whyModal.addEventListener("click", (e) => {
-    if (e.target === whyModal) whyModal.classList.add("hidden");
-  });
+openDevProfilesBtn.addEventListener("click", () => {
+  devProfilesModal.classList.remove("hidden");
 });
 
-const OPENAI_API_KEY =
-  ""; // paste your key here
-
-async function askFlaskii(prompt) {
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini", // or "gpt-3.5-turbo" if you prefer
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 150,
-      }),
-    });
-
-    const data = await response.json();
-    return data.choices[0].message.content;
-  } catch (error) {
-    console.error("Flaskii AI error:", error);
-    return "Hmm, I can’t explain that right now.";
-  }
-}
-function speak(text) {
-  if ("speechSynthesis" in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-US"; // you can change to "id-ID" for Bahasa
-    utterance.rate = 1; // speed (0.8 = slower, 1 = normal, 1.2 = faster)
-    utterance.pitch = 1; // voice pitch
-    speechSynthesis.speak(utterance);
-  } else {
-    console.warn("Speech synthesis not supported in this browser.");
-  }
-}
-
-function speak(text) {
-  if ("speechSynthesis" in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    // 🔹 Choose language based on currentLanguage
-    if (currentLanguage === "id") {
-      utterance.lang = "id-ID"; // Indonesian voice
-    } else {
-      utterance.lang = "en-US"; // English voice
-    }
-
-    // Optional tweaks
-    utterance.rate = 1; // 1 = normal speed
-    utterance.pitch = 1; // 1 = normal pitch
-
-    speechSynthesis.speak(utterance);
-  }
-}
-
+closeDevProfilesBtn.addEventListener("click", () => {
+  devProfilesModal.classList.add("hidden");
+});
